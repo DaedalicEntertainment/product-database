@@ -17,3 +17,5 @@ Company product database built as ASP.NET Core Web Application.
 1. Add index page link.
 1. Migrate database.
 1. Seed database (if applicable).
+
+See https://docs.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/?view=aspnetcore-3.1 for details.

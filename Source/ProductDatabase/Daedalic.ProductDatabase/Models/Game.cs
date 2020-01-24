@@ -13,5 +13,8 @@ namespace Daedalic.ProductDatabase.Models
         [StringLength(60, MinimumLength = 3)]
         [Required]
         public string Name { get; set; }
+
+        [Display(Name = "Asset Index Project Id")]
+        public string AssetIndexProjectId { get; set; }
     }
 }
