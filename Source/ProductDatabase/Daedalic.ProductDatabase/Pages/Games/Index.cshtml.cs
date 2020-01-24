@@ -21,9 +21,18 @@ namespace Daedalic.ProductDatabase
 
         public IList<Game> Game { get;set; }
 
+        [BindProperty(SupportsGet = true)]
+        public string Filter { get; set; }
+
         public async Task OnGetAsync()
         {
-            Game = await _context.Game.ToListAsync();
+            var games = from g in _context.Game select g;
+            if (!string.IsNullOrEmpty(Filter))
+            {
+                games = games.Where(s => s.Name.Contains(Filter));
+            }
+
+            Game = await games.ToListAsync();
         }
     }
 }
