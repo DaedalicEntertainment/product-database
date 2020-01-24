@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Daedalic.ProductDatabase.Models;
+
+namespace Daedalic.ProductDatabase.Data
+{
+    public class DaedalicProductDatabaseContext : DbContext
+    {
+        public DaedalicProductDatabaseContext (DbContextOptions<DaedalicProductDatabaseContext> options)
+            : base(options)
+        {
+        }
+
+        public DbSet<Daedalic.ProductDatabase.Models.Game> Game { get; set; }
+    }
+}
