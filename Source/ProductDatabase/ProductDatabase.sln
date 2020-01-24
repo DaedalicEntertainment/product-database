@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daedalic.ProductDatabase", "Daedalic.ProductDatabase\Daedalic.ProductDatabase.csproj", "{25FDA842-2E01-4771-9DC2-294A62C65EFF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{25FDA842-2E01-4771-9DC2-294A62C65EFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25FDA842-2E01-4771-9DC2-294A62C65EFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25FDA842-2E01-4771-9DC2-294A62C65EFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25FDA842-2E01-4771-9DC2-294A62C65EFF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {71E2C8F4-D5BB-4121-B112-A519755C4B27}
+	EndGlobalSection
+EndGlobal
