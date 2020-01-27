@@ -35,6 +35,15 @@ namespace Daedalic.ProductDatabase.Models
                     );
                 }
 
+                if (!context.Publisher.Any())
+                {
+                    context.Publisher.AddRange(
+                        new Publisher
+                        {
+                            Name = "Daedalic Entertainment"
+                        }
+                    );
+                }
                 context.SaveChanges();
             }
         }
