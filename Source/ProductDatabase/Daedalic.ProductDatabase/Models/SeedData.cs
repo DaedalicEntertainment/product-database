@@ -18,50 +18,51 @@ namespace Daedalic.ProductDatabase.Models
                 if (!context.Genre.Any())
                 {
                     context.Genre.AddRange(
-                        new Genre
-                        {
-                            Name = "Adventure"
-                        }
+                        new Genre { Name = "Adventure" }
                     );
                 }
 
                 if (!context.Developer.Any())
                 {
                     context.Developer.AddRange(
-                        new Developer
-                        {
-                            Name = "Daedalic Entertainment"
-                        }
+                        new Developer { Name = "Daedalic Entertainment" }
                     );
                 }
 
                 if (!context.Publisher.Any())
                 {
                     context.Publisher.AddRange(
-                        new Publisher
-                        {
-                            Name = "Daedalic Entertainment"
-                        }
+                        new Publisher { Name = "Daedalic Entertainment" }
                     );
                 }
 
                 if (!context.Platform.Any())
                 {
                     context.Platform.AddRange(
-                        new Platform
-                        {
-                            Name = "Windows (64-bit)"
-                        }
+                        new Platform { Name = "Windows (64-bit)" }
                     );
                 }
 
                 if (!context.Store.Any())
                 {
                     context.Store.AddRange(
-                        new Store
-                        {
-                            Name = "Steam"
-                        }
+                        new Store { Name = "Steam" }
+                    );
+                }
+
+                if (!context.Language.Any())
+                {
+                    context.Language.AddRange(
+                        new Language { Name = "English" },
+                        new Language { Name = "French" },
+                        new Language { Name = "Italian" },
+                        new Language { Name = "German" },
+                        new Language { Name = "Spanish" },
+                        new Language { Name = "Russian" },
+                        new Language { Name = "Japanese" },
+                        new Language { Name = "Korean" },
+                        new Language { Name = "Chinese (Simplified)" },
+                        new Language { Name = "Chinese (Traditional)" }
                     );
                 }
 
