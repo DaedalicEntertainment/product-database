@@ -50,7 +50,17 @@ namespace Daedalic.ProductDatabase.Models
                     context.Platform.AddRange(
                         new Platform
                         {
-                            Name = "Windows Steam"
+                            Name = "Windows (64-bit)"
+                        }
+                    );
+                }
+
+                if (!context.Store.Any())
+                {
+                    context.Store.AddRange(
+                        new Store
+                        {
+                            Name = "Steam"
                         }
                     );
                 }
