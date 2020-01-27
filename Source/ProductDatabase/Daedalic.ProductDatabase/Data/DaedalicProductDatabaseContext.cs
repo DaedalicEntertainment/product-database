@@ -21,5 +21,7 @@ namespace Daedalic.ProductDatabase.Data
         public DbSet<Daedalic.ProductDatabase.Models.Genre> Genre { get; set; }
 
         public DbSet<Daedalic.ProductDatabase.Models.Publisher> Publisher { get; set; }
+
+        public DbSet<Daedalic.ProductDatabase.Models.Platform> Platform { get; set; }
     }
 }

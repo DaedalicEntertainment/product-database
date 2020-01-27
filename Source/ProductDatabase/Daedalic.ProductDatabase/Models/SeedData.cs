@@ -44,6 +44,17 @@ namespace Daedalic.ProductDatabase.Models
                         }
                     );
                 }
+
+                if (!context.Platform.Any())
+                {
+                    context.Platform.AddRange(
+                        new Platform
+                        {
+                            Name = "Windows Steam"
+                        }
+                    );
+                }
+
                 context.SaveChanges();
             }
         }

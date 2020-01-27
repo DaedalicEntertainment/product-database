@@ -11,7 +11,7 @@ Company product database built as ASP.NET Core Web Application.
 ## Adding new data models
 
 1. Add model class with references and validation.
-1. Scaffold new pages and changed model pages
+1. Scaffold new and changed model pages
    1. Correct namespaces
    1. Add empty select items for Create and Edit, if necessary
    1. Set Index page title and h1
