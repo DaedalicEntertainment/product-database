@@ -1,0 +1,86 @@
+﻿@page
+@model Daedalic.ProductDatabase.Releases.IndexModel
+
+@{
+    ViewData["Title"] = "Releases";
+}
+
+<h1>Releases</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<form>
+    <p>
+        <input type="text" asp-for="Filter" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Release[0].Game)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Release[0].Summary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Release[0].ReleaseDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Release[0].Version)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Release[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Release[0].Publisher)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Release[0].Platform)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Release[0].Store)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Release) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Game.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Summary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReleaseDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Version)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Publisher.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Platform.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Store.Name)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

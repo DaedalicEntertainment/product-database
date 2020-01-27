@@ -1,0 +1,67 @@
+﻿@page "{id:int}"
+@model Daedalic.ProductDatabase.Releases.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Release</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Release.Game)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Release.Game.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Release.Summary)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Release.Summary)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Release.ReleaseDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Release.ReleaseDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Release.Version)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Release.Version)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Release.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Release.Status.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Release.Publisher)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Release.Publisher.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Release.Platform)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Release.Platform.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Release.Store)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Release.Store.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Release.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

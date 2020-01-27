@@ -25,5 +25,7 @@ namespace Daedalic.ProductDatabase.Models
         public Developer Developer { get; set; }
 
         public Genre Genre { get; set; }
+
+        public ICollection<Release> Releases { get; set; }
     }
 }

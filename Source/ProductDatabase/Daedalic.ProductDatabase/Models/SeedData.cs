@@ -75,6 +75,15 @@ namespace Daedalic.ProductDatabase.Models
                     );
                 }
 
+                if (!context.ReleaseStatus.Any())
+                {
+                    context.ReleaseStatus.AddRange(
+                        new ReleaseStatus {  Name = "Scheduled "},
+                        new ReleaseStatus {  Name = "Released "},
+                        new ReleaseStatus {  Name = "Cancelled "}
+                    );
+                }
+
                 context.SaveChanges();
             }
         }

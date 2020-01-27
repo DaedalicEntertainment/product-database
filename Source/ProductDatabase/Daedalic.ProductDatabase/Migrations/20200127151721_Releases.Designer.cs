@@ -4,14 +4,16 @@ using Daedalic.ProductDatabase.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Daedalic.ProductDatabase.Migrations
 {
     [DbContext(typeof(DaedalicProductDatabaseContext))]
-    partial class DaedalicProductDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200127151721_Releases")]
+    partial class Releases
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -178,9 +180,6 @@ namespace Daedalic.ProductDatabase.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("PlatformId")
                         .HasColumnType("int");
 
@@ -197,14 +196,13 @@ namespace Daedalic.ProductDatabase.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Summary")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Version")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GameId");
 
                     b.HasIndex("PlatformId");
 
@@ -283,12 +281,6 @@ namespace Daedalic.ProductDatabase.Migrations
 
             modelBuilder.Entity("Daedalic.ProductDatabase.Models.Release", b =>
                 {
-                    b.HasOne("Daedalic.ProductDatabase.Models.Game", "Game")
-                        .WithMany("Releases")
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Daedalic.ProductDatabase.Models.Platform", "Platform")
                         .WithMany()
                         .HasForeignKey("PlatformId");

@@ -29,5 +29,9 @@ namespace Daedalic.ProductDatabase.Data
         public DbSet<Daedalic.ProductDatabase.Models.Language> Language { get; set; }
 
         public DbSet<Daedalic.ProductDatabase.Models.LanguageType> LanguageType { get; set; }
+
+        public DbSet<Daedalic.ProductDatabase.Models.ReleaseStatus> ReleaseStatus { get; set; }
+
+        public DbSet<Daedalic.ProductDatabase.Models.Release> Release { get; set; }
     }
 }

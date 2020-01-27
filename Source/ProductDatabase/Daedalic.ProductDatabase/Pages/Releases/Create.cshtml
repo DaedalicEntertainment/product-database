@@ -1,0 +1,110 @@
+﻿@page
+@model Daedalic.ProductDatabase.Releases.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Release</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Release.GameId" class="control-label"></label>
+                <select asp-for="Release.GameId" class ="form-control" asp-items="ViewBag.GameId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Release.Summary" class="control-label"></label>
+                <input asp-for="Release.Summary" class="form-control" />
+                <span asp-validation-for="Release.Summary" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Release.ReleaseDate" class="control-label"></label>
+                <input asp-for="Release.ReleaseDate" class="form-control" />
+                <span asp-validation-for="Release.ReleaseDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Release.Version" class="control-label"></label>
+                <input asp-for="Release.Version" class="form-control" />
+                <span asp-validation-for="Release.Version" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Release.ReleaseStatusId" class="control-label"></label>
+                <select asp-for="Release.ReleaseStatusId" class="form-control" asp-items="ViewBag.ReleaseStatusId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Release.PublisherId" class="control-label"></label>
+                <select asp-for="Release.PublisherId" class="form-control" asp-items="ViewBag.PublisherId">
+                    <option></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Release.PlatformId" class="control-label"></label>
+                <select asp-for="Release.PlatformId" class="form-control" asp-items="ViewBag.PlatformId">
+                    <option></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Release.StoreId" class="control-label"></label>
+                <select asp-for="Release.StoreId" class="form-control" asp-items="ViewBag.StoreId">
+                    <option></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <div class="table">
+                    <table>
+                        <tr>
+                            <th></th>
+
+                            @{
+                                foreach (var languageType in Model.LanguageType)
+                                {
+                                    @:<th>
+                                        @languageType.Name
+                                    @:</th>
+                                }
+                            }
+                        </tr>
+
+                        @{
+                            foreach (var language in Model.Language)
+                            {
+                                @:<tr>
+                                    @:<th>
+                                        @language.Name
+                                    @:</th>
+
+
+                                    foreach (var languageType in Model.LanguageType)
+                                    {
+                                        @:<td>
+                                              <input type="checkbox"
+                                                     name="selectedLanguages"
+                                                     value="@language.Id @Html.Raw("/") @languageType.Id"
+                                                     @(Html.Raw(Model.Release.Languages.Any(l => l.LanguageId == language.Id && l.LanguageTypeId == languageType.Id) ? "checked=\"checked\"" : "")) />
+                                        @:</td>
+                                    }
+                                @:</tr>
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
