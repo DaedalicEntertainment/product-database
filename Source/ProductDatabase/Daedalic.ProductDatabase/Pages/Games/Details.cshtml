@@ -1,5 +1,5 @@
 ﻿@page "{id:int}"
-@model Daedalic.ProductDatabase.DetailsModel
+@model Daedalic.ProductDatabase.Games.DetailsModel
 
 @{
     ViewData["Title"] = "Details";
@@ -22,6 +22,12 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Game.AssetIndexProjectId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Game.Developer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Game.Developer.Name)
         </dd>
     </dl>
 </div>

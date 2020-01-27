@@ -1,5 +1,5 @@
 ﻿@page "{id:int}"
-@model Daedalic.ProductDatabase.EditModel
+@model Daedalic.ProductDatabase.Games.EditModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -14,6 +14,13 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Game.Id" />
+            <div class="form-group">
+                <label asp-for="Game.DeveloperId" class="control-label"></label>
+                <select asp-for="Game.DeveloperId" class="form-control" asp-items="ViewBag.DeveloperId">
+                    <option></option>
+                </select>
+                <span asp-validation-for="Game.DeveloperId" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Game.Name" class="control-label"></label>
                 <input asp-for="Game.Name" class="form-control" />

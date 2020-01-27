@@ -10,7 +10,7 @@ Company product database built as ASP.NET Core Web Application.
 
 ## Adding new data models
 
-1. Add model class with validation.
+1. Add model class with references (as nullable id with empty select item, if necessary) and validation.
 1. Scaffold pages.
 1. Replace query parameters by path variables.
 1. Add search.

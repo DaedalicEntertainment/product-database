@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
 
-namespace Daedalic.ProductDatabase.Games
+namespace Daedalic.ProductDatabase.Developers
 {
     public class CreateModel : PageModel
     {
@@ -21,12 +21,11 @@ namespace Daedalic.ProductDatabase.Games
 
         public IActionResult OnGet()
         {
-        ViewData["DeveloperId"] = new SelectList(_context.Developer, "Id", "Name");
             return Page();
         }
 
         [BindProperty]
-        public Game Game { get; set; }
+        public Developer Developer { get; set; }
 
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
@@ -37,7 +36,7 @@ namespace Daedalic.ProductDatabase.Games
                 return Page();
             }
 
-            _context.Game.Add(Game);
+            _context.Developer.Add(Developer);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

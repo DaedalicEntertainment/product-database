@@ -1,5 +1,5 @@
 ﻿@page
-@model Daedalic.ProductDatabase.IndexModel
+@model Daedalic.ProductDatabase.Games.IndexModel
 
 @{
     ViewData["Title"] = "Index";
@@ -24,6 +24,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Game[0].Name)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Game[0].Developer)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -32,6 +35,9 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Developer.Name)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |

@@ -15,5 +15,7 @@ namespace Daedalic.ProductDatabase.Data
         }
 
         public DbSet<Daedalic.ProductDatabase.Models.Game> Game { get; set; }
+
+        public DbSet<Daedalic.ProductDatabase.Models.Developer> Developer { get; set; }
     }
 }

@@ -7,40 +7,32 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
-using Microsoft.Extensions.Configuration;
 
-namespace Daedalic.ProductDatabase.Games
+namespace Daedalic.ProductDatabase.Developers
 {
     public class IndexModel : PageModel
     {
         private readonly Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext _context;
-        private readonly IConfiguration _config;
 
-        public IndexModel(Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext context, IConfiguration config)
+        public IndexModel(Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext context)
         {
             _context = context;
-            _config = config;
         }
 
-        public IList<Game> Game { get;set; }
-
-        public string AssetIndexUrl { get; set; }
+        public IList<Developer> Developer { get;set; }
 
         [BindProperty(SupportsGet = true)]
         public string Filter { get; set; }
 
         public async Task OnGetAsync()
         {
-            var games = from g in _context.Game.Include(g => g.Developer) select g;
-
+            var developers = from d in _context.Developer select d;
             if (!string.IsNullOrEmpty(Filter))
             {
-                games = games.Where(s => s.Name.Contains(Filter));
+                developers = developers.Where(s => s.Name.Contains(Filter));
             }
 
-            Game = await games.ToListAsync();
-
-            AssetIndexUrl = _config.GetValue<string>("AssetIndexUrl");
+            Developer = await developers.ToListAsync();
         }
     }
 }
