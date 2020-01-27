@@ -66,6 +66,15 @@ namespace Daedalic.ProductDatabase.Models
                     );
                 }
 
+                if (!context.LanguageType.Any())
+                {
+                    context.LanguageType.AddRange(
+                        new LanguageType {  Name = "Interface" },
+                        new LanguageType {  Name = "Full Audio" },
+                        new LanguageType {  Name = "Subtitles" }
+                    );
+                }
+
                 context.SaveChanges();
             }
         }
