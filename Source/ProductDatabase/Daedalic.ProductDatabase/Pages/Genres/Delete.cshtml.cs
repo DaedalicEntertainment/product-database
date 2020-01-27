@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
 
-namespace Daedalic.ProductDatabase.Games
+namespace Daedalic.ProductDatabase.Genres
 {
     public class DeleteModel : PageModel
     {
@@ -20,7 +20,7 @@ namespace Daedalic.ProductDatabase.Games
         }
 
         [BindProperty]
-        public Game Game { get; set; }
+        public Genre Genre { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,11 +29,9 @@ namespace Daedalic.ProductDatabase.Games
                 return NotFound();
             }
 
-            Game = await _context.Game
-                .Include(g => g.Developer)
-                .Include(g => g.Genre).FirstOrDefaultAsync(m => m.Id == id);
+            Genre = await _context.Genre.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Game == null)
+            if (Genre == null)
             {
                 return NotFound();
             }
@@ -47,11 +45,11 @@ namespace Daedalic.ProductDatabase.Games
                 return NotFound();
             }
 
-            Game = await _context.Game.FindAsync(id);
+            Genre = await _context.Genre.FindAsync(id);
 
-            if (Game != null)
+            if (Genre != null)
             {
-                _context.Game.Remove(Game);
+                _context.Genre.Remove(Genre);
                 await _context.SaveChangesAsync();
             }
 

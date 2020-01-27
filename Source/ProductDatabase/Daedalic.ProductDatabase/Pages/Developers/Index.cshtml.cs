@@ -29,7 +29,7 @@ namespace Daedalic.ProductDatabase.Developers
             var developers = from d in _context.Developer select d;
             if (!string.IsNullOrEmpty(Filter))
             {
-                developers = developers.Where(s => s.Name.Contains(Filter));
+                developers = developers.Where(d => d.Name.Contains(Filter));
             }
 
             Developer = await developers.ToListAsync();

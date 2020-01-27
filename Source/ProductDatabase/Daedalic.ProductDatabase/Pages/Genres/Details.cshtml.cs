@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
 
-namespace Daedalic.ProductDatabase.Games
+namespace Daedalic.ProductDatabase.Genres
 {
     public class DetailsModel : PageModel
     {
@@ -19,7 +19,7 @@ namespace Daedalic.ProductDatabase.Games
             _context = context;
         }
 
-        public Game Game { get; set; }
+        public Genre Genre { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,11 +28,9 @@ namespace Daedalic.ProductDatabase.Games
                 return NotFound();
             }
 
-            Game = await _context.Game
-                .Include(g => g.Developer)
-                .Include(g => g.Genre).FirstOrDefaultAsync(m => m.Id == id);
+            Genre = await _context.Genre.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Game == null)
+            if (Genre == null)
             {
                 return NotFound();
             }

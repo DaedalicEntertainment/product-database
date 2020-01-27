@@ -1,11 +1,11 @@
 ﻿@page
-@model Daedalic.ProductDatabase.Developers.IndexModel
+@model Daedalic.ProductDatabase.Genres.IndexModel
 
 @{
-    ViewData["Title"] = "Developers";
+    ViewData["Title"] = "Genres";
 }
 
-<h1>Developers</h1>
+<h1>Genres</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
@@ -22,13 +22,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Developer[0].Name)
+                @Html.DisplayNameFor(model => model.Genre[0].Name)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Developer) {
+@foreach (var item in Model.Genre) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)

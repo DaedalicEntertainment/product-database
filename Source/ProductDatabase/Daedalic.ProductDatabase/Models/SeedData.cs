@@ -15,18 +15,25 @@ namespace Daedalic.ProductDatabase.Models
             using (var context = new DaedalicProductDatabaseContext
                 (serviceProvider.GetRequiredService<DbContextOptions<DaedalicProductDatabaseContext>>()))
             {
-                if (context.Game.Any())
+                if (!context.Genre.Any())
                 {
-                    // DB already seeded.
-                    return;   
+                    context.Genre.AddRange(
+                        new Genre
+                        {
+                            Name = "Adventure"
+                        }
+                    );
                 }
 
-                context.Game.AddRange(
-                    new Game
-                    {
-                        Name = "Anna's Quest"
-                    }
-                );
+                if (!context.Developer.Any())
+                {
+                    context.Developer.AddRange(
+                        new Developer
+                        {
+                            Name = "Daedalic Entertainment"
+                        }
+                    );
+                }
 
                 context.SaveChanges();
             }

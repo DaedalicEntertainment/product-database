@@ -13,6 +13,9 @@ namespace Daedalic.ProductDatabase.Models
         [Display(Name = "Developer")]
         public int? DeveloperId { get; set; }
 
+        [Display(Name = "Genre")]
+        public int? GenreId { get; set; }
+
         [Required]
         public string Name { get; set; }
 
@@ -20,5 +23,7 @@ namespace Daedalic.ProductDatabase.Models
         public string AssetIndexProjectId { get; set; }
 
         public Developer Developer { get; set; }
+
+        public Genre Genre { get; set; }
     }
 }

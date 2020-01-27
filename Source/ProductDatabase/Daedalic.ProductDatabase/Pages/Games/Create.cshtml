@@ -15,7 +15,15 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Game.DeveloperId" class="control-label"></label>
-                <select asp-for="Game.DeveloperId" class ="form-control" asp-items="ViewBag.DeveloperId"></select>
+                <select asp-for="Game.DeveloperId" class="form-control" asp-items="ViewBag.DeveloperId">
+                    <option></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game.GenreId" class="control-label"></label>
+                <select asp-for="Game.GenreId" class="form-control" asp-items="ViewBag.GenreId">
+                    <option></option>
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="Game.Name" class="control-label"></label>

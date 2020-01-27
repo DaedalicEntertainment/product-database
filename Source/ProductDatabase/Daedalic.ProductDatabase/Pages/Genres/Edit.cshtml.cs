@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
 
-namespace Daedalic.ProductDatabase.Games
+namespace Daedalic.ProductDatabase.Genres
 {
     public class EditModel : PageModel
     {
@@ -21,7 +21,7 @@ namespace Daedalic.ProductDatabase.Games
         }
 
         [BindProperty]
-        public Game Game { get; set; }
+        public Genre Genre { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,16 +30,12 @@ namespace Daedalic.ProductDatabase.Games
                 return NotFound();
             }
 
-            Game = await _context.Game
-                .Include(g => g.Developer)
-                .Include(g => g.Genre).FirstOrDefaultAsync(m => m.Id == id);
+            Genre = await _context.Genre.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Game == null)
+            if (Genre == null)
             {
                 return NotFound();
             }
-           ViewData["DeveloperId"] = new SelectList(_context.Developer, "Id", "Name");
-           ViewData["GenreId"] = new SelectList(_context.Genre, "Id", "Name");
             return Page();
         }
 
@@ -52,7 +48,7 @@ namespace Daedalic.ProductDatabase.Games
                 return Page();
             }
 
-            _context.Attach(Game).State = EntityState.Modified;
+            _context.Attach(Genre).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +56,7 @@ namespace Daedalic.ProductDatabase.Games
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!GameExists(Game.Id))
+                if (!GenreExists(Genre.Id))
                 {
                     return NotFound();
                 }
@@ -73,9 +69,9 @@ namespace Daedalic.ProductDatabase.Games
             return RedirectToPage("./Index");
         }
 
-        private bool GameExists(int id)
+        private bool GenreExists(int id)
         {
-            return _context.Game.Any(e => e.Id == id);
+            return _context.Genre.Any(e => e.Id == id);
         }
     }
 }
