@@ -40,7 +40,7 @@
 
                 @if (!string.IsNullOrEmpty(item.AssetIndexProjectId))
                 {
-                    @Html.Raw("|") <a href="http://d00445:4040/?project=@item.AssetIndexProjectId" target="_blank">Asset Index</a>
+                    @Html.Raw("|") <a href="@string.Format(Model.AssetIndexUrl, item.AssetIndexProjectId)" target="_blank">Asset Index</a>
                 }
                 </td>
         </tr>
