@@ -1,0 +1,30 @@
+﻿@page
+@model Daedalic.ProductDatabase.Admin.IndexModel
+@{
+    ViewData["Title"] = "Admin";
+}
+
+<h1>Admin</h1>
+
+<div>
+    <ul>
+        <li>
+            <a asp-area="" asp-page="/Genres/Index">Genres</a>
+        </li>
+        <li>
+            <a asp-area="" asp-page="/Platforms/Index">Platforms</a>
+        </li>
+        <li>
+            <a asp-area="" asp-page="/Stores/Index">Stores</a>
+        </li>
+        <li>
+            <a asp-area="" asp-page="/Languages/Index">Languages</a>
+        </li>
+        <li>
+            <a asp-area="" asp-page="/LanguageTypes/Index">Language Types</a>
+        </li>
+        <li>
+            <a asp-area="" asp-page="/ReleaseStatuses/Index">Release Statuses</a>
+        </li>
+    </ul>
+</div>
