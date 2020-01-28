@@ -22,13 +22,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Game[0].Name)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["name"]">
+                    @Html.DisplayNameFor(model => model.Game[0].Name)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Game[0].Developer)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["developer"]">
+                    @Html.DisplayNameFor(model => model.Game[0].Developer)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Game[0].Genre)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["genre"]">
+                    @Html.DisplayNameFor(model => model.Game[0].Genre)
+                </a>
             </th>
             <th></th>
         </tr>

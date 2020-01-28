@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
 using Microsoft.Extensions.Configuration;
+using Daedalic.ProductDatabase.Helpers;
 
 namespace Daedalic.ProductDatabase.Games
 {
@@ -29,7 +30,9 @@ namespace Daedalic.ProductDatabase.Games
         [BindProperty(SupportsGet = true)]
         public string Filter { get; set; }
 
-        public async Task OnGetAsync()
+        public Dictionary<string, string> SortOrders { get; set; }
+
+        public async Task OnGetAsync(string sortOrder)
         {
             var games = from g in _context.Game
                         .Include(g => g.Developer)
@@ -40,7 +43,32 @@ namespace Daedalic.ProductDatabase.Games
                 games = games.Where(g => g.Name.Contains(Filter));
             }
 
-            Game = await games.OrderBy(g => g.Name).ToListAsync();
+            // Sort results.
+            SortOrders = PageHelper.GetNewSortOrders(sortOrder, "name", "developer", "genre");
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    games = games.OrderByDescending(g => g.Name);
+                    break;
+                case "developer":
+                    games = games.OrderBy(g => g.Developer.Name);
+                    break;
+                case "developer_desc":
+                    games = games.OrderByDescending(g => g.Developer.Name);
+                    break;
+                case "genre":
+                    games = games.OrderBy(g => g.Genre.Name);
+                    break;
+                case "genre_desc":
+                    games = games.OrderByDescending(g => g.Genre.Name);
+                    break;
+                default:
+                    games = games.OrderBy(g => g.Name);
+                    break;
+            }
+
+            Game = await games.AsNoTracking().ToListAsync();
 
             AssetIndexUrl = _config.GetValue<string>("AssetIndexUrl");
         }

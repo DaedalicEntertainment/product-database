@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
+using Daedalic.ProductDatabase.Helpers;
 
 namespace Daedalic.ProductDatabase.Developers
 {
@@ -24,7 +25,9 @@ namespace Daedalic.ProductDatabase.Developers
         [BindProperty(SupportsGet = true)]
         public string Filter { get; set; }
 
-        public async Task OnGetAsync()
+        public Dictionary<string, string> SortOrders { get; set; }
+
+        public async Task OnGetAsync(string sortOrder)
         {
             var developers = from d in _context.Developer select d;
             if (!string.IsNullOrEmpty(Filter))
@@ -32,7 +35,20 @@ namespace Daedalic.ProductDatabase.Developers
                 developers = developers.Where(d => d.Name.Contains(Filter));
             }
 
-            Developer = await developers.OrderBy(d => d.Name).ToListAsync();
+            // Sort results.
+            SortOrders = PageHelper.GetNewSortOrders(sortOrder, "name");
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    developers = developers.OrderByDescending(d => d.Name);
+                    break;
+                default:
+                    developers = developers.OrderBy(d => d.Name);
+                    break;
+            }
+
+            Developer = await developers.AsNoTracking().ToListAsync();
         }
     }
 }

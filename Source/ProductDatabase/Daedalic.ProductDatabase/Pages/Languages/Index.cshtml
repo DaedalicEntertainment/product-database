@@ -22,7 +22,9 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Language[0].Name)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["name"]">
+                    @Html.DisplayNameFor(model => model.Language[0].Name)
+                </a>
             </th>
             <th></th>
         </tr>

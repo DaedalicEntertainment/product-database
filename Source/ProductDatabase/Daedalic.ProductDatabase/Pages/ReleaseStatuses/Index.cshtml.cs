@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
+using Daedalic.ProductDatabase.Helpers;
 
 namespace Daedalic.ProductDatabase.ReleaseStatuses
 {
@@ -24,7 +25,9 @@ namespace Daedalic.ProductDatabase.ReleaseStatuses
         [BindProperty(SupportsGet = true)]
         public string Filter { get; set; }
 
-        public async Task OnGetAsync()
+        public Dictionary<string, string> SortOrders { get; set; }
+
+        public async Task OnGetAsync(string sortOrder)
         {
             var statuses = from s in _context.ReleaseStatus select s;
 
@@ -33,7 +36,20 @@ namespace Daedalic.ProductDatabase.ReleaseStatuses
                 statuses = statuses.Where(s => s.Name.Contains(Filter));
             }
 
-            ReleaseStatus = await statuses.OrderBy(s => s.Name).ToListAsync();
+            // Sort results.
+            SortOrders = PageHelper.GetNewSortOrders(sortOrder, "name");
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    statuses = statuses.OrderByDescending(s => s.Name);
+                    break;
+                default:
+                    statuses = statuses.OrderBy(s => s.Name);
+                    break;
+            }
+
+            ReleaseStatus = await statuses.AsNoTracking().ToListAsync();
         }
     }
 }

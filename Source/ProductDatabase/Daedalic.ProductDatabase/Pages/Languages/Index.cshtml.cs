@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
+using Daedalic.ProductDatabase.Helpers;
 
 namespace Daedalic.ProductDatabase.Languages
 {
@@ -24,7 +25,9 @@ namespace Daedalic.ProductDatabase.Languages
         [BindProperty(SupportsGet = true)]
         public string Filter { get; set; }
 
-        public async Task OnGetAsync()
+        public Dictionary<string, string> SortOrders { get; set; }
+
+        public async Task OnGetAsync(string sortOrder)
         {
             var languages = from l in _context.Language select l;
 
@@ -33,7 +36,20 @@ namespace Daedalic.ProductDatabase.Languages
                 languages = languages.Where(l => l.Name.Contains(Filter));
             }
 
-            Language = await languages.OrderBy(l => l.Name).ToListAsync();
+            // Sort results.
+            SortOrders = PageHelper.GetNewSortOrders(sortOrder, "name");
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    languages = languages.OrderByDescending(l => l.Name);
+                    break;
+                default:
+                    languages = languages.OrderBy(l => l.Name);
+                    break;
+            }
+
+            Language = await languages.AsNoTracking().ToListAsync();
         }
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
+using Daedalic.ProductDatabase.Helpers;
 
 namespace Daedalic.ProductDatabase.Publishers
 {
@@ -24,7 +25,9 @@ namespace Daedalic.ProductDatabase.Publishers
         [BindProperty(SupportsGet = true)]
         public string Filter { get; set; }
 
-        public async Task OnGetAsync()
+        public Dictionary<string, string> SortOrders { get; set; }
+
+        public async Task OnGetAsync(string sortOrder)
         {
             var publishers = from p in _context.Publisher select p;
 
@@ -33,7 +36,20 @@ namespace Daedalic.ProductDatabase.Publishers
                 publishers = publishers.Where(p => p.Name.Contains(Filter));
             }
 
-            Publisher = await publishers.OrderBy(p => p.Name).ToListAsync();
+            // Sort results.
+            SortOrders = PageHelper.GetNewSortOrders(sortOrder, "name");
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    publishers = publishers.OrderByDescending(p => p.Name);
+                    break;
+                default:
+                    publishers = publishers.OrderBy(p => p.Name);
+                    break;
+            }
+
+            Publisher = await publishers.AsNoTracking().ToListAsync();
         }
     }
 }

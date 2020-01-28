@@ -22,25 +22,39 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Release[0].Game)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["game"]">
+                    @Html.DisplayNameFor(model => model.Release[0].Game)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Release[0].Platform)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["platform"]">
+                    @Html.DisplayNameFor(model => model.Release[0].Platform)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Release[0].Store)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["store"]">
+                    @Html.DisplayNameFor(model => model.Release[0].Store)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Release[0].GmcDate)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["gmcdate"]">
+                    @Html.DisplayNameFor(model => model.Release[0].GmcDate)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Release[0].ReleaseDate)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["releasedate"]">
+                    @Html.DisplayNameFor(model => model.Release[0].ReleaseDate)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Release[0].Publisher)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["publisher"]">
+                    @Html.DisplayNameFor(model => model.Release[0].Publisher)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Release[0].Status)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["status"]">
+                    @Html.DisplayNameFor(model => model.Release[0].Status)
+                </a>
             </th>
             <th></th>
         </tr>

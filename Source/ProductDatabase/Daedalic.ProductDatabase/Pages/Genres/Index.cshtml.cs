@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
+using Daedalic.ProductDatabase.Helpers;
 
 namespace Daedalic.ProductDatabase.Genres
 {
@@ -24,7 +25,9 @@ namespace Daedalic.ProductDatabase.Genres
         [BindProperty(SupportsGet = true)]
         public string Filter { get; set; }
 
-        public async Task OnGetAsync()
+        public Dictionary<string, string> SortOrders { get; set; }
+
+        public async Task OnGetAsync(string sortOrder)
         {
             var genres = from g in _context.Genre select g;
 
@@ -33,7 +36,20 @@ namespace Daedalic.ProductDatabase.Genres
                 genres = genres.Where(g => g.Name.Contains(Filter));
             }
 
-            Genre = await genres.OrderBy(g => g.Name).ToListAsync();
+            // Sort results.
+            SortOrders = PageHelper.GetNewSortOrders(sortOrder, "name");
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    genres = genres.OrderByDescending(g => g.Name);
+                    break;
+                default:
+                    genres = genres.OrderBy(g => g.Name);
+                    break;
+            }
+
+            Genre = await genres.AsNoTracking().ToListAsync();
         }
     }
 }
