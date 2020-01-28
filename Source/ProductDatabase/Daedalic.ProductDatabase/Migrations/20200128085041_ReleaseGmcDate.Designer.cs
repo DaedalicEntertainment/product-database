@@ -4,14 +4,16 @@ using Daedalic.ProductDatabase.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Daedalic.ProductDatabase.Migrations
 {
     [DbContext(typeof(DaedalicProductDatabaseContext))]
-    partial class DaedalicProductDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200128085041_ReleaseGmcDate")]
+    partial class ReleaseGmcDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -181,7 +183,7 @@ namespace Daedalic.ProductDatabase.Migrations
                     b.Property<int>("GameId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("GmcDate")
+                    b.Property<DateTime>("GmcDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("PlatformId")
@@ -190,7 +192,7 @@ namespace Daedalic.ProductDatabase.Migrations
                     b.Property<int?>("PublisherId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("ReleaseDate")
+                    b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("ReleaseStatusId")

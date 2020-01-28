@@ -15,12 +15,17 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Release.GameId" class="control-label"></label>
-                <select asp-for="Release.GameId" class ="form-control" asp-items="ViewBag.GameId"></select>
+                <select asp-for="Release.GameId" class="form-control" asp-items="ViewBag.GameId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Release.Summary" class="control-label"></label>
                 <input asp-for="Release.Summary" class="form-control" />
                 <span asp-validation-for="Release.Summary" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Release.GmcDate" class="control-label"></label>
+                <input asp-for="Release.GmcDate" class="form-control" />
+                <span asp-validation-for="Release.GmcDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Release.ReleaseDate" class="control-label"></label>
@@ -79,13 +84,15 @@
                                     @:</th>
 
 
+
+
                                     foreach (var languageType in Model.LanguageType)
                                     {
                                         @:<td>
-                                              <input type="checkbox"
-                                                     name="selectedLanguages"
-                                                     value="@language.Id @Html.Raw("/") @languageType.Id"
-                                                     @(Html.Raw(Model.Release.Languages.Any(l => l.LanguageId == language.Id && l.LanguageTypeId == languageType.Id) ? "checked=\"checked\"" : "")) />
+                                            <input type="checkbox"
+                                                   name="selectedLanguages"
+                                                   value="@language.Id @Html.Raw("/") @languageType.Id"
+                                                   @(Html.Raw(Model.Release.Languages.Any(l => l.LanguageId == language.Id && l.LanguageTypeId == languageType.Id) ? "checked=\"checked\"" : "")) />
                                         @:</td>
                                     }
                                 @:</tr>

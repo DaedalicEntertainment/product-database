@@ -24,6 +24,7 @@ namespace Daedalic.ProductDatabase.Releases
             Release = new Release();
             Release.Languages = new List<ImplementedLanguage>();
             Release.ReleaseDate = DateTime.UtcNow;
+            Release.GmcDate = DateTime.UtcNow;
 
             ViewData["GameId"] = new SelectList(_context.Game, "Id", "Name");
             ViewData["PlatformId"] = new SelectList(_context.Platform, "Id", "Name");
@@ -57,8 +58,8 @@ namespace Daedalic.ProductDatabase.Releases
             }
 
             if (await TryUpdateModelAsync<Release>(newRelease, "Release",
-                r => r.GameId, r => r.Summary, r => r.ReleaseDate, r => r.Version, r => r.ReleaseStatusId,
-                r => r.PublisherId, r => r.PlatformId, r => r.StoreId))
+                r => r.GameId, r => r.Summary, r => r.GmcDate, r => r.ReleaseDate, r => r.Version,
+                r => r.ReleaseStatusId, r => r.PublisherId, r => r.PlatformId, r => r.StoreId))
             {
                 _context.Release.Add(newRelease);
                 await _context.SaveChangesAsync();

@@ -72,8 +72,8 @@ namespace Daedalic.ProductDatabase.Releases
             if (await TryUpdateModelAsync<Release>(
                 releaseToUpdate,
                 "Release",
-                r => r.GameId, r => r.Summary, r => r.ReleaseDate, r => r.Version, r => r.ReleaseStatusId,
-                r => r.PublisherId, r => r.PlatformId, r => r.StoreId))
+                r => r.GameId, r => r.Summary, r => r.GmcDate, r => r.ReleaseDate, r => r.Version,
+                r => r.ReleaseStatusId, r => r.PublisherId, r => r.PlatformId, r => r.StoreId))
             {
                 UpdateImplementedLanguages(_context, selectedLanguages, releaseToUpdate);
 

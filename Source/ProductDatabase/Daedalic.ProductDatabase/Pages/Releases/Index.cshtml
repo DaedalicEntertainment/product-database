@@ -25,25 +25,22 @@
                 @Html.DisplayNameFor(model => model.Release[0].Game)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Release[0].Summary)
+                @Html.DisplayNameFor(model => model.Release[0].Platform)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Release[0].Store)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Release[0].GmcDate)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Release[0].ReleaseDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Release[0].Version)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Release[0].Status)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Release[0].Publisher)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Release[0].Platform)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Release[0].Store)
+                @Html.DisplayNameFor(model => model.Release[0].Status)
             </th>
             <th></th>
         </tr>
@@ -55,25 +52,22 @@
                 @Html.DisplayFor(modelItem => item.Game.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Summary)
+                @Html.DisplayFor(modelItem => item.Platform.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Store.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GmcDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ReleaseDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Version)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status.Name)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Publisher.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Platform.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Store.Name)
+                @Html.DisplayFor(modelItem => item.Status.Name)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |

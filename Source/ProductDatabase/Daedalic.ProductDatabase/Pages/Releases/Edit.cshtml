@@ -25,6 +25,11 @@
                 <span asp-validation-for="Release.Summary" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Release.GmcDate" class="control-label"></label>
+                <input asp-for="Release.GmcDate" class="form-control" />
+                <span asp-validation-for="Release.GmcDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Release.ReleaseDate" class="control-label"></label>
                 <input asp-for="Release.ReleaseDate" class="form-control" />
                 <span asp-validation-for="Release.ReleaseDate" class="text-danger"></span>
@@ -83,6 +88,7 @@
                                     @:<th>
                                         @language.Name
                                     @:</th>
+
 
                                     foreach (var languageType in Model.LanguageType)
                                     {

@@ -18,9 +18,13 @@ namespace Daedalic.ProductDatabase.Models
 
         public string Summary { get; set; }
 
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Date)]
+        [Display(Name = "GMC Date")]
+        public DateTime? GmcDate { get; set; }
+
+        [DataType(DataType.Date)]
         [Display(Name = "Release Date")]
-        public DateTime ReleaseDate { get; set; }
+        public DateTime? ReleaseDate { get; set; }
 
         public string Version { get; set; }
 
