@@ -40,7 +40,7 @@ namespace Daedalic.ProductDatabase.Games
                 games = games.Where(g => g.Name.Contains(Filter));
             }
 
-            Game = await games.ToListAsync();
+            Game = await games.OrderBy(g => g.Name).ToListAsync();
 
             AssetIndexUrl = _config.GetValue<string>("AssetIndexUrl");
         }

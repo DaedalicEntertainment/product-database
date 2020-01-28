@@ -33,7 +33,7 @@ namespace Daedalic.ProductDatabase.Genres
                 genres = genres.Where(g => g.Name.Contains(Filter));
             }
 
-            Genre = await genres.ToListAsync();
+            Genre = await genres.OrderBy(g => g.Name).ToListAsync();
         }
     }
 }

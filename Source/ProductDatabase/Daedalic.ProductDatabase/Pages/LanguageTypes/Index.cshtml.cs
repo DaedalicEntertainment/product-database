@@ -33,7 +33,7 @@ namespace Daedalic.ProductDatabase.LanguageTypes
                 languageTypes = languageTypes.Where(t => t.Name.Contains(Filter));
             }
 
-            LanguageType = await languageTypes.ToListAsync();
+            LanguageType = await languageTypes.OrderBy(t => t.Name).ToListAsync();
         }
     }
 }

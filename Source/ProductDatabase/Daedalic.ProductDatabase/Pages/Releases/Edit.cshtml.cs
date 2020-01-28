@@ -41,11 +41,11 @@ namespace Daedalic.ProductDatabase.Releases
                 return NotFound();
             }
 
-            ViewData["GameId"] = new SelectList(_context.Game, "Id", "Name");
-            ViewData["PlatformId"] = new SelectList(_context.Platform, "Id", "Name");
-            ViewData["PublisherId"] = new SelectList(_context.Publisher, "Id", "Name");
-            ViewData["ReleaseStatusId"] = new SelectList(_context.ReleaseStatus, "Id", "Name");
-            ViewData["StoreId"] = new SelectList(_context.Store, "Id", "Name");
+            ViewData["GameId"] = new SelectList(_context.Game.OrderBy(g => g.Name), "Id", "Name");
+            ViewData["PlatformId"] = new SelectList(_context.Platform.OrderBy(p => p.Name), "Id", "Name");
+            ViewData["PublisherId"] = new SelectList(_context.Publisher.OrderBy(p => p.Name), "Id", "Name");
+            ViewData["ReleaseStatusId"] = new SelectList(_context.ReleaseStatus.OrderBy(s => s.Name), "Id", "Name");
+            ViewData["StoreId"] = new SelectList(_context.Store.OrderBy(s => s.Name), "Id", "Name");
 
             Language = _context.Language.ToList();
             LanguageType = _context.LanguageType.ToList();

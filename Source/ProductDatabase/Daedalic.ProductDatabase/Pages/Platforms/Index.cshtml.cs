@@ -33,7 +33,7 @@ namespace Daedalic.ProductDatabase.Platforms
                 platforms = platforms.Where(p => p.Name.Contains(Filter));
             }
 
-            Platform = await platforms.ToListAsync();
+            Platform = await platforms.OrderBy(p => p.Name).ToListAsync();
         }
     }
 }

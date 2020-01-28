@@ -33,7 +33,7 @@ namespace Daedalic.ProductDatabase.ReleaseStatuses
                 statuses = statuses.Where(s => s.Name.Contains(Filter));
             }
 
-            ReleaseStatus = await statuses.ToListAsync();
+            ReleaseStatus = await statuses.OrderBy(s => s.Name).ToListAsync();
         }
     }
 }

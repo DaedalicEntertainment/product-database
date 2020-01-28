@@ -38,8 +38,10 @@ namespace Daedalic.ProductDatabase.Games
             {
                 return NotFound();
             }
-           ViewData["DeveloperId"] = new SelectList(_context.Developer, "Id", "Name");
-           ViewData["GenreId"] = new SelectList(_context.Genre, "Id", "Name");
+
+            ViewData["DeveloperId"] = new SelectList(_context.Developer.OrderBy(d => d.Name), "Id", "Name");
+            ViewData["GenreId"] = new SelectList(_context.Genre.OrderBy(g => g.Name), "Id", "Name");
+
             return Page();
         }
 

@@ -33,7 +33,7 @@ namespace Daedalic.ProductDatabase.Publishers
                 publishers = publishers.Where(p => p.Name.Contains(Filter));
             }
 
-            Publisher = await publishers.ToListAsync();
+            Publisher = await publishers.OrderBy(p => p.Name).ToListAsync();
         }
     }
 }

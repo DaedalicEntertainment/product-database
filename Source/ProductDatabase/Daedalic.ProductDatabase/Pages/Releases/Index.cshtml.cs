@@ -38,7 +38,11 @@ namespace Daedalic.ProductDatabase.Releases
                 releases = releases.Where(r => r.Summary.Contains(Filter));
             }
 
-            Release = await releases.ToListAsync();
+            Release = await releases
+                .OrderBy(r => r.Game.Name)
+                .ThenBy(r => r.Platform.Name)
+                .ThenBy(r => r.Store.Name)
+                .ToListAsync();
         }
     }
 }

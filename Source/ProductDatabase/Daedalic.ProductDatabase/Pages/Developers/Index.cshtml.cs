@@ -32,7 +32,7 @@ namespace Daedalic.ProductDatabase.Developers
                 developers = developers.Where(d => d.Name.Contains(Filter));
             }
 
-            Developer = await developers.ToListAsync();
+            Developer = await developers.OrderBy(d => d.Name).ToListAsync();
         }
     }
 }

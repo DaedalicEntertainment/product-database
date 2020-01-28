@@ -33,7 +33,7 @@ namespace Daedalic.ProductDatabase.Stores
                 stores = stores.Where(s => s.Name.Contains(Filter));
             }
 
-            Store = await stores.ToListAsync();
+            Store = await stores.OrderBy(s => s.Name).ToListAsync();
         }
     }
 }
