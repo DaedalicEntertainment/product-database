@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
+using Daedalic.ProductDatabase.Repositories;
 
 namespace Daedalic.ProductDatabase
 {
@@ -29,6 +30,8 @@ namespace Daedalic.ProductDatabase
 
             services.AddDbContext<DaedalicProductDatabaseContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("DaedalicProductDatabaseContext")));
+
+            services.AddScoped<ConfigurationRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

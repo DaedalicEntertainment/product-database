@@ -33,5 +33,7 @@ namespace Daedalic.ProductDatabase.Data
         public DbSet<Daedalic.ProductDatabase.Models.ReleaseStatus> ReleaseStatus { get; set; }
 
         public DbSet<Daedalic.ProductDatabase.Models.Release> Release { get; set; }
+
+        public DbSet<Daedalic.ProductDatabase.Models.Configuration> Configuration { get; set; }
     }
 }

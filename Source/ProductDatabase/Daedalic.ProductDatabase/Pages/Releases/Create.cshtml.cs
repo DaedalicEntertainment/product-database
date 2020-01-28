@@ -7,24 +7,32 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
+using Daedalic.ProductDatabase.Repositories;
 
 namespace Daedalic.ProductDatabase.Releases
 {
     public class CreateModel : ReleasePageModel
     {
         private readonly Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext _context;
+        private readonly ConfigurationRepository _configurationRepository;
 
-        public CreateModel(Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext context)
+        public CreateModel(Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext context, ConfigurationRepository configurationRepository)
         {
             _context = context;
+            _configurationRepository = configurationRepository;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
-            Release = new Release();
-            Release.Languages = new List<ImplementedLanguage>();
-            Release.ReleaseDate = DateTime.UtcNow;
-            Release.GmcDate = DateTime.UtcNow;
+            ConfigurationData configuration = await _configurationRepository.Load();
+
+            Release = new Release
+            {
+                Languages = new List<ImplementedLanguage>(),
+                ReleaseDate = DateTime.UtcNow,
+                GmcDate = DateTime.UtcNow,
+                ReleaseStatusId = configuration.DefaultReleaseStatus
+            };
 
             ViewData["GameId"] = new SelectList(_context.Game.OrderBy(g => g.Name), "Id", "Name");
             ViewData["PlatformId"] = new SelectList(_context.Platform.OrderBy(p => p.Name), "Id", "Name");
