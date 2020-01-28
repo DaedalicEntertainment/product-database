@@ -11,7 +11,7 @@ using Daedalic.ProductDatabase.Models;
 
 namespace Daedalic.ProductDatabase.Releases
 {
-    public class EditModel : PageModel
+    public class EditModel : ReleasePageModel
     {
         private readonly Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext _context;
 
@@ -23,6 +23,10 @@ namespace Daedalic.ProductDatabase.Releases
         [BindProperty]
         public Release Release { get; set; }
 
+        public IList<Language> Language { get; set; }
+
+        public IList<LanguageType> LanguageType { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -30,58 +34,70 @@ namespace Daedalic.ProductDatabase.Releases
                 return NotFound();
             }
 
-            Release = await _context.Release
-                .Include(r => r.Game)
-                .Include(r => r.Platform)
-                .Include(r => r.Publisher)
-                .Include(r => r.Status)
-                .Include(r => r.Store).FirstOrDefaultAsync(m => m.Id == id);
+            Release = await GetReleaseById(id.Value);
 
             if (Release == null)
             {
                 return NotFound();
             }
-           ViewData["GameId"] = new SelectList(_context.Game, "Id", "Name");
-           ViewData["PlatformId"] = new SelectList(_context.Platform, "Id", "Name");
-           ViewData["PublisherId"] = new SelectList(_context.Publisher, "Id", "Name");
-           ViewData["ReleaseStatusId"] = new SelectList(_context.ReleaseStatus, "Id", "Name");
-           ViewData["StoreId"] = new SelectList(_context.Store, "Id", "Name");
+
+            ViewData["GameId"] = new SelectList(_context.Game, "Id", "Name");
+            ViewData["PlatformId"] = new SelectList(_context.Platform, "Id", "Name");
+            ViewData["PublisherId"] = new SelectList(_context.Publisher, "Id", "Name");
+            ViewData["ReleaseStatusId"] = new SelectList(_context.ReleaseStatus, "Id", "Name");
+            ViewData["StoreId"] = new SelectList(_context.Store, "Id", "Name");
+
+            Language = _context.Language.ToList();
+            LanguageType = _context.LanguageType.ToList();
+
             return Page();
         }
 
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id, string[] selectedLanguages)
         {
-            if (!ModelState.IsValid)
+            if (id == null)
             {
-                return Page();
+                return NotFound();
             }
 
-            _context.Attach(Release).State = EntityState.Modified;
+            var releaseToUpdate = await GetReleaseById(id.Value);
 
-            try
+            if (releaseToUpdate == null)
             {
+                return NotFound();
+            }
+
+            if (await TryUpdateModelAsync<Release>(
+                releaseToUpdate,
+                "Release",
+                r => r.GameId, r => r.Summary, r => r.ReleaseDate, r => r.Version, r => r.ReleaseStatusId,
+                r => r.PublisherId, r => r.PlatformId, r => r.StoreId))
+            {
+                UpdateImplementedLanguages(_context, selectedLanguages, releaseToUpdate);
+
                 await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ReleaseExists(Release.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToPage("./Index");
+            
+            UpdateImplementedLanguages(_context, selectedLanguages, releaseToUpdate);
+            return Page(); 
         }
 
-        private bool ReleaseExists(int id)
+        private Task<Release> GetReleaseById(int id)
         {
-            return _context.Release.Any(e => e.Id == id);
+            return _context.Release
+                .Include(r => r.Game)
+                .Include(r => r.Platform)
+                .Include(r => r.Publisher)
+                .Include(r => r.Status)
+                .Include(r => r.Store)
+                .Include(r => r.Languages)
+                    .ThenInclude(l => l.Language)
+                .Include(r => r.Languages)
+                    .ThenInclude(l => l.LanguageType)
+                .FirstOrDefaultAsync(m => m.Id == id);
         }
     }
 }

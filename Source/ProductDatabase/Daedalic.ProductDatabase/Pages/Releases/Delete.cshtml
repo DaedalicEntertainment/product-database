@@ -60,6 +60,17 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Release.Store.Name)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Release.Languages)
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                foreach (var language in Model.Release.Languages)
+                {
+                    <text>@language.Language.Name (@language.LanguageType.Name)</text> <br />
+                }
+            }
+        </dd>
     </dl>
     
     <form method="post">

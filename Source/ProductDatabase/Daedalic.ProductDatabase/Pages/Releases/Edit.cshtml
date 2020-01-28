@@ -61,6 +61,45 @@
                 <span asp-validation-for="Release.StoreId" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <div class="table">
+                    <table>
+                        <tr>
+                            <th></th>
+
+                            @{
+                                foreach (var languageType in Model.LanguageType)
+                                {
+                                    @:<th>
+                                        @languageType.Name
+                                    @:</th>
+                                }
+                            }
+                        </tr>
+
+                        @{
+                            foreach (var language in Model.Language)
+                            {
+                                @:<tr>
+                                    @:<th>
+                                        @language.Name
+                                    @:</th>
+
+                                    foreach (var languageType in Model.LanguageType)
+                                    {
+                                        @:<td>
+                                            <input type="checkbox"
+                                                   name="selectedLanguages"
+                                                   value="@language.Id @Html.Raw("/") @languageType.Id"
+                                                   @(Html.Raw(Model.Release.Languages.Any(l => l.LanguageId == language.Id && l.LanguageTypeId == languageType.Id) ? "checked=\"checked\"" : "")) />
+                                        @:</td>
+                                    }
+                                @:</tr>
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
