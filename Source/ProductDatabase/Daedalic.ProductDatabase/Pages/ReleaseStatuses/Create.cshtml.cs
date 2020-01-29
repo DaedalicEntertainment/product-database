@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
 
-namespace Daedalic.ProductDatabase.ReleaseStatuses
+namespace Daedalic.ProductDatabase.Pages.ReleaseStatuses
 {
     public class CreateModel : PageModel
     {

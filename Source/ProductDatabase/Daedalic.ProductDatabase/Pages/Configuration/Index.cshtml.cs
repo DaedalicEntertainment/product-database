@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Models;
 using Daedalic.ProductDatabase.Repositories;
 
-namespace Daedalic.ProductDatabase.Configuration
+namespace Daedalic.ProductDatabase.Pages.Configuration
 {
     public class IndexModel : PageModel
     {

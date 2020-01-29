@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
 
-namespace Daedalic.ProductDatabase.Developers
+namespace Daedalic.ProductDatabase.Pages.Developers
 {
     public class CreateModel : PageModel
     {

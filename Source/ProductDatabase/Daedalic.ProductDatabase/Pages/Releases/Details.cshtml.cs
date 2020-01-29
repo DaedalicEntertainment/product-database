@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
 
-namespace Daedalic.ProductDatabase.Releases
+namespace Daedalic.ProductDatabase.Pages.Releases
 {
     public class DetailsModel : PageModel
     {

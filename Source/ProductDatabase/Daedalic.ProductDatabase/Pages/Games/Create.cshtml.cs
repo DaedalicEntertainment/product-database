@@ -9,7 +9,7 @@ using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
 using Daedalic.ProductDatabase.Pages.Games;
 
-namespace Daedalic.ProductDatabase.Games
+namespace Daedalic.ProductDatabase.Pages.Games
 {
     public class CreateModel : GamePageModel
     {

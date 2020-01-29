@@ -10,7 +10,7 @@ using Daedalic.ProductDatabase.Models;
 using Microsoft.Extensions.Configuration;
 using Daedalic.ProductDatabase.Helpers;
 
-namespace Daedalic.ProductDatabase.Games
+namespace Daedalic.ProductDatabase.Pages.Games
 {
     public class IndexModel : PageModel
     {

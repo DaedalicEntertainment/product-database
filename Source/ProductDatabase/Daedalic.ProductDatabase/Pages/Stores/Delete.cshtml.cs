@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
 
-namespace Daedalic.ProductDatabase.Stores
+namespace Daedalic.ProductDatabase.Pages.Stores
 {
     public class DeleteModel : PageModel
     {

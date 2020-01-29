@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
 
-namespace Daedalic.ProductDatabase.LanguageTypes
+namespace Daedalic.ProductDatabase.Pages.LanguageTypes
 {
     public class EditModel : PageModel
     {

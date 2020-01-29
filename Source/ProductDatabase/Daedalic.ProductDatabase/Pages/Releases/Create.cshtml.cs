@@ -9,7 +9,7 @@ using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
 using Daedalic.ProductDatabase.Repositories;
 
-namespace Daedalic.ProductDatabase.Releases
+namespace Daedalic.ProductDatabase.Pages.Releases
 {
     public class CreateModel : ReleasePageModel
     {

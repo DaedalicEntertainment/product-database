@@ -10,7 +10,7 @@ using Daedalic.ProductDatabase.Models;
 using Daedalic.ProductDatabase.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace Daedalic.ProductDatabase.Releases
+namespace Daedalic.ProductDatabase.Pages.Releases
 {
     public class CreateForGameModel : ReleasePageModel
     {

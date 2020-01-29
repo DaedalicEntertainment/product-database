@@ -9,7 +9,7 @@ using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
 using Daedalic.ProductDatabase.Helpers;
 
-namespace Daedalic.ProductDatabase.Releases
+namespace Daedalic.ProductDatabase.Pages.Releases
 {
     public class IndexModel : PageModel
     {

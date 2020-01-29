@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Daedalic.ProductDatabase.Releases
+namespace Daedalic.ProductDatabase.Pages.Releases
 {
     public class ReleasePageModel : PageModel
     {
