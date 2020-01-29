@@ -78,11 +78,11 @@ namespace Daedalic.ProductDatabase.Models
                 if (!context.LanguageStatus.Any())
                 {
                     context.LanguageStatus.AddRange(
-                        new LanguageStatus {  Name = "Not Started" },
-                        new LanguageStatus {  Name = "Localization" },
-                        new LanguageStatus {  Name = "Integration" },
-                        new LanguageStatus {  Name = "Testing" },
-                        new LanguageStatus {  Name = "Finished" }
+                        new LanguageStatus {  Name = "Not Started", Summary = "Localizing for this language hasn't started yet." },
+                        new LanguageStatus {  Name = "Localization", Summary = "We're currently waiting for our external partners to translate the texts."},
+                        new LanguageStatus {  Name = "Integration", Summary = "Translations are finished and are being integrated in the game build." },
+                        new LanguageStatus {  Name = "Testing", Summary = "Texts have been integrated and are being tested by the localization QA." },
+                        new LanguageStatus {  Name = "Finished", Summary = "All texts have been translated, integrated and verified." }
                     );
                 }
 

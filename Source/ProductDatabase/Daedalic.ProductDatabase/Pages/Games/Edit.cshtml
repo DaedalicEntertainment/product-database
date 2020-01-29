@@ -98,11 +98,11 @@
                                             {
                                                 @if (Model.IsLanguageStatus(language, languageStatus))
                                                 {
-                                                    <option value="@languageStatus.Id" selected="selected">@languageStatus.Name</option>
+                                                    <option value="@languageStatus.Id" title="@languageStatus.Summary" selected="selected">@languageStatus.Name</option>
                                                 }
                                                 else
                                                 {
-                                                    <option value="@languageStatus.Id">@languageStatus.Name</option>
+                                                    <option value="@languageStatus.Id" title="@languageStatus.Summary">@languageStatus.Name</option>
                                                 }
                                             }
                                         </select>
