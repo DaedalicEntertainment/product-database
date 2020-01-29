@@ -27,5 +27,11 @@ namespace Daedalic.ProductDatabase.Models
         public Genre Genre { get; set; }
 
         public ICollection<Release> Releases { get; set; }
+
+        [Display(Name = "Supported Languages")]
+        public ICollection<SupportedLanguage> SupportedLanguages { get; set; }
+
+        [Display(Name = "Implemented Languages")]
+        public ICollection<ImplementedLanguage> ImplementedLanguages { get; set; }
     }
 }

@@ -1,11 +1,11 @@
-﻿@page "{id:int}"
-@model Daedalic.ProductDatabase.Releases.EditModel
+﻿@page
+@model Daedalic.ProductDatabase.Releases.CreateForGameModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Create";
 }
 
-<h1>Edit</h1>
+<h1>Create</h1>
 
 <h4>Release</h4>
 <hr />
@@ -13,7 +13,6 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Release.Id" />
             <div class="form-group">
                 <label asp-for="Release.GameId" class="control-label"></label>
                 <p>@Model.Release.Game.Name</p>
@@ -42,28 +41,24 @@
             <div class="form-group">
                 <label asp-for="Release.ReleaseStatusId" class="control-label"></label>
                 <select asp-for="Release.ReleaseStatusId" class="form-control" asp-items="ViewBag.ReleaseStatusId"></select>
-                <span asp-validation-for="Release.ReleaseStatusId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Release.PublisherId" class="control-label"></label>
                 <select asp-for="Release.PublisherId" class="form-control" asp-items="ViewBag.PublisherId">
                     <option></option>
                 </select>
-                <span asp-validation-for="Release.PublisherId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Release.PlatformId" class="control-label"></label>
                 <select asp-for="Release.PlatformId" class="form-control" asp-items="ViewBag.PlatformId">
                     <option></option>
                 </select>
-                <span asp-validation-for="Release.PlatformId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Release.StoreId" class="control-label"></label>
                 <select asp-for="Release.StoreId" class="form-control" asp-items="ViewBag.StoreId">
                     <option></option>
                 </select>
-                <span asp-validation-for="Release.StoreId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Release.Languages" class="control-label"></label>
@@ -88,14 +83,14 @@
                 </div>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="Index">Back to List</a>
 </div>
 
 @section Scripts {

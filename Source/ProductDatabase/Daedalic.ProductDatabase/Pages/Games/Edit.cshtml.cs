@@ -8,10 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
+using Daedalic.ProductDatabase.Pages.Games;
 
 namespace Daedalic.ProductDatabase.Games
 {
-    public class EditModel : PageModel
+    public class EditModel : GamePageModel
     {
         private readonly Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext _context;
 
@@ -23,6 +24,12 @@ namespace Daedalic.ProductDatabase.Games
         [BindProperty]
         public Game Game { get; set; }
 
+        public IList<Language> Language { get; set; }
+
+        public IList<LanguageType> LanguageType { get; set; }
+
+        public IList<LanguageStatus> LanguageStatus { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -30,9 +37,7 @@ namespace Daedalic.ProductDatabase.Games
                 return NotFound();
             }
 
-            Game = await _context.Game
-                .Include(g => g.Developer)
-                .Include(g => g.Genre).FirstOrDefaultAsync(m => m.Id == id);
+            Game = await GetGameById(id.Value);
 
             if (Game == null)
             {
@@ -42,42 +47,80 @@ namespace Daedalic.ProductDatabase.Games
             ViewData["DeveloperId"] = new SelectList(_context.Developer.OrderBy(d => d.Name), "Id", "Name");
             ViewData["GenreId"] = new SelectList(_context.Genre.OrderBy(g => g.Name), "Id", "Name");
 
+            Language = _context.Language.ToList();
+            LanguageType = _context.LanguageType.ToList();
+            LanguageStatus = _context.LanguageStatus.ToList();
+
             return Page();
         }
 
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id, string[] newSupportedLanguages, Dictionary<string, string> newLanguageStatuses)
         {
-            if (!ModelState.IsValid)
+            if (id == null)
             {
-                return Page();
+                return NotFound();
             }
 
-            _context.Attach(Game).State = EntityState.Modified;
+            var gameToUpdate = await GetGameById(id.Value);
 
-            try
+            if (gameToUpdate == null)
             {
+                return NotFound();
+            }
+
+            if (await TryUpdateModelAsync<Game>(
+                gameToUpdate,
+                "Game",
+                g => g.DeveloperId, g  => g.GenreId, g => g.Name, g => g.AssetIndexProjectId))
+            {
+                UpdateSupportedLanguages(_context, newSupportedLanguages, gameToUpdate);
+                UpdateImplementedLanguages(_context, newLanguageStatuses, gameToUpdate);
+
                 await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!GameExists(Game.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            
+            UpdateSupportedLanguages(_context, newSupportedLanguages, gameToUpdate);
+            UpdateImplementedLanguages(_context, newLanguageStatuses, gameToUpdate);
 
-            return RedirectToPage("./Index");
+            return Page(); 
         }
 
-        private bool GameExists(int id)
+        public bool IsLanguageStatus(Language language, LanguageStatus status)
         {
-            return _context.Game.Any(e => e.Id == id);
+            LanguageStatus defaultStatus = LanguageStatus.First();
+
+            if (Game.ImplementedLanguages == null)
+            {
+                return status.Id == defaultStatus.Id;
+            }
+
+            ImplementedLanguage implementedLanguage = Game.ImplementedLanguages.FirstOrDefault(il => il.LanguageId == language.Id);
+
+            if (implementedLanguage == null)
+            {
+                return status.Id == defaultStatus.Id;
+            }
+
+            return status.Id == implementedLanguage.LanguageStatusId;
+        }
+
+        private Task<Game> GetGameById(int id)
+        {
+            return _context.Game
+                .Include(g => g.Developer)
+                .Include(g => g.Genre)
+                .Include(r => r.SupportedLanguages)
+                    .ThenInclude(l => l.Language)
+                .Include(r => r.SupportedLanguages)
+                    .ThenInclude(l => l.LanguageType)
+                .Include(r => r.ImplementedLanguages)
+                    .ThenInclude(l => l.Language)
+                .Include(r => r.ImplementedLanguages)
+                    .ThenInclude(l => l.LanguageStatus)
+                .FirstOrDefaultAsync(m => m.Id == id);
         }
     }
 }

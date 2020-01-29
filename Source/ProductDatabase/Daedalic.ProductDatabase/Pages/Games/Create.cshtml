@@ -36,6 +36,47 @@
                 <span asp-validation-for="Game.AssetIndexProjectId" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Game.SupportedLanguages" class="control-label"></label>
+                <div class="table">
+                    <table>
+                        <tr>
+                            <th></th>
+
+                            @{
+                                foreach (var languageType in Model.LanguageType)
+                                {
+                                    @:<th>
+                                        @languageType.Name
+                                    @:</th>
+                                }
+                            }
+                        </tr>
+
+                        @{
+                            foreach (var language in Model.Language)
+                            {
+                                @:<tr>
+                                    @:<th>
+                                        @language.Name
+                                    @:</th>
+
+
+                                    foreach (var languageType in Model.LanguageType)
+                                    {
+                                        @:<td>
+                                            <input type="checkbox"
+                                                   name="newSupportedLanguages"
+                                                   value="@language.Id @Html.Raw("/") @languageType.Id"
+                                                   @(Html.Raw(Model.Game.SupportedLanguages.Any(l => l.LanguageId == language.Id && l.LanguageTypeId == languageType.Id) ? "checked=\"checked\"" : "")) />
+                                        @:</td>
+                                    }
+                                @:</tr>
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>

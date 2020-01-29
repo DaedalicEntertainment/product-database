@@ -31,7 +31,16 @@ namespace Daedalic.ProductDatabase.Games
 
             Game = await _context.Game
                 .Include(g => g.Developer)
-                .Include(g => g.Genre).FirstOrDefaultAsync(m => m.Id == id);
+                .Include(g => g.Genre)
+                .Include(g => g.SupportedLanguages)
+                    .ThenInclude(l => l.Language)
+                .Include(g => g.SupportedLanguages)
+                    .ThenInclude(l => l.LanguageType)
+                .Include(g => g.ImplementedLanguages)
+                    .ThenInclude(l => l.Language)
+                .Include(g => g.ImplementedLanguages)
+                    .ThenInclude(l => l.LanguageStatus)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (Game == null)
             {

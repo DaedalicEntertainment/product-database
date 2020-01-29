@@ -7,11 +7,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
-using Daedalic.ProductDatabase.Repositories;
 
-namespace Daedalic.ProductDatabase.Releases
+namespace Daedalic.ProductDatabase.LanguageStatuses
 {
-    public class CreateModel : ReleasePageModel
+    public class CreateModel : PageModel
     {
         private readonly Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext _context;
 
@@ -22,24 +21,25 @@ namespace Daedalic.ProductDatabase.Releases
 
         public IActionResult OnGet()
         {
-            ViewData["GameId"] = new SelectList(_context.Game.OrderBy(g => g.Name), "Id", "Name");
-
             return Page();
         }
 
         [BindProperty]
-        public Release Release { get; set; }
+        public LanguageStatus LanguageStatus { get; set; }
 
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
-        public IActionResult OnPost(int[] selectedLanguages)
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            return RedirectToPage("./CreateForGame", new { GameId = Release.GameId });
+            _context.LanguageStatus.Add(LanguageStatus);
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage("./Index");
         }
     }
 }

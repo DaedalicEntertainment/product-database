@@ -48,6 +48,6 @@ namespace Daedalic.ProductDatabase.Models
 
         public Store Store { get; set; }
 
-        public ICollection<ImplementedLanguage> Languages { get; set; }
+        public ICollection<ReleasedLanguage> Languages { get; set; }
     }
 }

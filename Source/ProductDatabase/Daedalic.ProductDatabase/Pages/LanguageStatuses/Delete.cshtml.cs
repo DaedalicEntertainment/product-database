@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
 
-namespace Daedalic.ProductDatabase.Releases
+namespace Daedalic.ProductDatabase.LanguageStatuses
 {
     public class DeleteModel : PageModel
     {
@@ -20,7 +20,7 @@ namespace Daedalic.ProductDatabase.Releases
         }
 
         [BindProperty]
-        public Release Release { get; set; }
+        public LanguageStatus LanguageStatus { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,19 +29,9 @@ namespace Daedalic.ProductDatabase.Releases
                 return NotFound();
             }
 
-            Release = await _context.Release
-                .Include(r => r.Game)
-                .Include(r => r.Platform)
-                .Include(r => r.Publisher)
-                .Include(r => r.Status)
-                .Include(r => r.Store)
-                .Include(r => r.Languages)
-                    .ThenInclude(l => l.Language)
-                //.Include(r => r.Languages)
-                //    .ThenInclude(l => l.LanguageType)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            LanguageStatus = await _context.LanguageStatus.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Release == null)
+            if (LanguageStatus == null)
             {
                 return NotFound();
             }
@@ -55,11 +45,11 @@ namespace Daedalic.ProductDatabase.Releases
                 return NotFound();
             }
 
-            Release = await _context.Release.FindAsync(id);
+            LanguageStatus = await _context.LanguageStatus.FindAsync(id);
 
-            if (Release != null)
+            if (LanguageStatus != null)
             {
-                _context.Release.Remove(Release);
+                _context.LanguageStatus.Remove(LanguageStatus);
                 await _context.SaveChangesAsync();
             }
 

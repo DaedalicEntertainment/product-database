@@ -36,6 +36,28 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Game.Genre.Name)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Game.SupportedLanguages)
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                foreach (var language in Model.Game.SupportedLanguages)
+                {
+                    <text>@language.Language.Name (@language.LanguageType.Name)</text> <br />
+                }
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Game.ImplementedLanguages)
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                foreach (var language in Model.Game.ImplementedLanguages.Where(il => Model.Game.SupportedLanguages.Select(sl => sl.Language).Any(sl => sl.Id == il.LanguageId)))
+                {
+                    <text>@language.Language.Name: @language.LanguageStatus.Name</text> <br />
+                }
+            }
+        </dd>
     </dl>
     
     <form method="post">

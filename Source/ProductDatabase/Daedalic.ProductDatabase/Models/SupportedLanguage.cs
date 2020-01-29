@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Daedalic.ProductDatabase.Models
 {
-    public class ImplementedLanguage
+    public class SupportedLanguage
     {
         public int Id { get; set; }
 
@@ -15,10 +15,10 @@ namespace Daedalic.ProductDatabase.Models
 
         public Language Language { get; set; }
 
-        [Display(Name = "Language Status")]
-        public int LanguageStatusId { get; set; }
+        [Display(Name = "Language Type")]
+        public int LanguageTypeId { get; set; }
 
-        public LanguageStatus LanguageStatus { get; set; }
+        public LanguageType LanguageType { get; set; }
 
         [Display(Name = "Game")]
         public int GameId { get; set; }

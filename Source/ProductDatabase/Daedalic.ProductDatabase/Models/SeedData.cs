@@ -75,6 +75,17 @@ namespace Daedalic.ProductDatabase.Models
                     );
                 }
 
+                if (!context.LanguageStatus.Any())
+                {
+                    context.LanguageStatus.AddRange(
+                        new LanguageStatus {  Name = "Not Started" },
+                        new LanguageStatus {  Name = "Localization" },
+                        new LanguageStatus {  Name = "Integration" },
+                        new LanguageStatus {  Name = "Testing" },
+                        new LanguageStatus {  Name = "Finished" }
+                    );
+                }
+
                 if (!context.ReleaseStatus.Any())
                 {
                     context.ReleaseStatus.AddRange(

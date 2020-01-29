@@ -36,8 +36,8 @@ namespace Daedalic.ProductDatabase.Releases
                 .Include(r => r.Store)
                 .Include(r => r.Languages)
                     .ThenInclude(l => l.Language)
-                .Include(r => r.Languages)
-                    .ThenInclude(l => l.LanguageType)
+                //.Include(r => r.Languages)
+                //    .ThenInclude(l => l.LanguageType)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (Release == null)

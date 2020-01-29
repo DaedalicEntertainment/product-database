@@ -25,8 +25,6 @@ namespace Daedalic.ProductDatabase.Releases
 
         public IList<Language> Language { get; set; }
 
-        public IList<LanguageType> LanguageType { get; set; }
-
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -47,15 +45,16 @@ namespace Daedalic.ProductDatabase.Releases
             ViewData["ReleaseStatusId"] = new SelectList(_context.ReleaseStatus.OrderBy(s => s.Name), "Id", "Name");
             ViewData["StoreId"] = new SelectList(_context.Store.OrderBy(s => s.Name), "Id", "Name");
 
-            Language = _context.Language.ToList();
-            LanguageType = _context.LanguageType.ToList();
+            Language = Release.Game.SupportedLanguages != null
+                ? Release.Game.SupportedLanguages.Select(sl => sl.Language).Distinct().ToList()
+                : new List<Language>();
 
             return Page();
         }
 
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync(int? id, string[] selectedLanguages)
+        public async Task<IActionResult> OnPostAsync(int? id, int[] selectedLanguages)
         {
             if (id == null)
             {
@@ -75,13 +74,13 @@ namespace Daedalic.ProductDatabase.Releases
                 r => r.GameId, r => r.Summary, r => r.GmcDate, r => r.ReleaseDate, r => r.Version,
                 r => r.ReleaseStatusId, r => r.PublisherId, r => r.PlatformId, r => r.StoreId))
             {
-                UpdateImplementedLanguages(_context, selectedLanguages, releaseToUpdate);
+                UpdateReleasedLanguages(_context, selectedLanguages, releaseToUpdate);
 
                 await _context.SaveChangesAsync();
                 return RedirectToPage("./Index");
             }
             
-            UpdateImplementedLanguages(_context, selectedLanguages, releaseToUpdate);
+            UpdateReleasedLanguages(_context, selectedLanguages, releaseToUpdate);
             return Page(); 
         }
 
@@ -89,14 +88,14 @@ namespace Daedalic.ProductDatabase.Releases
         {
             return _context.Release
                 .Include(r => r.Game)
+                    .ThenInclude(g => g.SupportedLanguages)
+                        .ThenInclude(l => l.Language)
                 .Include(r => r.Platform)
                 .Include(r => r.Publisher)
                 .Include(r => r.Status)
                 .Include(r => r.Store)
                 .Include(r => r.Languages)
                     .ThenInclude(l => l.Language)
-                .Include(r => r.Languages)
-                    .ThenInclude(l => l.LanguageType)
                 .FirstOrDefaultAsync(m => m.Id == id);
         }
     }

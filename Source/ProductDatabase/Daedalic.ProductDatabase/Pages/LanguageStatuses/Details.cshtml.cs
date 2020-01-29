@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
 
-namespace Daedalic.ProductDatabase.Games
+namespace Daedalic.ProductDatabase.LanguageStatuses
 {
     public class DetailsModel : PageModel
     {
@@ -19,7 +19,7 @@ namespace Daedalic.ProductDatabase.Games
             _context = context;
         }
 
-        public Game Game { get; set; }
+        public LanguageStatus LanguageStatus { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,20 +28,9 @@ namespace Daedalic.ProductDatabase.Games
                 return NotFound();
             }
 
-            Game = await _context.Game
-                .Include(g => g.Developer)
-                .Include(g => g.Genre)
-                .Include(g => g.SupportedLanguages)
-                    .ThenInclude(l => l.Language)
-                .Include(g => g.SupportedLanguages)
-                    .ThenInclude(l => l.LanguageType)
-                .Include(g => g.ImplementedLanguages)
-                    .ThenInclude(l => l.Language)
-                .Include(g => g.ImplementedLanguages)
-                    .ThenInclude(l => l.LanguageStatus)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            LanguageStatus = await _context.LanguageStatus.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Game == null)
+            if (LanguageStatus == null)
             {
                 return NotFound();
             }
