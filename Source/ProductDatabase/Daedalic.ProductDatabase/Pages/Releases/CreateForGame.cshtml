@@ -65,7 +65,7 @@
                 <div class="table">
                     <table>
                         @{
-                            foreach (var language in Model.Language)
+                            foreach (var language in Model.Language.OrderBy(l => l.Name))
                             {
                                 <tr>
                                     <th>

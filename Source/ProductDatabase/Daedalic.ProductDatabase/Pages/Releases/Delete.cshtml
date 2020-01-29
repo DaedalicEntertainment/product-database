@@ -71,7 +71,7 @@
         </dt>
         <dd class="col-sm-10">
             @{
-                foreach (var language in Model.Release.Languages)
+                foreach (var language in Model.Release.Languages.OrderBy(l => l.Language.Name))
                 {
                     <text>@language.Language.Name</text> <br />
                 }

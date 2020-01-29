@@ -56,7 +56,7 @@
                         </tr>
 
                         @{
-                            foreach (var language in Model.Language)
+                            foreach (var language in Model.Language.OrderBy(l => l.Name))
                             {
                                 <tr>
                                     <th>
@@ -83,7 +83,9 @@
                 <div class="table">
                     <table>
                         @{
-                            foreach (var language in Model.Language.Where(l => Model.Game.SupportedLanguages.Any(sl => sl.LanguageId == l.Id)))
+                            foreach (var language in Model.Language
+                                .Where(l => Model.Game.SupportedLanguages.Any(sl => sl.LanguageId == l.Id))
+                                .OrderBy(l => l.Name))
                             {
                                 <tr>
                                     <td>
