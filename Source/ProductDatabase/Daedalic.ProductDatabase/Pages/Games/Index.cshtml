@@ -5,6 +5,8 @@
     ViewData["Title"] = "Games";
 }
 
+<partial name="_Alert" />
+
 <h1>Games</h1>
 
 <p>
@@ -40,28 +42,29 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Game) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Developer.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genre.Name)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-
-                @if (!string.IsNullOrEmpty(item.AssetIndexProjectId))
-                {
-                    @Html.Raw("|") <a href="@string.Format(Model.AssetIndexUrl, item.AssetIndexProjectId)" target="_blank">Asset Index</a>
-                }
+        @foreach (var item in Model.Game)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
                 </td>
-        </tr>
-}
+                <td>
+                    @Html.DisplayFor(modelItem => item.Developer.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre.Name)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+
+                    @if (!string.IsNullOrEmpty(item.AssetIndexProjectId))
+                    {
+                        @Html.Raw("|") <a href="@string.Format(Model.AssetIndexUrl, item.AssetIndexProjectId)" target="_blank">Asset Index</a>
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

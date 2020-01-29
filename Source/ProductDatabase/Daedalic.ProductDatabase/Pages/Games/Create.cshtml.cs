@@ -62,7 +62,7 @@ namespace Daedalic.ProductDatabase.Pages.Games
                 _context.Game.Add(newGame);
                 await _context.SaveChangesAsync();
 
-                return RedirectToPage("./Index");
+                return RedirectToPage("./Index", new RouteValues().AlertCreated().Build() );
             }
 
             return Page();

@@ -79,7 +79,7 @@ namespace Daedalic.ProductDatabase.Pages.Games
                 UpdateImplementedLanguages(_context, newLanguageStatuses, gameToUpdate);
 
                 await _context.SaveChangesAsync();
-                return RedirectToPage("./Index");
+                return RedirectToPage("./Index", new RouteValues().AlertDeleted().Build());
             }
             
             UpdateSupportedLanguages(_context, newSupportedLanguages, gameToUpdate);

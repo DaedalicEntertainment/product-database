@@ -23,14 +23,14 @@ namespace Daedalic.ProductDatabase.Pages.Releases
             _configurationRepository = configurationRepository;
         }
 
-        public async Task<IActionResult> OnGet(int gameId)
+        public async Task<IActionResult> OnGet(int id)
         {
             ConfigurationData configuration = await _configurationRepository.Load();
 
             Release = new Release
             {
-                Game = _context.Game.Include(g => g.SupportedLanguages).ThenInclude(l => l.Language).FirstOrDefault(g => g.Id == gameId),
-                GameId = gameId,
+                Game = _context.Game.Include(g => g.SupportedLanguages).ThenInclude(l => l.Language).FirstOrDefault(g => g.Id == id),
+                GameId = id,
                 Languages = new List<ReleasedLanguage>(),
                 ReleaseDate = DateTime.UtcNow,
                 GmcDate = DateTime.UtcNow,

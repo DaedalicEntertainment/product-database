@@ -39,7 +39,7 @@ namespace Daedalic.ProductDatabase.Pages.Releases
                 return Page();
             }
 
-            return RedirectToPage("./CreateForGame", new { GameId = Release.GameId });
+            return RedirectToPage("./CreateForGame", new RouteValues().Id(Release.GameId).Build());
         }
     }
 }

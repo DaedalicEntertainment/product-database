@@ -12,7 +12,7 @@ using Daedalic.ProductDatabase.Helpers;
 
 namespace Daedalic.ProductDatabase.Pages.Games
 {
-    public class IndexModel : PageModel
+    public class IndexModel : IndexPageModel
     {
         private readonly Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext _context;
         private readonly IConfiguration _config;
@@ -32,7 +32,7 @@ namespace Daedalic.ProductDatabase.Pages.Games
 
         public Dictionary<string, string> SortOrders { get; set; }
 
-        public async Task OnGetAsync(string sortOrder)
+        public async Task OnGetAsync(string sortOrder, string alert)
         {
             var games = from g in _context.Game
                         .Include(g => g.Developer)
@@ -71,6 +71,9 @@ namespace Daedalic.ProductDatabase.Pages.Games
             Game = await games.AsNoTracking().ToListAsync();
 
             AssetIndexUrl = _config.GetValue<string>("AssetIndexUrl");
+
+            // Show alerts.
+            UpdateAlerts(alert, "Game");
         }
     }
 }
