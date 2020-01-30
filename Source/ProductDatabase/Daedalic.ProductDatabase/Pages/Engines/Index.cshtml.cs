@@ -7,11 +7,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
-using Daedalic.ProductDatabase.Helpers;
 
 namespace Daedalic.ProductDatabase.Pages.Engines
 {
-    public class IndexModel : IndexPageModel
+    public class IndexModel : IndexPageModel<Engine>
     {
         private readonly Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext _context;
 
@@ -22,36 +21,12 @@ namespace Daedalic.ProductDatabase.Pages.Engines
 
         public IList<Engine> Engine { get;set; }
 
-        public Dictionary<string, string> SortOrders { get; set; }
-
-        public async Task OnGetAsync(string sortOrder, string alert)
+        public void OnGet(string sortOrder, string alert)
         {
-            var engines = from e in _context.Engine select e;
-            if (!string.IsNullOrEmpty(Filter))
-            {
-                engines = engines.Where(e => e.Name.Contains(Filter));
-            }
-
-            // Sort results.
-            SortOrders = PageHelper.GetNewSortOrders(sortOrder, "name", "version");
-
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    engines = engines.OrderByDescending(e => e.Name);
-                    break;
-                case "version":
-                    engines = engines.OrderBy(e => e.Version);
-                    break;
-                case "version_desc":
-                    engines = engines.OrderByDescending(e => e.Version);
-                    break;
-                default:
-                    engines = engines.OrderBy(e => e.Name);
-                    break;
-            }
-
-            Engine = await engines.AsNoTracking().ToListAsync();
+            Engine = GetFilteredAndSortedItemsSlow(_context.Engine, e => e.Name, sortOrder,
+                OrderBy("name", e => e.Name),
+                OrderBy("version", e => e.Version)
+            );
 
             // Show alerts.
             UpdateAlerts(alert, "Engine");

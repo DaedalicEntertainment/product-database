@@ -7,11 +7,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
-using Daedalic.ProductDatabase.Helpers;
 
 namespace Daedalic.ProductDatabase.Pages.Genres
 {
-    public class IndexModel : IndexPageModel
+    public class IndexModel : IndexPageModel<Genre>
     {
         private readonly Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext _context;
 
@@ -22,31 +21,11 @@ namespace Daedalic.ProductDatabase.Pages.Genres
 
         public IList<Genre> Genre { get;set; }
 
-        public Dictionary<string, string> SortOrders { get; set; }
-
-        public async Task OnGetAsync(string sortOrder, string alert)
+        public void OnGet(string sortOrder, string alert)
         {
-            var genres = from g in _context.Genre select g;
-
-            if (!string.IsNullOrEmpty(Filter))
-            {
-                genres = genres.Where(g => g.Name.Contains(Filter));
-            }
-
-            // Sort results.
-            SortOrders = PageHelper.GetNewSortOrders(sortOrder, "name");
-
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    genres = genres.OrderByDescending(g => g.Name);
-                    break;
-                default:
-                    genres = genres.OrderBy(g => g.Name);
-                    break;
-            }
-
-            Genre = await genres.AsNoTracking().ToListAsync();
+            Genre = GetFilteredAndSortedItemsSlow(_context.Genre, g => g.Name, sortOrder,
+                OrderBy("name", g => g.Name)
+            );
 
             // Show alerts.
             UpdateAlerts(alert, "Genre");

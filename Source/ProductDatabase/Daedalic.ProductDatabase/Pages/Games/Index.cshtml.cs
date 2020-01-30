@@ -8,11 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
 using Microsoft.Extensions.Configuration;
-using Daedalic.ProductDatabase.Helpers;
 
 namespace Daedalic.ProductDatabase.Pages.Games
 {
-    public class IndexModel : IndexPageModel
+    public class IndexModel : IndexPageModel<Game>
     {
         private readonly Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext _context;
         private readonly IConfiguration _config;
@@ -27,8 +26,6 @@ namespace Daedalic.ProductDatabase.Pages.Games
 
         public string AssetIndexUrl { get; set; }
 
-        public Dictionary<string, string> SortOrders { get; set; }
-
         public async Task OnGetAsync(string sortOrder, string alert)
         {
             var games = from g in _context.Game
@@ -41,7 +38,7 @@ namespace Daedalic.ProductDatabase.Pages.Games
             }
 
             // Sort results.
-            SortOrders = PageHelper.GetNewSortOrders(sortOrder, "name", "developer", "genre");
+            UpdateSortOrders(sortOrder, "name", "developer", "genre");
 
             switch (sortOrder)
             {

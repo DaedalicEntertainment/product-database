@@ -11,7 +11,7 @@ using Daedalic.ProductDatabase.Repositories;
 
 namespace Daedalic.ProductDatabase.Pages.Configuration
 {
-    public class IndexModel : IndexPageModel
+    public class IndexModel : IndexPageModel<Daedalic.ProductDatabase.Models.Configuration>
     {
         private readonly Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext _context;
         private readonly ConfigurationRepository _configurationRepository;

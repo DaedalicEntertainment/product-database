@@ -7,11 +7,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
-using Daedalic.ProductDatabase.Helpers;
 
 namespace Daedalic.ProductDatabase.Pages.Platforms
 {
-    public class IndexModel : IndexPageModel
+    public class IndexModel : IndexPageModel<Platform>
     {
         private readonly Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext _context;
 
@@ -22,31 +21,11 @@ namespace Daedalic.ProductDatabase.Pages.Platforms
 
         public IList<Platform> Platform { get;set; }
 
-        public Dictionary<string, string> SortOrders { get; set; }
-
-        public async Task OnGetAsync(string sortOrder, string alert)
+        public void OnGet(string sortOrder, string alert)
         {
-            var platforms = from p in _context.Platform select p;
-
-            if (!string.IsNullOrEmpty(Filter))
-            {
-                platforms = platforms.Where(p => p.Name.Contains(Filter));
-            }
-
-            // Sort results.
-            SortOrders = PageHelper.GetNewSortOrders(sortOrder, "name");
-
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    platforms = platforms.OrderByDescending(p => p.Name);
-                    break;
-                default:
-                    platforms = platforms.OrderBy(p => p.Name);
-                    break;
-            }
-
-            Platform = await platforms.AsNoTracking().ToListAsync();
+            Platform = GetFilteredAndSortedItemsSlow(_context.Platform, p => p.Name, sortOrder,
+                OrderBy("name", p => p.Name)
+            );
 
             // Show alerts.
             UpdateAlerts(alert, "Platform");

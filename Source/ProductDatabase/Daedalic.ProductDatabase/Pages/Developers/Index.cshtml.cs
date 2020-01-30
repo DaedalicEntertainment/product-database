@@ -7,11 +7,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
-using Daedalic.ProductDatabase.Helpers;
 
 namespace Daedalic.ProductDatabase.Pages.Developers
 {
-    public class IndexModel : IndexPageModel
+    public class IndexModel : IndexPageModel<Developer>
     {
         private readonly Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext _context;
 
@@ -22,8 +21,6 @@ namespace Daedalic.ProductDatabase.Pages.Developers
 
         public IList<Developer> Developer { get;set; }
 
-        public Dictionary<string, string> SortOrders { get; set; }
-
         public async Task OnGetAsync(string sortOrder, string alert)
         {
             var developers = from d in _context.Developer select d;
@@ -33,7 +30,7 @@ namespace Daedalic.ProductDatabase.Pages.Developers
             }
 
             // Sort results.
-            SortOrders = PageHelper.GetNewSortOrders(sortOrder, "name");
+            UpdateSortOrders(sortOrder, "name");
 
             switch (sortOrder)
             {

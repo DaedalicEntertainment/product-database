@@ -7,11 +7,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
-using Daedalic.ProductDatabase.Helpers;
 
 namespace Daedalic.ProductDatabase.Pages.ReleaseStatuses
 {
-    public class IndexModel : IndexPageModel
+    public class IndexModel : IndexPageModel<ReleaseStatus>
     {
         private readonly Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext _context;
 
@@ -22,31 +21,11 @@ namespace Daedalic.ProductDatabase.Pages.ReleaseStatuses
 
         public IList<ReleaseStatus> ReleaseStatus { get;set; }
 
-        public Dictionary<string, string> SortOrders { get; set; }
-
-        public async Task OnGetAsync(string sortOrder, string alert)
+        public void OnGet(string sortOrder, string alert)
         {
-            var statuses = from s in _context.ReleaseStatus select s;
-
-            if (!string.IsNullOrEmpty(Filter))
-            {
-                statuses = statuses.Where(s => s.Name.Contains(Filter));
-            }
-
-            // Sort results.
-            SortOrders = PageHelper.GetNewSortOrders(sortOrder, "name");
-
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    statuses = statuses.OrderByDescending(s => s.Name);
-                    break;
-                default:
-                    statuses = statuses.OrderBy(s => s.Name);
-                    break;
-            }
-
-            ReleaseStatus = await statuses.AsNoTracking().ToListAsync();
+            ReleaseStatus = GetFilteredAndSortedItemsSlow(_context.ReleaseStatus, s => s.Name, sortOrder,
+                OrderBy("name", s => s.Name)
+            );
 
             // Show alerts.
             UpdateAlerts(alert, "Release status");

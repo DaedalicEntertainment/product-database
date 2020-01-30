@@ -7,11 +7,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
-using Daedalic.ProductDatabase.Helpers;
 
 namespace Daedalic.ProductDatabase.Pages.Publishers
 {
-    public class IndexModel : IndexPageModel
+    public class IndexModel : IndexPageModel<Publisher>
     {
         private readonly Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext _context;
 
@@ -21,8 +20,6 @@ namespace Daedalic.ProductDatabase.Pages.Publishers
         }
 
         public IList<Publisher> Publisher { get;set; }
-
-        public Dictionary<string, string> SortOrders { get; set; }
 
         public async Task OnGetAsync(string sortOrder, string alert)
         {
@@ -34,7 +31,7 @@ namespace Daedalic.ProductDatabase.Pages.Publishers
             }
 
             // Sort results.
-            SortOrders = PageHelper.GetNewSortOrders(sortOrder, "name");
+            UpdateSortOrders(sortOrder, "name");
 
             switch (sortOrder)
             {

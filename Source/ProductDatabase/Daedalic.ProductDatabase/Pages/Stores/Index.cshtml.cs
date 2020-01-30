@@ -7,11 +7,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
-using Daedalic.ProductDatabase.Helpers;
 
 namespace Daedalic.ProductDatabase.Pages.Stores
 {
-    public class IndexModel : IndexPageModel
+    public class IndexModel : IndexPageModel<Store>
     {
         private readonly Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext _context;
 
@@ -22,31 +21,11 @@ namespace Daedalic.ProductDatabase.Pages.Stores
 
         public IList<Store> Store { get;set; }
 
-        public Dictionary<string, string> SortOrders { get; set; }
-
-        public async Task OnGetAsync(string sortOrder, string alert)
+        public void OnGet(string sortOrder, string alert)
         {
-            var stores = from s in _context.Store select s;
-
-            if (!string.IsNullOrEmpty(Filter))
-            {
-                stores = stores.Where(s => s.Name.Contains(Filter));
-            }
-
-            // Sort results.
-            SortOrders = PageHelper.GetNewSortOrders(sortOrder, "name");
-
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    stores = stores.OrderByDescending(s => s.Name);
-                    break;
-                default:
-                    stores = stores.OrderBy(s => s.Name);
-                    break;
-            }
-
-            Store = await stores.AsNoTracking().ToListAsync();
+            Store = GetFilteredAndSortedItemsSlow(_context.Store, s => s.Name, sortOrder,
+                OrderBy("name", s => s.Name)
+            );
 
             // Show alerts.
             UpdateAlerts(alert, "Store");
