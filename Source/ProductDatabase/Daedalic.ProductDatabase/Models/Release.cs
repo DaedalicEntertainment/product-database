@@ -50,6 +50,11 @@ namespace Daedalic.ProductDatabase.Models
 
         public Store Store { get; set; }
 
+        [Display(Name = "Engine")]
+        public int? EngineId { get; set; }
+
+        public Engine Engine { get; set; }
+
         [Display(Description = "New languags to be included in this release. It's not necessary to repeat all languages for every release.")]
         public ICollection<ReleasedLanguage> Languages { get; set; }
     }

@@ -1,0 +1,51 @@
+﻿@page
+@model Daedalic.ProductDatabase.Pages.Engines.IndexModel
+
+@{
+    ViewData["Title"] = "Engines";
+}
+
+<partial name="_Alert" />
+
+<h1>Engines</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<partial name="_Filter" />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["name"]">
+                    @Html.DisplayNameFor(model => model.Engine[0].Name)
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["version"]">
+                    @Html.DisplayNameFor(model => model.Engine[0].Version)
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Engine) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Version)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

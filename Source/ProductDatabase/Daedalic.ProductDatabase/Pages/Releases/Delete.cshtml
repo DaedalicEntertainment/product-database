@@ -67,6 +67,13 @@
             @Html.DisplayFor(model => model.Release.Store.Name)
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Release.Engine)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Release.Engine.Name)
+            @Html.DisplayFor(model => model.Release.Engine.Version)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Release.Languages)
         </dt>
         <dd class="col-sm-10">

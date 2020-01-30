@@ -45,6 +45,7 @@ namespace Daedalic.ProductDatabase.Pages.Releases
             Language = Release.Game.SupportedLanguages != null
                 ? Release.Game.SupportedLanguages.Select(sl => sl.Language).Distinct().ToList()
                 : new List<Language>();
+            Engine = _context.Engine.OrderBy(e => e.Name).ThenBy(e => e.Version).ToList();
 
             return Page();
         }
@@ -53,6 +54,8 @@ namespace Daedalic.ProductDatabase.Pages.Releases
         public Release Release { get; set; }
 
         public IList<Language> Language { get; set; }
+
+        public IList<Engine> Engine { get; set; }
 
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
@@ -68,7 +71,8 @@ namespace Daedalic.ProductDatabase.Pages.Releases
 
             if (await TryUpdateModelAsync<Release>(newRelease, "Release",
                 r => r.GameId, r => r.Summary, r => r.GmcDate, r => r.ReleaseDate, r => r.Version,
-                r => r.ReleaseStatusId, r => r.PublisherId, r => r.PlatformId, r => r.StoreId))
+                r => r.ReleaseStatusId, r => r.PublisherId, r => r.PlatformId, r => r.StoreId,
+                r => r.EngineId))
             {
                 _context.Release.Add(newRelease);
                 await _context.SaveChangesAsync();

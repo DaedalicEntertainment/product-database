@@ -16,10 +16,11 @@ Company product database built as ASP.NET Core Web Application.
    1. Add empty select items for Create and Edit, if necessary
    1. Set Index page title and h1
    1. Replace query parameters by path variables.
-1. Add search to model and view.
-1. Add sorting to model and view.
-1. Add alerts.
-1. Add index page link.
+1. Add search, sorting and alerts to Index model and view.
+1. Add help texts to Create and Edit views.
+1. Use text areas for long strings.
+1. Add page link to layout or admin page.
+1. Add count to Home page if interesting.
 1. Migrate database.
 1. Seed database (if applicable).
 

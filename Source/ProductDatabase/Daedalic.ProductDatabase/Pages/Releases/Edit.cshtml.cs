@@ -25,6 +25,8 @@ namespace Daedalic.ProductDatabase.Pages.Releases
 
         public IList<Language> Language { get; set; }
 
+        public IList<Engine> Engine { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -48,6 +50,7 @@ namespace Daedalic.ProductDatabase.Pages.Releases
             Language = Release.Game.SupportedLanguages != null
                 ? Release.Game.SupportedLanguages.Select(sl => sl.Language).Distinct().ToList()
                 : new List<Language>();
+            Engine = _context.Engine.OrderBy(e => e.Name).ThenBy(e => e.Version).ToList();
 
             return Page();
         }
@@ -72,7 +75,8 @@ namespace Daedalic.ProductDatabase.Pages.Releases
                 releaseToUpdate,
                 "Release",
                 r => r.GameId, r => r.Summary, r => r.GmcDate, r => r.ReleaseDate, r => r.Version,
-                r => r.ReleaseStatusId, r => r.PublisherId, r => r.PlatformId, r => r.StoreId))
+                r => r.ReleaseStatusId, r => r.PublisherId, r => r.PlatformId, r => r.StoreId,
+                r => r.EngineId))
             {
                 UpdateReleasedLanguages(_context, selectedLanguages, releaseToUpdate);
 
@@ -96,6 +100,7 @@ namespace Daedalic.ProductDatabase.Pages.Releases
                 .Include(r => r.Store)
                 .Include(r => r.Languages)
                     .ThenInclude(l => l.Language)
+                .Include(r => r.Engine)
                 .FirstOrDefaultAsync(m => m.Id == id);
         }
     }

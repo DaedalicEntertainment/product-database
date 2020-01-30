@@ -74,6 +74,25 @@
                 <span asp-validation-for="Release.StoreId" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Release.EngineId" class="control-label"></label>
+                <select id="Release.EngineId" class="form-control" name="Release.EngineId">
+                    <option></option>
+                    @foreach (var engine in Model.Engine)
+                    {
+                        if (Model.Release.EngineId == engine.Id)
+                        {
+                            <option value="@engine.Id" title="@engine.Name @engine.Version" selected="selected">@engine.Name @engine.Version</option>
+                        }
+                        else
+                        {
+                            <option value="@engine.Id" title="@engine.Name @engine.Version">@engine.Name @engine.Version</option>
+                        }
+                    }
+                </select>
+                <help-text asp-for="Release.EngineId"></help-text>
+                <span asp-validation-for="Release.EngineId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Release.Languages" class="control-label"></label>
                 <help-text asp-for="Release.Languages"></help-text>
                 <div class="table">

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
 
-namespace Daedalic.ProductDatabase.Pages.Releases
+namespace Daedalic.ProductDatabase.Pages.Engines
 {
     public class DeleteModel : PageModel
     {
@@ -20,7 +20,7 @@ namespace Daedalic.ProductDatabase.Pages.Releases
         }
 
         [BindProperty]
-        public Release Release { get; set; }
+        public Engine Engine { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,18 +29,9 @@ namespace Daedalic.ProductDatabase.Pages.Releases
                 return NotFound();
             }
 
-            Release = await _context.Release
-                .Include(r => r.Game)
-                .Include(r => r.Platform)
-                .Include(r => r.Publisher)
-                .Include(r => r.Status)
-                .Include(r => r.Store)
-                .Include(r => r.Languages)
-                    .ThenInclude(l => l.Language)
-                .Include(r => r.Engine)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            Engine = await _context.Engine.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Release == null)
+            if (Engine == null)
             {
                 return NotFound();
             }
@@ -54,15 +45,15 @@ namespace Daedalic.ProductDatabase.Pages.Releases
                 return NotFound();
             }
 
-            Release = await _context.Release.FindAsync(id);
+            Engine = await _context.Engine.FindAsync(id);
 
-            if (Release != null)
+            if (Engine != null)
             {
-                _context.Release.Remove(Release);
+                _context.Engine.Remove(Engine);
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index", new RouteValues().AlertDeleted().Build());
+            return RedirectToPage("./Index");
         }
     }
 }

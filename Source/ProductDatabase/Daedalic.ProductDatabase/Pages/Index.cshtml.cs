@@ -33,6 +33,8 @@ namespace Daedalic.ProductDatabase.Pages
 
         public int Stores { get; set; }
 
+        public int Engines { get; set;}
+
         public void OnGet()
         {
             Developers = _context.Developer.Count();
@@ -43,6 +45,7 @@ namespace Daedalic.ProductDatabase.Pages
             Publishers = _context.Publisher.Count();
             Releases = _context.Release.Count();
             Stores = _context.Store.Count();
+            Engines = _context.Engine.Count();
         }
     }
 }
