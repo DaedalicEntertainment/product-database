@@ -22,9 +22,6 @@ namespace Daedalic.ProductDatabase.Pages.Releases
 
         public IList<Release> Release { get;set; }
 
-        [BindProperty(SupportsGet = true)]
-        public string Filter { get; set; }
-
         public Dictionary<string, string> SortOrders { get; set; }
 
         public async Task OnGetAsync(string sortOrder, string alert)

@@ -13,12 +13,7 @@
     <a asp-page="Create">Create New</a>
 </p>
 
-<form>
-    <p>
-        <input type="text" asp-for="Filter" />
-        <input type="submit" value="Filter" />
-    </p>
-</form>
+<partial name="_Filter" />
 
 <table class="table">
     <thead>

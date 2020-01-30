@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,9 @@ namespace Daedalic.ProductDatabase.Pages
         public string AlertClass { get; set; }
 
         public string AlertText { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string Filter { get; set; }
 
         protected void UpdateAlerts(string alert, string modelName)
         {
