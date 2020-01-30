@@ -66,7 +66,7 @@ namespace Daedalic.ProductDatabase.Pages.ReleaseStatuses
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new RouteValues().AlertUpdated().Build());
         }
 
         private bool ReleaseStatusExists(int id)

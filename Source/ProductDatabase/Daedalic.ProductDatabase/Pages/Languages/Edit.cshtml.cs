@@ -66,7 +66,7 @@ namespace Daedalic.ProductDatabase.Pages.Languages
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new RouteValues().AlertUpdated().Build());
         }
 
         private bool LanguageExists(int id)

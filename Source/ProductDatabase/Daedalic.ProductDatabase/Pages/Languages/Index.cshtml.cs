@@ -11,7 +11,7 @@ using Daedalic.ProductDatabase.Helpers;
 
 namespace Daedalic.ProductDatabase.Pages.Languages
 {
-    public class IndexModel : PageModel
+    public class IndexModel : IndexPageModel
     {
         private readonly Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext _context;
 
@@ -27,7 +27,7 @@ namespace Daedalic.ProductDatabase.Pages.Languages
 
         public Dictionary<string, string> SortOrders { get; set; }
 
-        public async Task OnGetAsync(string sortOrder)
+        public async Task OnGetAsync(string sortOrder, string alert)
         {
             var languages = from l in _context.Language select l;
 
@@ -50,6 +50,9 @@ namespace Daedalic.ProductDatabase.Pages.Languages
             }
 
             Language = await languages.AsNoTracking().ToListAsync();
+
+            // Show alerts.
+            UpdateAlerts(alert, "Language");
         }
     }
 }

@@ -66,7 +66,7 @@ namespace Daedalic.ProductDatabase.Pages.Publishers
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new RouteValues().AlertUpdated().Build());
         }
 
         private bool PublisherExists(int id)

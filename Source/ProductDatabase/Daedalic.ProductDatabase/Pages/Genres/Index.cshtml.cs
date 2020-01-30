@@ -11,7 +11,7 @@ using Daedalic.ProductDatabase.Helpers;
 
 namespace Daedalic.ProductDatabase.Pages.Genres
 {
-    public class IndexModel : PageModel
+    public class IndexModel : IndexPageModel
     {
         private readonly Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext _context;
 
@@ -27,7 +27,7 @@ namespace Daedalic.ProductDatabase.Pages.Genres
 
         public Dictionary<string, string> SortOrders { get; set; }
 
-        public async Task OnGetAsync(string sortOrder)
+        public async Task OnGetAsync(string sortOrder, string alert)
         {
             var genres = from g in _context.Genre select g;
 
@@ -50,6 +50,9 @@ namespace Daedalic.ProductDatabase.Pages.Genres
             }
 
             Genre = await genres.AsNoTracking().ToListAsync();
+
+            // Show alerts.
+            UpdateAlerts(alert, "Genre");
         }
     }
 }

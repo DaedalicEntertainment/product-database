@@ -11,7 +11,7 @@ using Daedalic.ProductDatabase.Helpers;
 
 namespace Daedalic.ProductDatabase.Pages.Stores
 {
-    public class IndexModel : PageModel
+    public class IndexModel : IndexPageModel
     {
         private readonly Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext _context;
 
@@ -27,7 +27,7 @@ namespace Daedalic.ProductDatabase.Pages.Stores
 
         public Dictionary<string, string> SortOrders { get; set; }
 
-        public async Task OnGetAsync(string sortOrder)
+        public async Task OnGetAsync(string sortOrder, string alert)
         {
             var stores = from s in _context.Store select s;
 
@@ -50,6 +50,9 @@ namespace Daedalic.ProductDatabase.Pages.Stores
             }
 
             Store = await stores.AsNoTracking().ToListAsync();
+
+            // Show alerts.
+            UpdateAlerts(alert, "Store");
         }
     }
 }

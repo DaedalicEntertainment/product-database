@@ -63,7 +63,7 @@ namespace Daedalic.ProductDatabase.Pages.Releases
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new RouteValues().AlertDeleted().Build());
         }
     }
 }

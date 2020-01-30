@@ -77,7 +77,7 @@ namespace Daedalic.ProductDatabase.Pages.Releases
                 UpdateReleasedLanguages(_context, selectedLanguages, releaseToUpdate);
 
                 await _context.SaveChangesAsync();
-                return RedirectToPage("./Index");
+                return RedirectToPage("./Index", new RouteValues().AlertUpdated().Build());
             }
             
             UpdateReleasedLanguages(_context, selectedLanguages, releaseToUpdate);

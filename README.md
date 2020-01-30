@@ -18,6 +18,7 @@ Company product database built as ASP.NET Core Web Application.
    1. Replace query parameters by path variables.
 1. Add search to model and view.
 1. Add sorting to model and view.
+1. Add alerts.
 1. Add index page link.
 1. Migrate database.
 1. Seed database (if applicable).

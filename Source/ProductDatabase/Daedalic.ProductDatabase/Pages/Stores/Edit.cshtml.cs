@@ -66,7 +66,7 @@ namespace Daedalic.ProductDatabase.Pages.Stores
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new RouteValues().AlertUpdated().Build());
         }
 
         private bool StoreExists(int id)

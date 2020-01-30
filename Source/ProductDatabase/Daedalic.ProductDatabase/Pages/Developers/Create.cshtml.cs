@@ -39,7 +39,7 @@ namespace Daedalic.ProductDatabase.Pages.Developers
             _context.Developer.Add(Developer);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new RouteValues().AlertCreated().Build());
         }
     }
 }

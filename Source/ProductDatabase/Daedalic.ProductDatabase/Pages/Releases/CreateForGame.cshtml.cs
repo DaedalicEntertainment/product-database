@@ -73,7 +73,7 @@ namespace Daedalic.ProductDatabase.Pages.Releases
                 _context.Release.Add(newRelease);
                 await _context.SaveChangesAsync();
 
-                return RedirectToPage("./Index");
+                return RedirectToPage("./Index", new RouteValues().AlertCreated().Build());
             }
 
             return Page();

@@ -11,7 +11,7 @@ using Daedalic.ProductDatabase.Repositories;
 
 namespace Daedalic.ProductDatabase.Pages.Configuration
 {
-    public class IndexModel : PageModel
+    public class IndexModel : IndexPageModel
     {
         private readonly Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext _context;
         private readonly ConfigurationRepository _configurationRepository;
@@ -25,11 +25,14 @@ namespace Daedalic.ProductDatabase.Pages.Configuration
         [BindProperty]
         public ConfigurationData Configuration { get; set; }
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(string alert)
         {
             Configuration = await _configurationRepository.Load();
             
             ViewData["ReleaseStatusId"] = new SelectList(_context.ReleaseStatus.OrderBy(s => s.Name), "Id", "Name");
+
+            // Show alerts.
+            UpdateAlerts(alert, "Configuration");
 
             return Page();
         }
@@ -40,7 +43,7 @@ namespace Daedalic.ProductDatabase.Pages.Configuration
         {
             await _configurationRepository.Save(Configuration);
 
-            return RedirectToPage("/Admin/Index");
+            return RedirectToPage("/Configuration/Index", new RouteValues().AlertUpdated().Build());
         }
     }
 }

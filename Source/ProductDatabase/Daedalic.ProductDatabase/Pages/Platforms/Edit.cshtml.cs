@@ -66,7 +66,7 @@ namespace Daedalic.ProductDatabase.Pages.Platforms
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new RouteValues().AlertUpdated().Build());
         }
 
         private bool PlatformExists(int id)

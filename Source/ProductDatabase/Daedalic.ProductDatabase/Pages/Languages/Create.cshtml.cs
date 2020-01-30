@@ -39,7 +39,7 @@ namespace Daedalic.ProductDatabase.Pages.Languages
             _context.Language.Add(Language);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new RouteValues().AlertCreated().Build());
         }
     }
 }

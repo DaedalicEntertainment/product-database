@@ -66,7 +66,7 @@ namespace Daedalic.ProductDatabase.Pages.Developers
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new RouteValues().AlertUpdated().Build());
         }
 
         private bool DeveloperExists(int id)
