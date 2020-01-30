@@ -19,7 +19,8 @@ namespace Daedalic.ProductDatabase.Models
         [Required]
         public string Name { get; set; }
 
-        [Display(Name = "Asset Index Project Id")]
+        [Display(Name = "Asset Index Project Id",
+            Description = "Id of the project in our asset index tool, e.g. for an asset index link like http://d00445:4040/?project=Deponia, enter Deponia.")]
         public string AssetIndexProjectId { get; set; }
 
         public Developer Developer { get; set; }
@@ -28,10 +29,12 @@ namespace Daedalic.ProductDatabase.Models
 
         public ICollection<Release> Releases { get; set; }
 
-        [Display(Name = "Supported Languages")]
+        [Display(Name = "Supported Languages",
+            Description = "Languages the game is supposed to support (on any platform).")]
         public ICollection<SupportedLanguage> SupportedLanguages { get; set; }
 
-        [Display(Name = "Implemented Languages")]
+        [Display(Name = "Implemented Languages",
+            Description = "Current status of localizing the respective languages. See their individual tooltips for details.")]
         public ICollection<ImplementedLanguage> ImplementedLanguages { get; set; }
     }
 }

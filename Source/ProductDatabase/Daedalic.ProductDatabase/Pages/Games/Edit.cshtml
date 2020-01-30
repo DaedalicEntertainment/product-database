@@ -15,10 +15,17 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Game.Id" />
             <div class="form-group">
+                <label asp-for="Game.Name" class="control-label"></label>
+                <input asp-for="Game.Name" class="form-control" />
+                <help-text asp-for="Game.Name"></help-text>
+                <span asp-validation-for="Game.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Game.DeveloperId" class="control-label"></label>
                 <select asp-for="Game.DeveloperId" class="form-control" asp-items="ViewBag.DeveloperId">
                     <option></option>
                 </select>
+                <help-text asp-for="Game.DeveloperId"></help-text>
                 <span asp-validation-for="Game.DeveloperId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -26,12 +33,8 @@
                 <select asp-for="Game.GenreId" class="form-control" asp-items="ViewBag.GenreId">
                     <option></option>
                 </select>
+                <help-text asp-for="Game.GenreId"></help-text>
                 <span asp-validation-for="Game.GenreId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Game.Name" class="control-label"></label>
-                <input asp-for="Game.Name" class="form-control" />
-                <span asp-validation-for="Game.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Game.AssetIndexProjectId" class="control-label"></label>
@@ -40,6 +43,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Game.SupportedLanguages" class="control-label"></label>
+                <help-text asp-for="Game.SupportedLanguages"></help-text>
                 <div class="table">
                     <table>
                         <tr>
@@ -80,6 +84,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Game.ImplementedLanguages" class="control-label"></label>
+                <help-text asp-for="Game.ImplementedLanguages"></help-text>
                 <div class="table">
                     <table>
                         @{

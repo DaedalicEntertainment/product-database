@@ -21,47 +21,56 @@
             <div class="form-group">
                 <label asp-for="Release.Summary" class="control-label"></label>
                 <textarea asp-for="Release.Summary" class="form-control"></textarea>
+                <help-text asp-for="Release.Summary"></help-text>
                 <span asp-validation-for="Release.Summary" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Release.GmcDate" class="control-label"></label>
                 <input asp-for="Release.GmcDate" class="form-control" />
+                <help-text asp-for="Release.GmcDate"></help-text>
                 <span asp-validation-for="Release.GmcDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Release.ReleaseDate" class="control-label"></label>
                 <input asp-for="Release.ReleaseDate" class="form-control" />
+                <help-text asp-for="Release.ReleaseDate"></help-text>
                 <span asp-validation-for="Release.ReleaseDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Release.Version" class="control-label"></label>
                 <input asp-for="Release.Version" class="form-control" />
+                <help-text asp-for="Release.Version"></help-text>
                 <span asp-validation-for="Release.Version" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Release.ReleaseStatusId" class="control-label"></label>
                 <select asp-for="Release.ReleaseStatusId" class="form-control" asp-items="ViewBag.ReleaseStatusId"></select>
+                <help-text asp-for="Release.ReleaseStatusId"></help-text>
             </div>
             <div class="form-group">
                 <label asp-for="Release.PublisherId" class="control-label"></label>
                 <select asp-for="Release.PublisherId" class="form-control" asp-items="ViewBag.PublisherId">
                     <option></option>
                 </select>
+                <help-text asp-for="Release.PublisherId"></help-text>
             </div>
             <div class="form-group">
                 <label asp-for="Release.PlatformId" class="control-label"></label>
                 <select asp-for="Release.PlatformId" class="form-control" asp-items="ViewBag.PlatformId">
                     <option></option>
                 </select>
+                <help-text asp-for="Release.PlatformId"></help-text>
             </div>
             <div class="form-group">
                 <label asp-for="Release.StoreId" class="control-label"></label>
                 <select asp-for="Release.StoreId" class="form-control" asp-items="ViewBag.StoreId">
                     <option></option>
                 </select>
+                <help-text asp-for="Release.StoreId"></help-text>
             </div>
             <div class="form-group">
                 <label asp-for="Release.Languages" class="control-label"></label>
+                <help-text asp-for="Release.Languages"></help-text>
                 <div class="table">
                     <table>
                         @{

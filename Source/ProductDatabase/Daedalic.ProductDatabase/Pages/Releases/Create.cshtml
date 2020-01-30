@@ -16,6 +16,7 @@
             <div class="form-group">
                 <label asp-for="Release.GameId" class="control-label"></label>
                 <select asp-for="Release.GameId" class="form-control" asp-items="ViewBag.GameId"></select>
+                <help-text asp-for="Release.GameId"></help-text>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

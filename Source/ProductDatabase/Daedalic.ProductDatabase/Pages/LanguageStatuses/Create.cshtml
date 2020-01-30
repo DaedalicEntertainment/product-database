@@ -16,11 +16,13 @@
             <div class="form-group">
                 <label asp-for="LanguageStatus.Name" class="control-label"></label>
                 <input asp-for="LanguageStatus.Name" class="form-control" />
+                <help-text asp-for="LanguageStatus.Name"></help-text>
                 <span asp-validation-for="LanguageStatus.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="LanguageStatus.Summary" class="control-label"></label>
                 <textarea asp-for="LanguageStatus.Summary" class="form-control"></textarea>
+                <help-text asp-for="LanguageStatus.Summary"></help-text>
                 <span asp-validation-for="LanguageStatus.Summary" class="text-danger"></span>
             </div>
             <div class="form-group">
