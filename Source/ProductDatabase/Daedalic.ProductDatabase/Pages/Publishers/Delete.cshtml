@@ -19,7 +19,14 @@
             @Html.DisplayFor(model => model.Publisher.Name)
         </dd>
     </dl>
-    
+
+    @if (Model.Publisher.Releases != null && Model.Publisher.Releases.Count > 0)
+    {
+        <div class="alert alert-warning" role="alert">
+            This publisher has @Model.Publisher.Releases.Count releases associated with it. Deleting the publisher will remove it from all of these releases.
+        </div>
+    }
+
     <form method="post">
         <input type="hidden" asp-for="Publisher.Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |

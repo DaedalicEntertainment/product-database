@@ -19,7 +19,14 @@
             @Html.DisplayFor(model => model.Store.Name)
         </dd>
     </dl>
-    
+
+    @if (Model.Store.Releases != null && Model.Store.Releases.Count > 0)
+    {
+        <div class="alert alert-warning" role="alert">
+            This store has @Model.Store.Releases.Count releases associated with it. Deleting the store will remove it from all of these releases.
+        </div>
+    }
+
     <form method="post">
         <input type="hidden" asp-for="Store.Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |

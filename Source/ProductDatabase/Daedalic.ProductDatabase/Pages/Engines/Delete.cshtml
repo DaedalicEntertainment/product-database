@@ -25,7 +25,14 @@
             @Html.DisplayFor(model => model.Engine.Version)
         </dd>
     </dl>
-    
+
+    @if (Model.Engine.Releases != null && Model.Engine.Releases.Count > 0)
+    {
+        <div class="alert alert-warning" role="alert">
+            This engine has @Model.Engine.Releases.Count releases associated with it. Deleting the engine will remove it from all of these releases.
+        </div>
+    }
+
     <form method="post">
         <input type="hidden" asp-for="Engine.Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |

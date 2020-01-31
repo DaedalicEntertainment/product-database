@@ -29,12 +29,13 @@ namespace Daedalic.ProductDatabase.Pages.Developers
                 return NotFound();
             }
 
-            Developer = await _context.Developer.FirstOrDefaultAsync(m => m.Id == id);
+            Developer = await _context.Developer.Include(d => d.Games).FirstOrDefaultAsync(m => m.Id == id);
 
             if (Developer == null)
             {
                 return NotFound();
             }
+
             return Page();
         }
 
@@ -45,11 +46,17 @@ namespace Daedalic.ProductDatabase.Pages.Developers
                 return NotFound();
             }
 
-            Developer = await _context.Developer.FindAsync(id);
+            Developer = await _context.Developer.Include(d => d.Games).FirstOrDefaultAsync(d => d.Id == id);
 
             if (Developer != null)
             {
+                foreach (Game game in Developer.Games)
+                {
+                    game.Developer = null;
+                }
+
                 _context.Developer.Remove(Developer);
+
                 await _context.SaveChangesAsync();
             }
 

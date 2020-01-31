@@ -16,5 +16,7 @@ namespace Daedalic.ProductDatabase.Models
 
         [Display(Description = "Tooltip to show when selecting this status.")]
         public string Summary { get; set; }
+
+        public ICollection<ImplementedLanguage> ImplementedLanguages { get; set; }
     }
 }

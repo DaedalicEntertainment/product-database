@@ -22,6 +22,8 @@ namespace Daedalic.ProductDatabase.Pages.LanguageStatuses
         [BindProperty]
         public LanguageStatus LanguageStatus { get; set; }
 
+        public bool CanDelete { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -29,12 +31,15 @@ namespace Daedalic.ProductDatabase.Pages.LanguageStatuses
                 return NotFound();
             }
 
-            LanguageStatus = await _context.LanguageStatus.FirstOrDefaultAsync(m => m.Id == id);
+            LanguageStatus = await _context.LanguageStatus.Include(s => s.ImplementedLanguages).ThenInclude(il => il.Game).FirstOrDefaultAsync(m => m.Id == id);
 
             if (LanguageStatus == null)
             {
                 return NotFound();
             }
+
+            CanDelete = LanguageStatus.ImplementedLanguages == null || LanguageStatus.ImplementedLanguages.Count == 0;
+
             return Page();
         }
 

@@ -29,12 +29,13 @@ namespace Daedalic.ProductDatabase.Pages.Publishers
                 return NotFound();
             }
 
-            Publisher = await _context.Publisher.FirstOrDefaultAsync(m => m.Id == id);
+            Publisher = await _context.Publisher.Include(p => p.Releases).FirstOrDefaultAsync(m => m.Id == id);
 
             if (Publisher == null)
             {
                 return NotFound();
             }
+
             return Page();
         }
 
@@ -45,11 +46,17 @@ namespace Daedalic.ProductDatabase.Pages.Publishers
                 return NotFound();
             }
 
-            Publisher = await _context.Publisher.FindAsync(id);
+            Publisher = await _context.Publisher.Include(p => p.Releases).FirstOrDefaultAsync(m => m.Id == id);
 
             if (Publisher != null)
             {
+                foreach (Release release in Publisher.Releases)
+                {
+                    release.Publisher = null;
+                }
+
                 _context.Publisher.Remove(Publisher);
+
                 await _context.SaveChangesAsync();
             }
 

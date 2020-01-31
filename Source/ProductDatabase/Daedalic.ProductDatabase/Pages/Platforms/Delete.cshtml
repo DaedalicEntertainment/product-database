@@ -19,7 +19,14 @@
             @Html.DisplayFor(model => model.Platform.Name)
         </dd>
     </dl>
-    
+
+    @if (Model.Platform.Releases != null && Model.Platform.Releases.Count > 0)
+    {
+        <div class="alert alert-warning" role="alert">
+            This platform has @Model.Platform.Releases.Count releases associated with it. Deleting the platform will delete all releases as well.
+        </div>
+    }
+
     <form method="post">
         <input type="hidden" asp-for="Platform.Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |

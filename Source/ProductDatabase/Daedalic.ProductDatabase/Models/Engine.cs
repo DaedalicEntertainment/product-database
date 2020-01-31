@@ -14,5 +14,7 @@ namespace Daedalic.ProductDatabase.Models
         public string Name { get; set; }
 
         public string Version { get; set; }
+
+        public ICollection<Release> Releases { get; set; }
     }
 }

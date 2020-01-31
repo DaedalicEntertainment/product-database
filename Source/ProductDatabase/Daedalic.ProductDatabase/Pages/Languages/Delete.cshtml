@@ -20,6 +20,13 @@
         </dd>
     </dl>
 
+    @if (Model.Language.SupportedLanguages != null && Model.Language.SupportedLanguages.Count > 0)
+    {
+        <div class="alert alert-warning" role="alert">
+            This language has @Model.Language.SupportedLanguages.Select(sl => sl.Game).Distinct().Count() games associated with it. Deleting the language will remove it from all of these games and their releases.
+        </div>
+    }
+
     <form method="post">
         <input type="hidden" asp-for="Language.Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |

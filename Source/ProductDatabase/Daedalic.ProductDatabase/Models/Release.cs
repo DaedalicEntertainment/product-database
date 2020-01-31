@@ -30,6 +30,7 @@ namespace Daedalic.ProductDatabase.Models
         [Display(Description = "Version number of the build to release.")]
         public string Version { get; set; }
 
+        [Display(Name = "Status")]
         public int ReleaseStatusId { get; set; }
 
         [Display(Name = "Status")]

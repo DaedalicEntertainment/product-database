@@ -29,12 +29,13 @@ namespace Daedalic.ProductDatabase.Pages.Platforms
                 return NotFound();
             }
 
-            Platform = await _context.Platform.FirstOrDefaultAsync(m => m.Id == id);
+            Platform = await _context.Platform.Include(p => p.Releases).FirstOrDefaultAsync(m => m.Id == id);
 
             if (Platform == null)
             {
                 return NotFound();
             }
+
             return Page();
         }
 
@@ -45,7 +46,8 @@ namespace Daedalic.ProductDatabase.Pages.Platforms
                 return NotFound();
             }
 
-            Platform = await _context.Platform.FindAsync(id);
+            // Fetch releases along with platform to ensure cascading delete.
+            Platform = await _context.Platform.Include(p => p.Releases).FirstOrDefaultAsync(p => p.Id == id);
 
             if (Platform != null)
             {

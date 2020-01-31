@@ -22,6 +22,8 @@ namespace Daedalic.ProductDatabase.Pages.ReleaseStatuses
         [BindProperty]
         public ReleaseStatus ReleaseStatus { get; set; }
 
+        public bool CanDelete { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -29,12 +31,15 @@ namespace Daedalic.ProductDatabase.Pages.ReleaseStatuses
                 return NotFound();
             }
 
-            ReleaseStatus = await _context.ReleaseStatus.FirstOrDefaultAsync(m => m.Id == id);
+            ReleaseStatus = await _context.ReleaseStatus.Include(s => s.Releases).FirstOrDefaultAsync(m => m.Id == id);
 
             if (ReleaseStatus == null)
             {
                 return NotFound();
             }
+
+            CanDelete = ReleaseStatus.Releases == null || ReleaseStatus.Releases.Count == 0;
+
             return Page();
         }
 

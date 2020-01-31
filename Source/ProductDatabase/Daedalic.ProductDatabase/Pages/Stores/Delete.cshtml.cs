@@ -29,12 +29,13 @@ namespace Daedalic.ProductDatabase.Pages.Stores
                 return NotFound();
             }
 
-            Store = await _context.Store.FirstOrDefaultAsync(m => m.Id == id);
+            Store = await _context.Store.Include(s => s.Releases).FirstOrDefaultAsync(s => s.Id == id);
 
             if (Store == null)
             {
                 return NotFound();
             }
+
             return Page();
         }
 
@@ -45,11 +46,17 @@ namespace Daedalic.ProductDatabase.Pages.Stores
                 return NotFound();
             }
 
-            Store = await _context.Store.FindAsync(id);
+            Store = await _context.Store.Include(s => s.Releases).FirstOrDefaultAsync(s => s.Id == id);
 
             if (Store != null)
             {
+                foreach (Release release in Store.Releases)
+                {
+                    release.Store = null;
+                }
+
                 _context.Store.Remove(Store);
+
                 await _context.SaveChangesAsync();
             }
 

@@ -29,12 +29,13 @@ namespace Daedalic.ProductDatabase.Pages.LanguageTypes
                 return NotFound();
             }
 
-            LanguageType = await _context.LanguageType.FirstOrDefaultAsync(m => m.Id == id);
+            LanguageType = await _context.LanguageType.Include(t => t.SupportedLanguages).ThenInclude(sl => sl.Game).FirstOrDefaultAsync(t => t.Id == id);
 
             if (LanguageType == null)
             {
                 return NotFound();
             }
+
             return Page();
         }
 
@@ -45,11 +46,23 @@ namespace Daedalic.ProductDatabase.Pages.LanguageTypes
                 return NotFound();
             }
 
-            LanguageType = await _context.LanguageType.FindAsync(id);
+            LanguageType = await _context.LanguageType
+                .Include(t => t.SupportedLanguages)
+                .FirstOrDefaultAsync(t => t.Id == id);
 
             if (LanguageType != null)
             {
+                // Remove supported languages.
+                List<SupportedLanguage> supportedLanguages = LanguageType.SupportedLanguages.Where(sl => sl.LanguageTypeId == LanguageType.Id).ToList();
+                        
+                foreach (var removedLanguage in supportedLanguages)
+                {
+                    _context.Remove(removedLanguage);
+                }
+                
+                // Remove type.
                 _context.LanguageType.Remove(LanguageType);
+
                 await _context.SaveChangesAsync();
             }
 

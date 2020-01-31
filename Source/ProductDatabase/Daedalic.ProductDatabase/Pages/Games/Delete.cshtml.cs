@@ -32,6 +32,7 @@ namespace Daedalic.ProductDatabase.Pages.Games
             Game = await _context.Game
                 .Include(g => g.Developer)
                 .Include(g => g.Genre)
+                .Include(g => g.Releases)
                 .Include(g => g.SupportedLanguages)
                     .ThenInclude(l => l.Language)
                 .Include(g => g.SupportedLanguages)
@@ -46,6 +47,7 @@ namespace Daedalic.ProductDatabase.Pages.Games
             {
                 return NotFound();
             }
+
             return Page();
         }
 
@@ -56,7 +58,8 @@ namespace Daedalic.ProductDatabase.Pages.Games
                 return NotFound();
             }
 
-            Game = await _context.Game.FindAsync(id);
+            // Fetch releases along with game to ensure cascading delete.
+            Game = await _context.Game.Include(g => g.Releases).FirstOrDefaultAsync(g => g.Id == id);
 
             if (Game != null)
             {

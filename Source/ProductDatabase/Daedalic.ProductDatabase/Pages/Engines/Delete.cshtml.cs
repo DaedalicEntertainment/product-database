@@ -29,12 +29,13 @@ namespace Daedalic.ProductDatabase.Pages.Engines
                 return NotFound();
             }
 
-            Engine = await _context.Engine.FirstOrDefaultAsync(m => m.Id == id);
+            Engine = await _context.Engine.Include(e => e.Releases).FirstOrDefaultAsync(e => e.Id == id);
 
             if (Engine == null)
             {
                 return NotFound();
             }
+
             return Page();
         }
 
@@ -45,11 +46,17 @@ namespace Daedalic.ProductDatabase.Pages.Engines
                 return NotFound();
             }
 
-            Engine = await _context.Engine.FindAsync(id);
+            Engine = await _context.Engine.Include(e => e.Releases).FirstOrDefaultAsync(e => e.Id == id);
 
             if (Engine != null)
             {
+                foreach (Release release in Engine.Releases)
+                {
+                    release.Engine = null;
+                }
+
                 _context.Engine.Remove(Engine);
+
                 await _context.SaveChangesAsync();
             }
 

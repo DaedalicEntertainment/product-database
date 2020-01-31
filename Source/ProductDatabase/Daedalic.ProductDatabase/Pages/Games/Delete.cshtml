@@ -85,7 +85,14 @@
             @Html.DisplayFor(model => model.Game.TwitterHandle)
         </dd>
     </dl>
-    
+
+    @if (Model.Game.Releases != null && Model.Game.Releases.Count > 0)
+    {
+        <div class="alert alert-warning" role="alert">
+            This game has @Model.Game.Releases.Count releases associated with it. Deleting the game will delete all releases as well.
+        </div>
+    }
+
     <form method="post">
         <input type="hidden" asp-for="Game.Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |

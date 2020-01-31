@@ -29,12 +29,13 @@ namespace Daedalic.ProductDatabase.Pages.Genres
                 return NotFound();
             }
 
-            Genre = await _context.Genre.FirstOrDefaultAsync(m => m.Id == id);
+            Genre = await _context.Genre.Include(g => g.Games).FirstOrDefaultAsync(g => g.Id == id);
 
             if (Genre == null)
             {
                 return NotFound();
             }
+
             return Page();
         }
 
@@ -45,11 +46,17 @@ namespace Daedalic.ProductDatabase.Pages.Genres
                 return NotFound();
             }
 
-            Genre = await _context.Genre.FindAsync(id);
+            Genre = await _context.Genre.Include(g => g.Games).FirstOrDefaultAsync(g => g.Id == id);
 
             if (Genre != null)
             {
+                foreach (Game game in Genre.Games)
+                {
+                    game.Genre = null;
+                }
+
                 _context.Genre.Remove(Genre);
+
                 await _context.SaveChangesAsync();
             }
 
