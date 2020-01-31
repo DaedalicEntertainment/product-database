@@ -50,6 +50,9 @@ namespace Daedalic.ProductDatabase.Models
 
         public Store Store { get; set; }
 
+        [Display(Name = "Early Access")]
+        public bool EarlyAccess { get; set; }
+
         [Display(Name = "Engine")]
         public int? EngineId { get; set; }
 

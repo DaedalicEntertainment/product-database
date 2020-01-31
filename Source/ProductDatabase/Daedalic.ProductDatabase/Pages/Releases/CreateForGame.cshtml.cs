@@ -72,7 +72,7 @@ namespace Daedalic.ProductDatabase.Pages.Releases
             if (await TryUpdateModelAsync<Release>(newRelease, "Release",
                 r => r.GameId, r => r.Summary, r => r.GmcDate, r => r.ReleaseDate, r => r.Version,
                 r => r.ReleaseStatusId, r => r.PublisherId, r => r.PlatformId, r => r.StoreId,
-                r => r.EngineId))
+                r => r.EarlyAccess, r => r.EngineId))
             {
                 _context.Release.Add(newRelease);
                 await _context.SaveChangesAsync();

@@ -67,6 +67,12 @@
             @Html.DisplayFor(model => model.Release.Store.Name)
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Release.EarlyAccess)
+        </dt>
+        <dd class="col-sm-10">
+            <show-flag flag="@Model.Release.EarlyAccess"></show-flag>
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Release.Engine)
         </dt>
         <dd class="col-sm-10">
