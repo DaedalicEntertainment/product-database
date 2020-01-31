@@ -27,7 +27,7 @@ namespace Daedalic.ProductDatabase.Pages.Releases
                 .Include(r => r.Game)
                 .Include(r => r.Platform)
                 .Include(r => r.Publisher)
-                .Include(r => r.Status)
+                .Include(r => r.ReleaseStatus)
                 .Include(r => r.Store) select r;
 
             if (!string.IsNullOrEmpty(Filter))
@@ -74,10 +74,10 @@ namespace Daedalic.ProductDatabase.Pages.Releases
                     releases = releases.OrderByDescending(r => r.Publisher.Name);
                     break;
                 case "status":
-                    releases = releases.OrderBy(r => r.Status.Name);
+                    releases = releases.OrderBy(r => r.ReleaseStatus.Name);
                     break;
                 case "status_desc":
-                    releases = releases.OrderByDescending(r => r.Status.Name);
+                    releases = releases.OrderByDescending(r => r.ReleaseStatus.Name);
                     break;
                 default:
                     releases = releases

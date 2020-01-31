@@ -96,7 +96,7 @@ namespace Daedalic.ProductDatabase.Pages.Releases
                         .ThenInclude(l => l.Language)
                 .Include(r => r.Platform)
                 .Include(r => r.Publisher)
-                .Include(r => r.Status)
+                .Include(r => r.ReleaseStatus)
                 .Include(r => r.Store)
                 .Include(r => r.Languages)
                     .ThenInclude(l => l.Language)
