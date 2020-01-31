@@ -16,6 +16,8 @@ namespace Daedalic.ProductDatabase.Insights.Checks
 
         private const string InsightDetailsPage = "/Games/Details";
 
+        public int Id { get; set; }
+
         public string Name => InsightName;
 
         public string Description => InsightDescription;

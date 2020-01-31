@@ -24,7 +24,7 @@ namespace Daedalic.ProductDatabase.Pages.Insights
             Checks = _insightsService.GetChecks();
         }
 
-        public IActionResult OnPostAsync(string[] selectedChecks)
+        public IActionResult OnPostAsync(int[] selectedChecks)
         {
             return RedirectToPage("./Results", new RouteValues().Custom("selectedChecks", selectedChecks).Build());
         }

@@ -21,6 +21,7 @@ Company product database built as ASP.NET Core Web Application.
 1. Use text areas for long strings.
 1. Add page link to layout or admin page.
 1. Add count to Home page if interesting.
+1. Add missing data check, if applicable.
 1. Migrate database.
 1. Seed database (if applicable).
 

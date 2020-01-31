@@ -27,13 +27,13 @@ namespace Daedalic.ProductDatabase.Pages.Insights
 
         public IList<InsightCheckWithResults> Insights { get; set; }
 
-        public async Task OnGet(string[] selectedChecks)
+        public async Task OnGet(int[] selectedChecks)
         {
             ConfigurationData configuration = await _configurationRepository.Load();
 
             Insights = new List<InsightCheckWithResults>();
 
-            foreach (var check in _insightsService.GetChecks().Where(c => selectedChecks.Contains(c.Name)))
+            foreach (var check in _insightsService.GetChecks().Where(c => selectedChecks.Contains(c.Id)))
             {
                 var results = check.Run(_context, configuration);
 

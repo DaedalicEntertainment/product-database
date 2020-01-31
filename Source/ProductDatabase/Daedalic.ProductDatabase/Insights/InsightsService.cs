@@ -12,6 +12,8 @@ namespace Daedalic.ProductDatabase.Insights
 
         public List<IInsightCheck> GetChecks()
         {
+            int nextCheckId = 0;
+
             if (checks.Count == 0)
             {
                 foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
@@ -21,6 +23,7 @@ namespace Daedalic.ProductDatabase.Insights
                         if (!type.IsInterface && typeof(IInsightCheck).IsAssignableFrom(type))
                         {
                             IInsightCheck check = (IInsightCheck)Activator.CreateInstance(type);
+                            check.Id = nextCheckId++;
                             checks.Add(check);
                         }
                     }

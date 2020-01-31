@@ -9,6 +9,8 @@ namespace Daedalic.ProductDatabase.Insights
 {
     public interface IInsightCheck
     {
+        int Id { get; set; }
+
         string Name { get; }
 
         string Description { get; }
