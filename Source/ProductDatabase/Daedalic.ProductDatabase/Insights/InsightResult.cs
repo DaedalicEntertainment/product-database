@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Daedalic.ProductDatabase.Pages.Insights
+namespace Daedalic.ProductDatabase.Insights
 {
-    public class Insight<T>
+    public class InsightResult
     {
-        public T Item { get; set; }
+        public object Item { get; set; }
 
         public string Text { get; set; }
     }

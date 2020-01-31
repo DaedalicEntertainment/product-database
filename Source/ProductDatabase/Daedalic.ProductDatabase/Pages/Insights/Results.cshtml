@@ -1,0 +1,23 @@
+﻿@page
+@model Daedalic.ProductDatabase.Pages.Insights.ResultsModel
+@{
+    ViewData["Title"] = "Results";
+}
+
+<h1>Results</h1>
+
+@foreach (var insight in Model.Insights)
+{
+    <h5>@insight.Check.Name</h5>
+
+    <p>@insight.Check.Description</p>
+
+    <div>
+        <ul>
+            @foreach (var result in insight.Results)
+            {
+                <li><a asp-page="@insight.Check.DetailsPage" asp-route-id="@insight.Check.GetDetailsPageRouteId(result)">@result.Text</a></li>
+            }
+        </ul>
+    </div>
+}

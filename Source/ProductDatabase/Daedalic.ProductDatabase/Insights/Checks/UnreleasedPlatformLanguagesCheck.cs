@@ -1,30 +1,31 @@
-﻿using System;
+﻿using Daedalic.ProductDatabase.Data;
+using Daedalic.ProductDatabase.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Daedalic.ProductDatabase.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
-namespace Daedalic.ProductDatabase.Pages.Insights
+namespace Daedalic.ProductDatabase.Insights.Checks
 {
-    public class UnreleasedLanguagesModel : PageModel
+    public class UnreleasedPlatformLanguagesCheck : IInsightCheck
     {
-        private readonly Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext _context;
+        private const string InsightName = "Unreleased Platform Languages";
 
-        public UnreleasedLanguagesModel(Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext context)
+        private const string InsightDescription = "Shows all languages that are released on at least one platform, but not on all of them.";
+
+        private const string InsightDetailsPage = "/Games/Details";
+
+        public string Name => InsightName;
+
+        public string Description => InsightDescription;
+
+        public List<InsightResult> Run(DaedalicProductDatabaseContext context)
         {
-            _context = context;
-        }
-
-        public IList<Insight<Game>> Insights { get;set; }
-
-        public void OnGet()
-        {
+            // Query database.
             List<UnreleasedLanguage> unreleasedLanguages = new List<UnreleasedLanguage>();
 
-            foreach (Game game in _context.Game
+            foreach (Game game in context.Game
                 .Include(g => g.Releases)
                     .ThenInclude(r => r.Languages)
                 .Include(g => g.Releases)
@@ -47,16 +48,26 @@ namespace Daedalic.ProductDatabase.Pages.Insights
                 }
             }
 
-            Insights = new List<Insight<Game>>();
+            // Collect results.
+            List<InsightResult> results = new List<InsightResult>();
 
             foreach (UnreleasedLanguage unreleasedLanguage in unreleasedLanguages)
             {
-                Insights.Add(new Insight<Game>
+                results.Add(new InsightResult
                 {
                     Item = unreleasedLanguage.Game,
                     Text = $"{unreleasedLanguage.Game.Name} supports {unreleasedLanguage.Language.Name}, but that language is not being released on {unreleasedLanguage.Platform.Name}."
                 });
             }
+
+            return results;
+        }
+
+        public string DetailsPage => InsightDetailsPage;
+
+        public int GetDetailsPageRouteId(InsightResult result)
+        {
+            return ((Game)result.Item).Id;
         }
 
         private class UnreleasedLanguage
