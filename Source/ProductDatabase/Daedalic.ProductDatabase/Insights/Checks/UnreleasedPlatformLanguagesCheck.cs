@@ -20,7 +20,14 @@ namespace Daedalic.ProductDatabase.Insights.Checks
 
         public string Description => InsightDescription;
 
-        public List<InsightResult> Run(DaedalicProductDatabaseContext context)
+        public string DetailsPage => InsightDetailsPage;
+
+        public int GetDetailsPageRouteId(InsightResult result)
+        {
+            return ((Game)result.Item).Id;
+        }
+
+        public List<InsightResult> Run(DaedalicProductDatabaseContext context, ConfigurationData configuration)
         {
             // Query database.
             List<UnreleasedLanguage> unreleasedLanguages = new List<UnreleasedLanguage>();
@@ -55,20 +62,13 @@ namespace Daedalic.ProductDatabase.Insights.Checks
             {
                 results.Add(new InsightResult
                 {
-                    Severity = InsightResultSeverity.Warning,
+                    Severity = InsightResultSeverity.Information,
                     Item = unreleasedLanguage.Game,
                     Text = $"{unreleasedLanguage.Game.Name} supports {unreleasedLanguage.Language.Name}, but that language is not being released on {unreleasedLanguage.Platform.Name}."
                 });
             }
 
             return results;
-        }
-
-        public string DetailsPage => InsightDetailsPage;
-
-        public int GetDetailsPageRouteId(InsightResult result)
-        {
-            return ((Game)result.Item).Id;
         }
 
         private class UnreleasedLanguage

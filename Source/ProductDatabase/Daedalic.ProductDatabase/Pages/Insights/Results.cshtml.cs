@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Daedalic.ProductDatabase.Insights;
 using Daedalic.ProductDatabase.Models;
+using Daedalic.ProductDatabase.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -14,22 +15,27 @@ namespace Daedalic.ProductDatabase.Pages.Insights
     {
         private readonly Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext _context;
         private readonly InsightsService _insightsService;
+        private readonly ConfigurationRepository _configurationRepository;
 
-        public ResultsModel(Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext context, InsightsService insightsService)
+        public ResultsModel(Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext context, InsightsService insightsService,
+            ConfigurationRepository configurationRepository)
         {
             _context = context;
             _insightsService = insightsService;
+            _configurationRepository = configurationRepository;
         }
 
         public IList<InsightCheckWithResults> Insights { get; set; }
 
-        public void OnGet(string[] selectedChecks)
+        public async Task OnGet(string[] selectedChecks)
         {
+            ConfigurationData configuration = await _configurationRepository.Load();
+
             Insights = new List<InsightCheckWithResults>();
 
             foreach (var check in _insightsService.GetChecks().Where(c => selectedChecks.Contains(c.Name)))
             {
-                var results = check.Run(_context);
+                var results = check.Run(_context, configuration);
 
                 Insights.Add(new InsightCheckWithResults { Check = check, Results = results });
             }

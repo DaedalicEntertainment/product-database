@@ -1,4 +1,5 @@
 ﻿using Daedalic.ProductDatabase.Data;
+using Daedalic.ProductDatabase.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,10 @@ namespace Daedalic.ProductDatabase.Insights
 
         string Description { get; }
 
-        List<InsightResult> Run(DaedalicProductDatabaseContext context);
-
         string DetailsPage { get; }
 
         int GetDetailsPageRouteId(InsightResult result);
+
+        List<InsightResult> Run(DaedalicProductDatabaseContext context, ConfigurationData configuration);
     }
 }
