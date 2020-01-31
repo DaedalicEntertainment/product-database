@@ -10,5 +10,7 @@ namespace Daedalic.ProductDatabase.Insights
         public object Item { get; set; }
 
         public string Text { get; set; }
+
+        public InsightResultSeverity Severity { get; set; }
     }
 }

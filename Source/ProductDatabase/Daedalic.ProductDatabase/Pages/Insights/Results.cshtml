@@ -13,11 +13,39 @@
     <p>@insight.Check.Description</p>
 
     <div>
-        <ul>
-            @foreach (var result in insight.Results)
-            {
-                <li><a asp-page="@insight.Check.DetailsPage" asp-route-id="@insight.Check.GetDetailsPageRouteId(result)">@result.Text</a></li>
-            }
-        </ul>
+        @if (insight.Results.Count > 0)
+        {
+            <ul>
+                @foreach (var result in insight.Results)
+                {
+                    <li style="list-style-type: none">
+                        @switch (result.Severity)
+                        {
+                            case ProductDatabase.Insights.InsightResultSeverity.Warning:
+                                <img src="~/img/StatusWarning_16x.png" alt="Warning" />
+                                break;
+
+                            case ProductDatabase.Insights.InsightResultSeverity.Error:
+                                <img src="~/img/StatusInvalid_16x.png" alt="Error" />
+                                break;
+
+                            default:
+                                <img src="~/img/StatusInformation_16x.png" alt="Information" />
+                                break;
+                        }
+
+                        <a asp-page="@insight.Check.DetailsPage" asp-route-id="@insight.Check.GetDetailsPageRouteId(result)">@result.Text</a>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <ul>
+                <li style="list-style-type: none">
+                    <img src="~/img/StatusOK_16x.png" alt="OK" /> All checks passed.
+                </li>
+            </ul>
+        }
     </div>
 }

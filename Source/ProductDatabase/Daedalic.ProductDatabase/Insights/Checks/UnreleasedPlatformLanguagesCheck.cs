@@ -55,6 +55,7 @@ namespace Daedalic.ProductDatabase.Insights.Checks
             {
                 results.Add(new InsightResult
                 {
+                    Severity = InsightResultSeverity.Warning,
                     Item = unreleasedLanguage.Game,
                     Text = $"{unreleasedLanguage.Game.Name} supports {unreleasedLanguage.Language.Name}, but that language is not being released on {unreleasedLanguage.Platform.Name}."
                 });
