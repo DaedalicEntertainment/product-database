@@ -34,9 +34,9 @@ namespace Daedalic.ProductDatabase.Pages.Releases
                 return NotFound();
             }
 
-            Release = await GetReleaseById(id.Value);
+            Release release = await GetReleaseById(id.Value);
 
-            if (Release == null)
+            if (release == null)
             {
                 return NotFound();
             }
@@ -47,10 +47,7 @@ namespace Daedalic.ProductDatabase.Pages.Releases
             ViewData["ReleaseStatusId"] = new SelectList(_context.ReleaseStatus.OrderBy(s => s.Name), "Id", "Name");
             ViewData["StoreId"] = new SelectList(_context.Store.OrderBy(s => s.Name), "Id", "Name");
 
-            Language = Release.Game.SupportedLanguages != null
-                ? Release.Game.SupportedLanguages.Select(sl => sl.Language).Distinct().ToList()
-                : new List<Language>();
-            Engine = _context.Engine.OrderBy(e => e.Name).ThenBy(e => e.Version).ToList();
+            PreparePage(release);
 
             return Page();
         }
@@ -83,9 +80,21 @@ namespace Daedalic.ProductDatabase.Pages.Releases
                 await _context.SaveChangesAsync();
                 return RedirectToPage("./Index", new RouteValues().AlertUpdated().Build());
             }
-            
+
             UpdateReleasedLanguages(_context, selectedLanguages, releaseToUpdate);
+
+            PreparePage(releaseToUpdate);
+
             return Page(); 
+        }
+
+        private void PreparePage(Release release)
+        {
+            Release = release;
+            Language = Release.Game.SupportedLanguages != null
+                ? Release.Game.SupportedLanguages.Select(sl => sl.Language).Distinct().ToList()
+                : new List<Language>();
+            Engine = _context.Engine.OrderBy(e => e.Name).ThenBy(e => e.Version).ToList();
         }
 
         private Task<Release> GetReleaseById(int id)

@@ -37,9 +37,9 @@ namespace Daedalic.ProductDatabase.Pages.Games
                 return NotFound();
             }
 
-            Game = await GetGameById(id.Value);
+            Game game = await GetGameById(id.Value);
 
-            if (Game == null)
+            if (game == null)
             {
                 return NotFound();
             }
@@ -47,9 +47,7 @@ namespace Daedalic.ProductDatabase.Pages.Games
             ViewData["DeveloperId"] = new SelectList(_context.Developer.OrderBy(d => d.Name), "Id", "Name");
             ViewData["GenreId"] = new SelectList(_context.Genre.OrderBy(g => g.Name), "Id", "Name");
 
-            Language = _context.Language.ToList();
-            LanguageType = _context.LanguageType.ToList();
-            LanguageStatus = _context.LanguageStatus.ToList();
+            PreparePage(game);
 
             return Page();
         }
@@ -86,6 +84,8 @@ namespace Daedalic.ProductDatabase.Pages.Games
             UpdateSupportedLanguages(_context, newSupportedLanguages, gameToUpdate);
             UpdateImplementedLanguages(_context, newLanguageStatuses, gameToUpdate);
 
+            PreparePage(gameToUpdate);
+
             return Page(); 
         }
 
@@ -106,6 +106,14 @@ namespace Daedalic.ProductDatabase.Pages.Games
             }
 
             return status.Id == implementedLanguage.LanguageStatusId;
+        }
+
+        private void PreparePage(Game game)
+        {
+            Game = game;
+            Language = _context.Language.ToList();
+            LanguageType = _context.LanguageType.ToList();
+            LanguageStatus = _context.LanguageStatus.ToList();
         }
 
         private Task<Game> GetGameById(int id)
