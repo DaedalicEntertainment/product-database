@@ -18,15 +18,17 @@ namespace Daedalic.ProductDatabase.Pages.Insights
             _context = context;
         }
 
-        public IList<UnreleasedLanguage> UnreleasedLanguages { get;set; }
+        public IList<Insight<Game>> Insights { get;set; }
 
         public void OnGet()
         {
-            UnreleasedLanguages = new List<UnreleasedLanguage>();
+            List<UnreleasedLanguage> unreleasedLanguages = new List<UnreleasedLanguage>();
 
             foreach (Game game in _context.Game
                 .Include(g => g.Releases)
                     .ThenInclude(r => r.Languages)
+                .Include(g => g.Releases)
+                    .ThenInclude(r => r.Platform)
                 .Include(g => g.SupportedLanguages)
                     .ThenInclude(sl => sl.Language))
             {
@@ -34,18 +36,34 @@ namespace Daedalic.ProductDatabase.Pages.Insights
                 {
                     foreach (Language language in game.SupportedLanguages.Select(sl => sl.Language).Distinct())
                     {
-                        if (!game.Releases.Any(r => r.Languages.Any(l => l.LanguageId == language.Id)))
+                        foreach (Platform platform in game.Releases.Select(r => r.Platform).Distinct())
                         {
-                            UnreleasedLanguages.Add(new UnreleasedLanguage { Game = game, Language = language });
+                            if (!game.Releases.Any(r => r.Platform == platform && r.Languages.Any(l => l.LanguageId == language.Id)))
+                            {
+                                unreleasedLanguages.Add(new UnreleasedLanguage { Game = game, Platform = platform, Language = language });
+                            }
                         }
                     }
                 }
             }
+
+            Insights = new List<Insight<Game>>();
+
+            foreach (UnreleasedLanguage unreleasedLanguage in unreleasedLanguages)
+            {
+                Insights.Add(new Insight<Game>
+                {
+                    Item = unreleasedLanguage.Game,
+                    Text = $"{unreleasedLanguage.Game.Name} supports {unreleasedLanguage.Language.Name}, but that language is not being released on {unreleasedLanguage.Platform.Name}."
+                });
+            }
         }
 
-        public class UnreleasedLanguage
+        private class UnreleasedLanguage
         {
             public Game Game { get; set; }
+
+            public Platform Platform { get; set; }
 
             public Language Language { get; set; }
         }

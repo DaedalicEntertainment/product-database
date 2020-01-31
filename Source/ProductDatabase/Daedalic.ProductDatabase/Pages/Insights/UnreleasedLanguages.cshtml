@@ -6,13 +6,13 @@
 
 <h1>Unreleased Languages</h1>
 
-<p>Shows all languages that are associated with a game, but not with any release for that game.</p>
+<p>Shows all languages that are released on at least one platform, but not on all of them.</p>
 
 <div>
     <ul>
-        @foreach (var unreleasedLanguage in Model.UnreleasedLanguages)
+        @foreach (var insight in Model.Insights)
         {
-            <li>@unreleasedLanguage.Game.Name - @unreleasedLanguage.Language.Name</li>
+            <li><a asp-page="/Games/Details" asp-route-id="@insight.Item.Id">@insight.Text</a></li>
         }
     </ul>
 </div>
