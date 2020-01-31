@@ -21,6 +21,12 @@
                 <span asp-validation-for="Configuration.DefaultReleaseStatus" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Configuration.FinishedReleaseStatus" class="control-label"></label>
+                <select asp-for="Configuration.FinishedReleaseStatus" class="form-control" asp-items="ViewBag.ReleaseStatusId"></select>
+                <help-text asp-for="Configuration.FinishedReleaseStatus"></help-text>
+                <span asp-validation-for="Configuration.FinishedReleaseStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
