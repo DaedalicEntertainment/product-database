@@ -50,7 +50,7 @@
             </th>
             <th>
                 <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["status"]">
-                    @Html.DisplayNameFor(model => model.Release[0].Status)
+                    @Html.DisplayNameFor(model => model.Release[0].ReleaseStatus)
                 </a>
             </th>
             <th></th>
@@ -78,7 +78,7 @@
                 @Html.DisplayFor(modelItem => item.Publisher.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Status.Name)
+                @Html.DisplayFor(modelItem => item.ReleaseStatus.Name)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |

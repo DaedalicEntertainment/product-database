@@ -5,11 +5,34 @@
 }
 
 <h1>Insights</h1>
-
-<div>
-    <ul>
-        <li>
-            <a asp-area="" asp-page="/Insights/UnreleasedLanguages">Unreleased Languages</a>
-        </li>
-    </ul>
+<hr />
+<p>Validates the data of this database and generates the specified insights.</p>
+<div class="row">
+    <div>
+        <form method="post">
+            <div class="form-group">
+                <div class="table">
+                    <table>
+                        @{
+                            foreach (var check in Model.Checks)
+                            {
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" name="selectedChecks" value="@check.Id" checked="checked" />
+                                        <b>@check.Name</b>
+                                        
+                                        <p style="padding-left: 1.5em">@check.Description</p>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Generate" class="btn btn-primary" />
+                <p><small>(This could take a while.)</small></p>
+            </div>
+        </form>
+    </div>
 </div>

@@ -14,7 +14,7 @@ namespace Daedalic.ProductDatabase.Pages
         public const string AlertValueUpdated = "updated";
         public const string AlertValueDeleted = "deleted";
 
-        private readonly Dictionary<string, string> values = new Dictionary<string, string>();
+        private readonly Dictionary<string, object> values = new Dictionary<string, object>();
 
         public RouteValues AlertCreated()
         {
@@ -40,7 +40,13 @@ namespace Daedalic.ProductDatabase.Pages
             return this;
         }
 
-        public Dictionary<string, string> Build()
+        public RouteValues Custom(string key, object value)
+        {
+            values.Add(key, value);
+            return this;
+        }
+
+        public Dictionary<string, object> Build()
         {
             return values;
         }

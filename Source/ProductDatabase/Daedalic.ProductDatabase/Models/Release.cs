@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Daedalic.ProductDatabase.Models
 {
-    public class Release
+    public class Release : IValidatableObject
     {
         public int Id { get; set; }
 
@@ -30,18 +30,19 @@ namespace Daedalic.ProductDatabase.Models
         [Display(Description = "Version number of the build to release.")]
         public string Version { get; set; }
 
-        [Display(Name = "Status")]
         public int ReleaseStatusId { get; set; }
 
-        public ReleaseStatus Status { get; set; }
+        [Display(Name = "Status")]
+        public ReleaseStatus ReleaseStatus { get; set; }
 
         [Display(Name = "Publisher")]
         public int? PublisherId { get; set; }
 
         public Publisher Publisher { get; set; }
 
+        [Required]
         [Display(Name = "Platform")]
-        public int? PlatformId { get; set; }
+        public int PlatformId { get; set; }
 
         public Platform Platform { get; set; }
 
@@ -60,5 +61,13 @@ namespace Daedalic.ProductDatabase.Models
 
         [Display(Description = "New languags to be included in this release. It's not necessary to repeat all languages for every release.")]
         public ICollection<ReleasedLanguage> Languages { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (GmcDate != null && ReleaseDate != null && ReleaseDate < GmcDate)
+            {
+                yield return new ValidationResult("Release must be after GMC.", new[] { nameof(ReleaseDate) });
+            }
+        }
     }
 }
