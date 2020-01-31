@@ -44,7 +44,7 @@ namespace Daedalic.ProductDatabase.Insights.Checks
                 {
                     foreach (Language language in game.SupportedLanguages.Select(sl => sl.Language).Distinct())
                     {
-                        foreach (Platform platform in game.Releases.Select(r => r.Platform).Distinct())
+                        foreach (Platform platform in game.Releases.Where(r => r.Platform != null).Select(r => r.Platform).Distinct())
                         {
                             if (!game.Releases.Any(r => r.Platform == platform && r.Languages.Any(l => l.LanguageId == language.Id)))
                             {
