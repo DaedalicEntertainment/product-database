@@ -57,7 +57,8 @@ namespace Daedalic.ProductDatabase.Pages.Games
             }
 
             if (await TryUpdateModelAsync<Game>(newGame, "Game",
-                g => g.DeveloperId, g  => g.GenreId, g => g.Name, g => g.AssetIndexProjectId))
+                g => g.Name, g => g.DeveloperId, g  => g.GenreId, g => g.AssetIndexProjectId,
+                g => g.WebsiteUrl, g => g.FacebookPageName, g => g.TwitterHandle))
             {
                 _context.Game.Add(newGame);
                 await _context.SaveChangesAsync();

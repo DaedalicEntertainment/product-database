@@ -10,14 +10,14 @@ namespace Daedalic.ProductDatabase.Models
     {
         public int Id { get; set; }
 
+        [Required]
+        public string Name { get; set; }
+
         [Display(Name = "Developer")]
         public int? DeveloperId { get; set; }
 
         [Display(Name = "Genre")]
         public int? GenreId { get; set; }
-
-        [Required]
-        public string Name { get; set; }
 
         [Display(Name = "Asset Index Project Id",
             Description = "Id of the project in our asset index tool, e.g. for an asset index link like http://d00445:4040/?project=Deponia, enter Deponia.")]
@@ -26,6 +26,16 @@ namespace Daedalic.ProductDatabase.Models
         public Developer Developer { get; set; }
 
         public Genre Genre { get; set; }
+
+        [Display(Name = "Website URL")]
+        [DataType(DataType.Url)]
+        public string WebsiteUrl { get; set; }
+
+        [Display(Name = "Facebook Page Name", Description = "Just specify the page name, not the whole URL.")]
+        public string FacebookPageName { get; set; }
+
+        [Display(Name = "Twitter Handle", Description = "Just specify the handle, not the whole URL. You may add or omit the @ symbol.")]
+        public string TwitterHandle { get; set; }
 
         public ICollection<Release> Releases { get; set; }
 

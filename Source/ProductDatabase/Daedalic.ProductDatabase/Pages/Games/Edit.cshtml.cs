@@ -73,7 +73,8 @@ namespace Daedalic.ProductDatabase.Pages.Games
             if (await TryUpdateModelAsync<Game>(
                 gameToUpdate,
                 "Game",
-                g => g.DeveloperId, g  => g.GenreId, g => g.Name, g => g.AssetIndexProjectId))
+                g => g.Name, g => g.DeveloperId, g => g.GenreId, g => g.AssetIndexProjectId,
+                g => g.WebsiteUrl, g => g.FacebookPageName, g => g.TwitterHandle))
             {
                 UpdateSupportedLanguages(_context, newSupportedLanguages, gameToUpdate);
                 UpdateImplementedLanguages(_context, newLanguageStatuses, gameToUpdate);

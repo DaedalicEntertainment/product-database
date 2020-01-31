@@ -21,6 +21,74 @@ namespace Daedalic.ProductDatabase.Pages.Games
 
         public Game Game { get; set; }
 
+        public string FacebookUrl
+        {
+            get
+            {
+                if (Game == null)
+                {
+                    return string.Empty;
+                }
+
+                if (string.IsNullOrEmpty(Game.FacebookPageName))
+                {
+                    return string.Empty;
+                }
+
+                return "https://www.facebook.com/" + Game.FacebookPageName;
+            }
+        }
+
+        public string TwitterUrl
+        {
+            get
+            {
+                if (Game == null)
+                {
+                    return string.Empty;
+                }
+
+                if (string.IsNullOrEmpty(Game.TwitterHandle))
+                {
+                    return string.Empty;
+                }
+
+                string twitterHandle = Game.TwitterHandle;
+
+                if (twitterHandle.StartsWith("@"))
+                {
+                    twitterHandle = twitterHandle.Substring(1);
+                }
+
+                return "https://twitter.com/" + twitterHandle;
+            }
+        }
+
+        public string FullTwitterHandle
+        {
+            get
+            {
+                if (Game == null)
+                {
+                    return string.Empty;
+                }
+
+                if (string.IsNullOrEmpty(Game.TwitterHandle))
+                {
+                    return string.Empty;
+                }
+
+                string twitterHandle = Game.TwitterHandle;
+
+                if (!twitterHandle.StartsWith("@"))
+                {
+                    twitterHandle = "@" + twitterHandle;
+                }
+
+                return twitterHandle;
+            }
+        }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)

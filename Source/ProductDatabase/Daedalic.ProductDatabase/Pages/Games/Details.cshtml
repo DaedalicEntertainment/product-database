@@ -57,12 +57,36 @@
                     .GroupBy(il => il.LanguageStatus))
                 {
                     <h5><text>@languagesByStatus.Key.Name</text></h5>
-            
+
                     foreach (var language in languagesByStatus)
                     {
                         @language.Language.Name <br />
                     }
                 }
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Game.WebsiteUrl)
+        </dt>
+        <dd class="col-sm-10">
+            <a href="@Model.Game.WebsiteUrl" target="_blank">@Model.Game.WebsiteUrl</a>
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Game.FacebookPageName)
+        </dt>
+        <dd class="col-sm-10">
+            @if (!string.IsNullOrEmpty(Model.FacebookUrl))
+            {
+                <img src="~/img/f_logo_RGB-Blue_58.png" alt="Facebook" height="16" /> <a href="@Model.FacebookUrl" target="_blank">@Model.Game.FacebookPageName</a>
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Game.TwitterHandle)
+        </dt>
+        <dd class="col-sm-10">
+            @if (!string.IsNullOrEmpty(Model.TwitterUrl))
+            {
+                <img src="~/img/Twitter_Logo_Blue.png" alt="Twitter" height="16" /> <a href="@Model.TwitterUrl" target="_blank">@Model.FullTwitterHandle</a>
             }
         </dd>
     </dl>
