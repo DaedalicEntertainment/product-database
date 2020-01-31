@@ -40,8 +40,9 @@ namespace Daedalic.ProductDatabase.Models
 
         public Publisher Publisher { get; set; }
 
+        [Required]
         [Display(Name = "Platform")]
-        public int? PlatformId { get; set; }
+        public int PlatformId { get; set; }
 
         public Platform Platform { get; set; }
 
