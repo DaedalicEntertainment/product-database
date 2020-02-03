@@ -10,7 +10,7 @@ namespace Daedalic.ProductDatabase.Insights.Checks
 {
     public class ReleaseDatePassedButNotReleasedCheck : IInsightCheck
     {
-        private const string InsightName = "Past Released Dates";
+        private const string InsightName = "Passed Release Dates";
 
         private const string InsightDescription = "Shows all releases whose release dates have passed, but whose status has not been updated. " +
             "(This could indicate we missed an update of the release date.)";
