@@ -13,7 +13,25 @@
     <a asp-page="Create">Create New</a>
 </p>
 
-<partial name="_Filter" />
+<h4>Filter</h4>
+
+<form>
+    <table>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <input type="text" data-val="true" id="Filter" name="Filter" value="@Model.Filter">
+                    <small class="form-text text-muted">Supported filters: Name, Developer, Genre</small>
+                </div>
+            </td>
+            <td style="vertical-align: top; padding-left: 2em">
+                <div class="form-group">
+                    <input type="submit" value="Filter" class="btn btn-primary" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
 
 <table class="table">
     <thead>

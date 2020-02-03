@@ -32,9 +32,18 @@ namespace Daedalic.ProductDatabase.Pages.Games
                         .Include(g => g.Developer)
                         .Include(g => g.Genre) select g;
 
+            // Apply filters.
             if (!string.IsNullOrEmpty(Filter))
             {
-                games = games.Where(g => g.Name.Contains(Filter));
+                string[] filters = Filter.Split(' ');
+
+                foreach (string f in filters)
+                {
+                    games = games.Where(g =>
+                        g.Name.Contains(f) ||
+                        g.Developer.Name.Contains(f) ||
+                        g.Genre.Name.Contains(f));
+                }
             }
 
             // Sort results.

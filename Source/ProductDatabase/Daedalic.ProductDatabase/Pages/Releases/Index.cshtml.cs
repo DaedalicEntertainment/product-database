@@ -7,19 +7,25 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
+using Daedalic.ProductDatabase.Repositories;
 
 namespace Daedalic.ProductDatabase.Pages.Releases
 {
     public class IndexModel : IndexPageModel<Release>
     {
         private readonly Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext _context;
+        private readonly ConfigurationRepository _configurationRepository;
 
-        public IndexModel(Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext context)
+        public IndexModel(Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext context, ConfigurationRepository configurationRepository)
         {
             _context = context;
+            _configurationRepository = configurationRepository;
         }
 
         public IList<Release> Release { get;set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string ShowReleased { get; set; }
 
         public async Task OnGetAsync(string sortOrder, string alert)
         {
@@ -30,9 +36,24 @@ namespace Daedalic.ProductDatabase.Pages.Releases
                 .Include(r => r.ReleaseStatus)
                 .Include(r => r.Store) select r;
 
+            // Apply filters.
             if (!string.IsNullOrEmpty(Filter))
             {
-                releases = releases.Where(r => r.Summary.Contains(Filter));
+                string[] filters = Filter.Split(' ');
+
+                foreach (string f in filters)
+                {
+                    releases = releases.Where(r =>
+                        r.Game.Name.Contains(f) ||
+                        r.Platform.Name.Contains(f) ||
+                        r.Store.Name.Contains(f));
+                }
+            }
+
+            if (ShowReleased != "on")
+            {
+                ConfigurationData configuration = await _configurationRepository.Load();
+                releases = releases.Where(r => r.ReleaseStatusId != configuration.FinishedReleaseStatus);
             }
 
             // Sort results.
