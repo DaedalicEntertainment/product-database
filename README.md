@@ -21,7 +21,8 @@ Company product database built as ASP.NET Core Web Application.
 1. Use text areas for long strings.
 1. Add page link to layout or admin page.
 1. Add count to Home page if interesting.
-1. Add missing data check, if applicable.
+1. Add missing data insights check, if applicable.
+1. Add changing sort orders to admin page, if applicable.
 1. Handle deletion (e.g. set references to null, cascade deletion, or prevent deletion).
 1. Migrate database.
 1. Seed database (if applicable).

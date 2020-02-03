@@ -37,6 +37,9 @@
                 <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
             </td>
+            <td>
+                <partial name="_ChangeOrderButtons" model="@item.Id" />
+            </td>
         </tr>
 }
     </tbody>

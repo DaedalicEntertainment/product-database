@@ -44,7 +44,7 @@ namespace Daedalic.ProductDatabase.Pages.Releases
             ViewData["GameId"] = new SelectList(_context.Game.OrderBy(g => g.Name), "Id", "Name");
             ViewData["PlatformId"] = new SelectList(_context.Platform.OrderBy(p => p.Name), "Id", "Name");
             ViewData["PublisherId"] = new SelectList(_context.Publisher.OrderBy(p => p.Name), "Id", "Name");
-            ViewData["ReleaseStatusId"] = new SelectList(_context.ReleaseStatus.OrderBy(s => s.Name), "Id", "Name");
+            ViewData["ReleaseStatusId"] = new SelectList(_context.ReleaseStatus.OrderBy(s => s.Order).ThenBy(s => s.Name), "Id", "Name");
             ViewData["StoreId"] = new SelectList(_context.Store.OrderBy(s => s.Name), "Id", "Name");
 
             PreparePage(release);

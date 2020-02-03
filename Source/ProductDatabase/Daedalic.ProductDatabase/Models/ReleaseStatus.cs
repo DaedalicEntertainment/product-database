@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace Daedalic.ProductDatabase.Models
 {
-    public class ReleaseStatus
+    public class ReleaseStatus : IIndexedModel, IOrderedModel
     {
         public int Id { get; set; }
 
         [Required]
         public string Name { get; set; }
+
+        public int Order { get; set; }
 
         public ICollection<Release> Releases { get; set; }
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Daedalic.ProductDatabase.Models
 {
-    public class LanguageStatus
+    public class LanguageStatus : IIndexedModel, IOrderedModel
     {
          public int Id { get; set; }
 
@@ -16,6 +16,8 @@ namespace Daedalic.ProductDatabase.Models
 
         [Display(Description = "Tooltip to show when selecting this status.")]
         public string Summary { get; set; }
+
+        public int Order { get; set; }
 
         public ICollection<ImplementedLanguage> ImplementedLanguages { get; set; }
     }

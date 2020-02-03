@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Daedalic.ProductDatabase.Data;
+using Daedalic.ProductDatabase.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -35,6 +37,39 @@ namespace Daedalic.ProductDatabase.Pages
             {
                 SortOrders.Add(columns[i], currentSortOrder == columns[i] ? columns[i] + "_desc" : columns[i]);
             }
+        }
+
+        protected async Task ChangeOrder<TItem>(DaedalicProductDatabaseContext context, Func<DaedalicProductDatabaseContext,
+            DbSet<TItem>> dbSetSelector, int? id, int change) where TItem : class, IIndexedModel, IOrderedModel
+        {
+            // Get current statuses.
+            List<TItem> items = dbSetSelector(context).OrderBy(i => i.Order).ToList();
+
+            // Assign current indices (fixes gaps caused by deletions).
+            for (int i = 0; i < items.Count; ++i)
+            {
+                items[i].Order = i;
+            }
+
+            // Swap indices as desired.
+            for (int i = 0; i < items.Count; ++i)
+            {
+                if (items[i].Id == id)
+                {
+                    int otherIndex = i + change;
+                    bool otherIndexValid = otherIndex >= 0 && otherIndex < items.Count;
+
+                    if (otherIndexValid)
+                    {
+                        items[i + change].Order = i;
+                        items[i].Order = i + change;
+                    }
+
+                    break;
+                }
+            }
+
+            await context.SaveChangesAsync();
         }
 
         protected void UpdateAlerts(string alert, string modelName)

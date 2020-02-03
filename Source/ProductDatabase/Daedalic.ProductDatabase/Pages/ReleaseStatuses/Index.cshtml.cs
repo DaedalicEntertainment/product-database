@@ -24,11 +24,24 @@ namespace Daedalic.ProductDatabase.Pages.ReleaseStatuses
         public void OnGet(string sortOrder, string alert)
         {
             ReleaseStatus = GetFilteredAndSortedItemsSlow(_context.ReleaseStatus, s => s.Name, sortOrder,
+                OrderBy("order", s => s.Order.ToString()),
                 OrderBy("name", s => s.Name)
             );
 
             // Show alerts.
             UpdateAlerts(alert, "Release status");
+        }
+
+        public async Task<IActionResult> OnPostUpAsync(int? id)
+        {
+            await ChangeOrder(_context, context => context.ReleaseStatus, id, -1);
+            return RedirectToPage("./Index", new RouteValues().AlertUpdated().Build());
+        }
+
+        public async Task<IActionResult> OnPostDownAsync(int? id)
+        {
+            await ChangeOrder(_context, context => context.ReleaseStatus, id, +1);
+            return RedirectToPage("./Index", new RouteValues().AlertUpdated().Build());
         }
     }
 }

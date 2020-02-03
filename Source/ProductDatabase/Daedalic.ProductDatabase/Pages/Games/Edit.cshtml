@@ -94,7 +94,7 @@
 
                                     <td>
                                         <select id="newLanguageStatuses[@language.Id]" class="form-control" name="newLanguageStatuses[@language.Id]">
-                                            @foreach (var languageStatus in Model.LanguageStatus)
+                                            @foreach (var languageStatus in Model.LanguageStatus.OrderBy(s => s.Order).ThenBy(s => s.Name))
                                             {
                                                 @if (Model.IsLanguageStatus(language, languageStatus))
                                                 {

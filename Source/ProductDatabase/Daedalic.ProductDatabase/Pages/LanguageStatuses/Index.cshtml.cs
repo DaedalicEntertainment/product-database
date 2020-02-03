@@ -24,11 +24,24 @@ namespace Daedalic.ProductDatabase.Pages.LanguageStatuses
         public void OnGet(string sortOrder, string alert)
         {
             LanguageStatus = GetFilteredAndSortedItemsSlow(_context.LanguageStatus, s => s.Name, sortOrder,
+                OrderBy("order", s => s.Order.ToString()),
                 OrderBy("name", s => s.Name)
             );
 
             // Show alerts.
             UpdateAlerts(alert, "Language status");
+        }
+
+        public async Task<IActionResult> OnPostUpAsync(int? id)
+        {
+            await ChangeOrder(_context, context => context.LanguageStatus, id, -1);
+            return RedirectToPage("./Index", new RouteValues().AlertUpdated().Build());
+        }
+
+        public async Task<IActionResult> OnPostDownAsync(int? id)
+        {
+            await ChangeOrder(_context, context => context.LanguageStatus, id, +1);
+            return RedirectToPage("./Index", new RouteValues().AlertUpdated().Build());
         }
     }
 }
