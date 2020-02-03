@@ -36,7 +36,7 @@ namespace Daedalic.ProductDatabase.Pages.Releases
             }
 
             // Sort results.
-            UpdateSortOrders(sortOrder, "game", "platform", "store", "gmcdate", "releasedate", "publisher", "status");
+            UpdateSortOrders(sortOrder, "game", "platform", "gmcdate", "releasedate", "publisher", "status");
 
             switch (sortOrder)
             {
@@ -44,16 +44,10 @@ namespace Daedalic.ProductDatabase.Pages.Releases
                     releases = releases.OrderByDescending(r => r.Game.Name);
                     break;
                 case "platform":
-                    releases = releases.OrderBy(r => r.Platform.Name);
+                    releases = releases.OrderBy(r => r.Platform.Name).ThenBy(r => r.Store.Name);
                     break;
                 case "platform_desc":
-                    releases = releases.OrderByDescending(r => r.Platform.Name);
-                    break;
-                case "store":
-                    releases = releases.OrderBy(r => r.Store.Name);
-                    break;
-                case "store_desc":
-                    releases = releases.OrderByDescending(r => r.Store.Name);
+                    releases = releases.OrderByDescending(r => r.Platform.Name).ThenByDescending(r => r.Store.Name);
                     break;
                 case "gmcdate":
                     releases = releases.OrderBy(r => r.GmcDate);

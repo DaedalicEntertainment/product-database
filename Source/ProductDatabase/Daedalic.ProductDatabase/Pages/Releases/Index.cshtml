@@ -25,12 +25,7 @@
             </th>
             <th>
                 <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["platform"]">
-                    @Html.DisplayNameFor(model => model.Release[0].Platform)
-                </a>
-            </th>
-            <th>
-                <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["store"]">
-                    @Html.DisplayNameFor(model => model.Release[0].Store)
+                    @Html.DisplayNameFor(model => model.Release[0].Platform) / @Html.DisplayNameFor(model => model.Release[0].Store)
                 </a>
             </th>
             <th>
@@ -63,10 +58,7 @@
                 @Html.DisplayFor(modelItem => item.Game.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Platform.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Store.Name)
+                @Html.DisplayFor(modelItem => item.Platform.Name) @Html.DisplayFor(modelItem => item.Store.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.GmcDate)
