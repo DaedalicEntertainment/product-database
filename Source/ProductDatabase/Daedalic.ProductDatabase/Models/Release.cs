@@ -70,5 +70,51 @@ namespace Daedalic.ProductDatabase.Models
                 yield return new ValidationResult("Release must be after GMC.", new[] { nameof(ReleaseDate) });
             }
         }
+
+        public ReleaseQuarter GetReleaseQuarter()
+        {
+            return ReleaseDate.HasValue ? new ReleaseQuarter(ReleaseDate.Value) : null;
+        }
+
+        public class ReleaseQuarter
+        {
+            public int Year { get; set; }
+
+            public int Quarter { get; set; }
+
+            public ReleaseQuarter()
+            {
+            }
+
+            public ReleaseQuarter(DateTime releaseDate)
+            {
+                Year = releaseDate.Year;
+                Quarter = (releaseDate.Month / 4) + 1;
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (obj is ReleaseQuarter)
+                {
+                    ReleaseQuarter other = (ReleaseQuarter)obj;
+                    return this.Year == other.Year && this.Quarter == other.Quarter;
+                }
+
+                return base.Equals(obj);
+            }
+
+            public override int GetHashCode()
+            {
+                int hash = 23;
+                hash = hash * 31 + Year.GetHashCode();
+                hash = hash * 31 + Quarter.GetHashCode();
+                return hash;
+            }
+
+            public override string ToString()
+            {
+                return $"Q{Quarter} {Year}";
+            }
+        }
     }
 }

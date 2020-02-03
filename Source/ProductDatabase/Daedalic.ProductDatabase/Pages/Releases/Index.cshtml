@@ -15,69 +15,85 @@
 
 <partial name="_Filter" />
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["game"]">
-                    @Html.DisplayNameFor(model => model.Release[0].Game)
-                </a>
-            </th>
-            <th>
-                <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["platform"]">
-                    @Html.DisplayNameFor(model => model.Release[0].Platform) / @Html.DisplayNameFor(model => model.Release[0].Store)
-                </a>
-            </th>
-            <th>
-                <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["gmcdate"]">
-                    @Html.DisplayNameFor(model => model.Release[0].GmcDate)
-                </a>
-            </th>
-            <th>
-                <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["releasedate"]">
-                    @Html.DisplayNameFor(model => model.Release[0].ReleaseDate)
-                </a>
-            </th>
-            <th>
-                <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["publisher"]">
-                    @Html.DisplayNameFor(model => model.Release[0].Publisher)
-                </a>
-            </th>
-            <th>
-                <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["status"]">
-                    @Html.DisplayNameFor(model => model.Release[0].ReleaseStatus)
-                </a>
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Release) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Game.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Platform.Name) @Html.DisplayFor(modelItem => item.Store.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GmcDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReleaseDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Publisher.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReleaseStatus.Name)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+@foreach (var releasesByQuarter in Model.Release
+    .GroupBy(r => r.GetReleaseQuarter())
+    .OrderBy(g => g.Key != null ? g.Key.Year : 10000)
+    .ThenBy(g => g.Key != null ? g.Key.Quarter : 5))
+{
+    if (releasesByQuarter.Key != null)
+    {
+        <h4>@releasesByQuarter.Key</h4>
+    }
+    else
+    {
+        <h4>No Release Date</h4>
+    }
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["game"]">
+                        @Html.DisplayNameFor(model => model.Release[0].Game)
+                    </a>
+                </th>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["platform"]">
+                        @Html.DisplayNameFor(model => model.Release[0].Platform) / @Html.DisplayNameFor(model => model.Release[0].Store)
+                    </a>
+                </th>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["gmcdate"]">
+                        @Html.DisplayNameFor(model => model.Release[0].GmcDate)
+                    </a>
+                </th>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["releasedate"]">
+                        @Html.DisplayNameFor(model => model.Release[0].ReleaseDate)
+                    </a>
+                </th>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["publisher"]">
+                        @Html.DisplayNameFor(model => model.Release[0].Publisher)
+                    </a>
+                </th>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["status"]">
+                        @Html.DisplayNameFor(model => model.Release[0].ReleaseStatus)
+                    </a>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in releasesByQuarter)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Game.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Platform.Name) @Html.DisplayFor(modelItem => item.Store.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GmcDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReleaseDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Publisher.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReleaseStatus.Name)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
-    </tbody>
-</table>
