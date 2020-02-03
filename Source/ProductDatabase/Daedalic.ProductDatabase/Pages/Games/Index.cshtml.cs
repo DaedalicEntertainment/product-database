@@ -24,7 +24,7 @@ namespace Daedalic.ProductDatabase.Pages.Games
 
         public IList<Game> Game { get;set; }
 
-        public string AssetIndexUrl { get; set; }
+        public string AssetIndexUrl { get; private set; }
 
         public async Task OnGetAsync(string sortOrder, string alert)
         {

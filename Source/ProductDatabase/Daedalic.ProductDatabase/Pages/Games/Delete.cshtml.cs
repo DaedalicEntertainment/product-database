@@ -33,14 +33,6 @@ namespace Daedalic.ProductDatabase.Pages.Games
                 .Include(g => g.Developer)
                 .Include(g => g.Genre)
                 .Include(g => g.Releases)
-                .Include(g => g.SupportedLanguages)
-                    .ThenInclude(l => l.Language)
-                .Include(g => g.SupportedLanguages)
-                    .ThenInclude(l => l.LanguageType)
-                .Include(g => g.ImplementedLanguages)
-                    .ThenInclude(l => l.Language)
-                .Include(g => g.ImplementedLanguages)
-                    .ThenInclude(l => l.LanguageStatus)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (Game == null)
