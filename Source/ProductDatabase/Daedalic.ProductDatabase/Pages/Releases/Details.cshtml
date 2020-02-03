@@ -18,11 +18,29 @@
             @Html.DisplayFor(model => model.Release.Game.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Release.Summary)
+            @Html.DisplayNameFor(model => model.Release.Platform)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Release.Summary)
+            @Html.DisplayFor(model => model.Release.Platform.Name)
+            @Html.DisplayFor(model => model.Release.Store.Name)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Release.ReleaseStatus)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Release.ReleaseStatus.Name)
+        </dd>
+
+        @if (!string.IsNullOrEmpty(Model.Release.Summary))
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Release.Summary)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Release.Summary)
+            </dd>
+        }
+
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Release.GmcDate)
         </dt>
@@ -42,28 +60,10 @@
             @Html.DisplayFor(model => model.Release.Version)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Release.ReleaseStatus)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Release.ReleaseStatus.Name)
-        </dd>
-        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Release.Publisher)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Release.Publisher.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Release.Platform)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Release.Platform.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Release.Store)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Release.Store.Name)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Release.EarlyAccess)
