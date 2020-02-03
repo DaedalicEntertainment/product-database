@@ -1,4 +1,5 @@
 ﻿using Daedalic.ProductDatabase.Data;
+using Daedalic.ProductDatabase.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -6,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Daedalic.ProductDatabase.Models
+namespace Daedalic.ProductDatabase.Data
 {
     public static class SeedData
     {
