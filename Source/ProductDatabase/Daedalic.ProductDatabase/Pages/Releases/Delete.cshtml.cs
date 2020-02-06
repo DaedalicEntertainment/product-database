@@ -22,6 +22,8 @@ namespace Daedalic.ProductDatabase.Pages.Releases
         [BindProperty]
         public Release Release { get; set; }
 
+        public List<Release> Releases { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -44,6 +46,13 @@ namespace Daedalic.ProductDatabase.Pages.Releases
             {
                 return NotFound();
             }
+
+            Releases = await _context.Release
+                .Include(r => r.Game)
+                .Include(r => r.Platform)
+                .Include(r => r.Store)
+                .ToListAsync();
+
             return Page();
         }
 

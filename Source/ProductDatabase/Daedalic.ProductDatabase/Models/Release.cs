@@ -8,6 +8,19 @@ namespace Daedalic.ProductDatabase.Models
 {
     public class Release : IValidatableObject
     {
+        private static readonly ReleaseType ReleaseTypeRelease = new ReleaseType
+        { 
+            Name = "Release",
+            Description = "First release for a game with this platform and store."
+        };
+
+        private static readonly ReleaseType ReleaseTypePatch =
+            new ReleaseType
+            { 
+                Name = "Patch", 
+                Description = "Release for an existing game with the same platform and store, but earlier release/ready for release/GMC date." 
+            };
+
         public int Id { get; set; }
 
         [Required]
@@ -85,9 +98,62 @@ namespace Daedalic.ProductDatabase.Models
             }
         }
 
+        public bool IsPatch(IEnumerable<Release> allReleases)
+        {
+            // If there's any other release satisfying the following criteria, this release must be a patch.
+            return allReleases.Any(other =>
+                // Only consider other releases.
+                other.Id != this.Id &&
+
+                // Must be for same game, platform and store.
+                other.GameId == this.GameId &&
+                other.PlatformId == this.PlatformId &&
+                other.StoreId == this.StoreId &&
+
+                // Must be released before us.
+                other.IsBefore(this));
+        }
+
+        public ReleaseType GetReleaseType(IEnumerable<Release> allReleases)
+        {
+            return IsPatch(allReleases) ? ReleaseTypePatch : ReleaseTypeRelease;
+        }
+
+        public bool IsBefore(Release other)
+        {
+            if (other == null)
+            {
+                return true;
+            }
+
+            if (this.ReleaseDate != null && other.ReleaseDate != null)
+            {
+                return this.ReleaseDate < other.ReleaseDate;
+            }
+
+            if (this.ReadyForReleaseDate != null && other.ReadyForReleaseDate != null)
+            {
+                return this.ReadyForReleaseDate < other.ReadyForReleaseDate;
+            }
+
+            if (this.GmcDate != null)
+            {
+                return other.GmcDate != null && this.GmcDate < other.GmcDate;
+            }
+
+            return this.Id < other.Id;
+        }
+
         public ReleaseQuarter GetReleaseQuarter()
         {
             return ReleaseDate.HasValue ? new ReleaseQuarter(ReleaseDate.Value) : null;
+        }
+
+        public class ReleaseType
+        {
+            public string Name { get; set; }
+
+            public string Description { get; set; }
         }
 
         public class ReleaseQuarter

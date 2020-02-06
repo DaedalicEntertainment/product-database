@@ -27,6 +27,16 @@
         </dd>
 
         <dt class="col-sm-2">
+            Type
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                var releaseType = Model.Release.GetReleaseType(Model.Releases);
+
+                <p title="@releaseType.Description">@releaseType.Name</p>
+            }
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Release.ReleaseStatus)
         </dt>
         <dd class="col-sm-10">

@@ -70,6 +70,9 @@
                     </a>
                 </th>
                 <th>
+                    Type
+                </th>
+                <th>
                     <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["gmcdate"]">
                         @Html.DisplayNameFor(model => model.Release[0].GmcDate)
                     </a>
@@ -101,6 +104,13 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Platform.Name) @Html.DisplayFor(modelItem => item.Store.Name)
+                    </td>
+                    <td>
+                        @{
+                            var releaseType = item.GetReleaseType(Model.Release);
+
+                            <p title="@releaseType.Description">@releaseType.Name</p>
+                        }
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.GmcDate)
