@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
 using Daedalic.ProductDatabase.Repositories;
+using System.Globalization;
 
 namespace Daedalic.ProductDatabase.Pages.Releases
 {
@@ -27,8 +28,12 @@ namespace Daedalic.ProductDatabase.Pages.Releases
         [BindProperty(SupportsGet = true)]
         public string ShowReleased { get; set; }
 
+        public ConfigurationData Configuration { get; set; }
+
         public async Task OnGetAsync(string sortOrder, string alert)
         {
+            Configuration = await _configurationRepository.Load();
+
             var releases = from r in  _context.Release
                 .Include(r => r.Game)
                 .Include(r => r.Platform)
@@ -52,8 +57,7 @@ namespace Daedalic.ProductDatabase.Pages.Releases
 
             if (ShowReleased != "on")
             {
-                ConfigurationData configuration = await _configurationRepository.Load();
-                releases = releases.Where(r => r.ReleaseStatusId != configuration.FinishedReleaseStatus);
+                releases = releases.Where(r => r.ReleaseStatusId != Configuration.FinishedReleaseStatus);
             }
 
             // Sort results.

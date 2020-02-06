@@ -7,22 +7,27 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
+using Daedalic.ProductDatabase.Repositories;
 
 namespace Daedalic.ProductDatabase.Pages.Releases
 {
     public class DeleteModel : PageModel
     {
         private readonly Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext _context;
+        private readonly ConfigurationRepository _configurationRepository;
 
-        public DeleteModel(Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext context)
+        public DeleteModel(Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext context, ConfigurationRepository configurationRepository)
         {
             _context = context;
+            _configurationRepository = configurationRepository;
         }
 
         [BindProperty]
         public Release Release { get; set; }
 
         public List<Release> Releases { get; set; }
+
+        public ConfigurationData Configuration { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -47,6 +52,7 @@ namespace Daedalic.ProductDatabase.Pages.Releases
                 return NotFound();
             }
 
+            Configuration = await _configurationRepository.Load();
             Releases = await _context.Release
                 .Include(r => r.Game)
                 .Include(r => r.Platform)

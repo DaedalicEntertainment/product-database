@@ -33,6 +33,12 @@
                 <span asp-validation-for="Configuration.DefaultLanguageStatus" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Configuration.Locale" class="control-label"></label>
+                <input asp-for="Configuration.Locale" class="form-control" />
+                <help-text asp-for="Configuration.Locale"></help-text>
+                <span asp-validation-for="Configuration.Locale" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>

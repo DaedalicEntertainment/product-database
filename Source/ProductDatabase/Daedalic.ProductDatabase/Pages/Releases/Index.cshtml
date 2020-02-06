@@ -113,13 +113,13 @@
                         }
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.GmcDate)
+                        @Model.Configuration.FormatDate(item.GmcDate)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.ReadyForReleaseDate)
+                        @Model.Configuration.FormatDate(item.ReadyForReleaseDate)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.ReleaseDate)
+                        @Model.Configuration.FormatDate(item.ReleaseDate)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ReleaseStatus.Name)

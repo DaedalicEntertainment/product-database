@@ -56,19 +56,19 @@
             @Html.DisplayNameFor(model => model.Release.GmcDate)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Release.GmcDate)
+            @Model.Configuration.FormatDate(Model.Release.GmcDate)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Release.ReadyForReleaseDate)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Release.ReadyForReleaseDate)
+            @Model.Configuration.FormatDate(Model.Release.ReadyForReleaseDate)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Release.ReleaseDate)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Release.ReleaseDate)
+            @Model.Configuration.FormatDate(Model.Release.ReleaseDate)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Release.Version)
