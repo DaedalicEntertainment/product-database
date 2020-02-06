@@ -30,6 +30,7 @@ namespace Daedalic.ProductDatabase.Pages.Configuration
             Configuration = await _configurationRepository.Load();
             
             ViewData["ReleaseStatusId"] = new SelectList(_context.ReleaseStatus.OrderBy(s => s.Order).ThenBy(s => s.Name), "Id", "Name");
+            ViewData["LanguageStatusId"] = new SelectList(_context.LanguageStatus.OrderBy(s => s.Order).ThenBy(s => s.Name), "Id", "Name");
 
             // Show alerts.
             UpdateAlerts(alert, "Configuration");

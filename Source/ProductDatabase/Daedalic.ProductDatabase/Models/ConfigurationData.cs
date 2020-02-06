@@ -13,5 +13,8 @@ namespace Daedalic.ProductDatabase.Models
 
         [Display(Name = "Finished Release Status", Description = "Status that describes a finished release (game is available for customers).")]
         public int FinishedReleaseStatus { get; set; }
+
+        [Display(Name = "Default Language Status", Description = "Default status to select for new game langauges.")]
+        public int DefaultLanguageStatus { get; set; }
     }
 }

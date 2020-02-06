@@ -9,16 +9,21 @@ using Microsoft.EntityFrameworkCore;
 using Daedalic.ProductDatabase.Data;
 using Daedalic.ProductDatabase.Models;
 using Daedalic.ProductDatabase.Pages.Games;
+using Daedalic.ProductDatabase.Repositories;
 
 namespace Daedalic.ProductDatabase.Pages.Games
 {
     public class EditModel : GamePageModel
     {
         private readonly Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext _context;
+        private readonly ConfigurationRepository _configurationRepository;
 
-        public EditModel(Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext context)
+        private ConfigurationData configuration;
+
+        public EditModel(Daedalic.ProductDatabase.Data.DaedalicProductDatabaseContext context, ConfigurationRepository configurationRepository)
         {
             _context = context;
+            _configurationRepository = configurationRepository;
         }
 
         [BindProperty]
@@ -46,6 +51,8 @@ namespace Daedalic.ProductDatabase.Pages.Games
 
             ViewData["DeveloperId"] = new SelectList(_context.Developer.OrderBy(d => d.Name), "Id", "Name");
             ViewData["GenreId"] = new SelectList(_context.Genre.OrderBy(g => g.Name), "Id", "Name");
+
+            configuration = await _configurationRepository.Load();
 
             PreparePage(game);
 
@@ -91,18 +98,18 @@ namespace Daedalic.ProductDatabase.Pages.Games
 
         public bool IsLanguageStatus(Language language, LanguageStatus status)
         {
-            LanguageStatus defaultStatus = LanguageStatus.First();
+            int defaultStatus = configuration.DefaultLanguageStatus;
 
             if (Game.ImplementedLanguages == null)
             {
-                return status.Id == defaultStatus.Id;
+                return status.Id == defaultStatus;
             }
 
             ImplementedLanguage implementedLanguage = Game.ImplementedLanguages.FirstOrDefault(il => il.LanguageId == language.Id);
 
             if (implementedLanguage == null)
             {
-                return status.Id == defaultStatus.Id;
+                return status.Id == defaultStatus;
             }
 
             return status.Id == implementedLanguage.LanguageStatusId;
