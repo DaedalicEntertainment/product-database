@@ -1,0 +1,35 @@
+﻿@page "{id:int}"
+@model Daedalic.ProductDatabase.Pages.Languages.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Language</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Language.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Language.Name)
+        </dd>
+    </dl>
+
+    @if (Model.Language.SupportedLanguages != null && Model.Language.SupportedLanguages.Count > 0)
+    {
+        <div class="alert alert-warning" role="alert">
+            This language has @Model.Language.SupportedLanguages.Select(sl => sl.Game).Distinct().Count() games associated with it. Deleting the language will remove it from all of these games and their releases.
+        </div>
+    }
+
+    <form method="post">
+        <input type="hidden" asp-for="Language.Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>

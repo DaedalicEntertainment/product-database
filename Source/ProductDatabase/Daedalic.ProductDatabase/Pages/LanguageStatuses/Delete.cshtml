@@ -1,0 +1,43 @@
+﻿@page "{id:int}"
+@model Daedalic.ProductDatabase.Pages.LanguageStatuses.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Language Status</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LanguageStatus.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LanguageStatus.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LanguageStatus.Summary)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LanguageStatus.Summary)
+        </dd>
+    </dl>
+
+    @if (!Model.CanDelete)
+    {
+        <div class="alert alert-danger" role="alert">
+            This language status has @Model.LanguageStatus.ImplementedLanguages.Select(il => il.Game).Distinct().Count() games associated with it.
+            Deleting this status is not possible as long as it is referenced by any game, because it is unclear what other language status to fall back to.
+            Change the status of the languages for the affected games and try again.
+        </div>
+    }
+
+    <form method="post">
+        <input type="hidden" asp-for="LanguageStatus.Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" @if (!Model.CanDelete) { <text>disabled</text> } /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>

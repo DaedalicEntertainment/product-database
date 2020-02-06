@@ -1,0 +1,30 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>to the Daedalic Entertainment product database.</p>
+</div>
+
+<table class="table">
+    <tbody>
+        <tr>
+            <td>@Model.Developers Developers</td>
+            <td>@Model.Games Games</td>
+            <td>@Model.Genres Genres</td>
+        </tr>
+        <tr>
+            <td>@Model.Languages Languages</td>
+            <td>@Model.Platforms Platforms</td>
+            <td>@Model.Publishers Publishers</td>
+        </tr>
+        <tr>
+            <td>@Model.Releases Releases</td>
+            <td>@Model.Stores Stores</td>
+            <td>@Model.Engines Engine Versions</td>
+        </tr>
+    </tbody>
+</table>

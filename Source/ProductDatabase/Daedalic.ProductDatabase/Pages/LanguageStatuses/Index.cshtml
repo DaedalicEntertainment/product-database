@@ -1,0 +1,52 @@
+﻿@page
+@model Daedalic.ProductDatabase.Pages.LanguageStatuses.IndexModel
+
+@{
+    ViewData["Title"] = "Language Statuses";
+}
+
+<partial name="_Alert" />
+
+<h1>Language Statuses</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<partial name="_Filter" />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["name"]">
+                    @Html.DisplayNameFor(model => model.LanguageStatus[0].Name)
+                </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LanguageStatus[0].Summary)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.LanguageStatus) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Summary)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+            <td>
+                <partial name="_ChangeOrderButtons" model="@item.Id" />
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

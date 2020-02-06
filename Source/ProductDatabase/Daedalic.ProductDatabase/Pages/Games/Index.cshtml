@@ -1,0 +1,83 @@
+﻿@page
+@model Daedalic.ProductDatabase.Pages.Games.IndexModel
+
+@{
+    ViewData["Title"] = "Games";
+}
+
+<partial name="_Alert" />
+
+<h1>Games</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<h4>Filter</h4>
+
+<form>
+    <table>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <input type="text" data-val="true" id="Filter" name="Filter" value="@Model.Filter">
+                    <small class="form-text text-muted">Supported filters: Name, Developer, Genre</small>
+                </div>
+            </td>
+            <td style="vertical-align: top; padding-left: 2em">
+                <div class="form-group">
+                    <input type="submit" value="Filter" class="btn btn-primary" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["name"]">
+                    @Html.DisplayNameFor(model => model.Game[0].Name)
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["developer"]">
+                    @Html.DisplayNameFor(model => model.Game[0].Developer)
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["genre"]">
+                    @Html.DisplayNameFor(model => model.Game[0].Genre)
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Game)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Developer.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre.Name)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+
+                    @if (!string.IsNullOrEmpty(item.AssetIndexProjectId))
+                    {
+                        @Html.Raw("|") <a href="@string.Format(Model.AssetIndexUrl, item.AssetIndexProjectId)" target="_blank">Asset Index</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,201 @@
+﻿@page "{id:int}"
+@model Daedalic.ProductDatabase.Pages.Games.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Game</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Game.Name)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Game.Name)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Game.Developer)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Game.Developer.Name)
+        </dd>
+        <dt class="col-sm-4">
+            @string.Concat(Html.DisplayNameFor(model => model.Game.Releases.FirstOrDefault().Publisher), "s")
+        </dt>
+        <dd class="col-sm-8">
+            @foreach (var publisher in Model.Game.Releases.Select(r => r.Publisher).Distinct())
+            {
+                @Html.DisplayFor(modelItem => publisher.Name) <br />
+            }
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Game.Genre)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Game.Genre.Name)
+        </dd>
+        <dt class="col-sm-4">
+            Languages
+        </dt>
+        <dd class="col-sm-8">
+            <div class="table">
+                <table>
+                    <tr>
+                        <th></th>
+
+                        @{
+                            foreach (var languageType in Model.Game.SupportedLanguages.Select(sl => sl.LanguageType).Distinct())
+                            {
+                                <th>
+                                    @languageType.Name
+                                </th>
+                            }
+                        }
+
+                        <th></th>
+                    </tr>
+
+                    @{
+                        foreach (var language in Model.Game.SupportedLanguages.Select(sl => sl.Language).Distinct().OrderBy(l => l.Name))
+                        {
+                            <tr>
+                                <th>
+                                    @language.Name
+                                </th>
+
+                                @foreach (var languageType in Model.Game.SupportedLanguages.Select(sl => sl.LanguageType).Distinct())
+                                {
+                                    <td style="text-align: center">
+                                        @(Html.Raw(Model.Game.SupportedLanguages.Any(l => l.LanguageId == language.Id && l.LanguageTypeId == languageType.Id) ? "X" : ""))
+                                    </td>
+                                }
+
+                                <td>
+                                    @if (Model.Game.ImplementedLanguages.Any(il => il.LanguageId == language.Id))
+                                    {
+                                        @Model.Game.ImplementedLanguages.FirstOrDefault(il => il.LanguageId == language.Id).LanguageStatus.Name
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </div>
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Game.Releases.FirstOrDefault().EarlyAccess)
+        </dt>
+        <dd class="col-sm-8">
+            @if (Model.Game.Releases.Any(r => r.EarlyAccess) && !Model.Game.Releases.Any(r => !r.EarlyAccess && r.ReleaseStatus.Id == Model.Configuration.FinishedReleaseStatus))
+            {
+                <text>yes</text>
+            }
+            else
+            {
+                <text>no</text>
+            }
+        </dd>
+        <dt class="col-sm-4">
+            @string.Concat(Html.DisplayNameFor(model => model.Game.Releases.FirstOrDefault().Engine), "s")
+        </dt>
+        <dd class="col-sm-8">
+            @foreach (var engine in Model.Game.Releases.Select(r => r.Engine).Distinct())
+            {
+                @Html.DisplayFor(modelItem => engine.Name)
+                <text> </text>
+                @Html.DisplayFor(modelItem => engine.Version)
+                <br />
+            }
+        </dd>
+        <dt class="col-sm-4">
+            Asset Index Page
+        </dt>
+        <dd class="col-sm-8">
+            @if (!string.IsNullOrEmpty(Model.Game.AssetIndexProjectId))
+            {
+                <a href="@string.Format(Model.AssetIndexUrl, Model.Game.AssetIndexProjectId)" target="_blank">@string.Format(Model.AssetIndexUrl, Model.Game.AssetIndexProjectId)</a>
+            }
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Game.WebsiteUrl)
+        </dt>
+        <dd class="col-sm-8">
+            <a href="@Model.Game.WebsiteUrl" target="_blank">@Model.Game.WebsiteUrl</a>
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Game.FacebookPageName)
+        </dt>
+        <dd class="col-sm-8">
+            @if (!string.IsNullOrEmpty(Model.FacebookUrl))
+            {
+                <img src="~/img/f_logo_RGB-Blue_58.png" alt="Facebook" height="16" /> <a href="@Model.FacebookUrl" target="_blank">@Model.Game.FacebookPageName</a>
+            }
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Game.TwitterHandle)
+        </dt>
+        <dd class="col-sm-8">
+            @if (!string.IsNullOrEmpty(Model.TwitterUrl))
+            {
+                <img src="~/img/Twitter_Logo_Blue.png" alt="Twitter" height="16" /> <a href="@Model.TwitterUrl" target="_blank">@Model.FullTwitterHandle</a>
+            }
+        </dd>
+    </dl>
+</div>
+
+@foreach (var releasesByStatus in Model.Game.Releases.GroupBy(r => r.ReleaseStatus))
+{
+    <h5>@releasesByStatus.Key.Name Releases</h5>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Game.Releases.FirstOrDefault().Platform) / @Html.DisplayNameFor(model => model.Game.Releases.FirstOrDefault().Store)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Game.Releases.FirstOrDefault().Version)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Game.Releases.FirstOrDefault().GmcDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Game.Releases.FirstOrDefault().ReleaseDate)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in releasesByStatus)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Platform.Name)
+                        @Html.DisplayFor(modelItem => item.Store.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Version)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GmcDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReleaseDate)
+                    </td>
+                    <td>
+                        <a asp-page="/Releases/Details" asp-route-id="@item.Id">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Game.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

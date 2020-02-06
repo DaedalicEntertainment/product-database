@@ -1,0 +1,46 @@
+﻿@page
+@model Daedalic.ProductDatabase.Pages.ReleaseStatuses.IndexModel
+
+@{
+    ViewData["Title"] = "Release Statuses";
+}
+
+<partial name="_Alert" />
+
+<h1>Release Statuses</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<partial name="_Filter" />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["name"]">
+                    @Html.DisplayNameFor(model => model.ReleaseStatus[0].Name)
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.ReleaseStatus) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+            <td>
+                <partial name="_ChangeOrderButtons" model="@item.Id" />
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

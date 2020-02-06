@@ -1,0 +1,144 @@
+﻿@page "{id:int}"
+@model Daedalic.ProductDatabase.Pages.Releases.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Release</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Release.Id" />
+            <div class="form-group">
+                <label asp-for="Release.GameId" class="control-label"></label>
+                <p>@Model.Release.Game.Name</p>
+                <input type="hidden" asp-for="Release.GameId" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Release.PlatformId" class="control-label"></label>
+                <select asp-for="Release.PlatformId" class="form-control" asp-items="ViewBag.PlatformId">
+                </select>
+                <help-text asp-for="Release.PlatformId"></help-text>
+                <span asp-validation-for="Release.PlatformId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Release.StoreId" class="control-label"></label>
+                <select asp-for="Release.StoreId" class="form-control" asp-items="ViewBag.StoreId">
+                    <option></option>
+                </select>
+                <help-text asp-for="Release.StoreId"></help-text>
+                <span asp-validation-for="Release.StoreId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Release.ReleaseStatusId" class="control-label"></label>
+                <select asp-for="Release.ReleaseStatusId" class="form-control" asp-items="ViewBag.ReleaseStatusId"></select>
+                <help-text asp-for="Release.ReleaseStatusId"></help-text>
+                <span asp-validation-for="Release.ReleaseStatusId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Release.Summary" class="control-label"></label>
+                <textarea asp-for="Release.Summary" class="form-control"></textarea>
+                <help-text asp-for="Release.Summary"></help-text>
+                <span asp-validation-for="Release.Summary" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Release.GmcDate" class="control-label"></label>
+                <input asp-for="Release.GmcDate" class="form-control" />
+                <help-text asp-for="Release.GmcDate"></help-text>
+                <span asp-validation-for="Release.GmcDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Release.ReleaseDate" class="control-label"></label>
+                <input asp-for="Release.ReleaseDate" class="form-control" />
+                <help-text asp-for="Release.ReleaseDate"></help-text>
+                <span asp-validation-for="Release.ReleaseDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Release.Version" class="control-label"></label>
+                <input asp-for="Release.Version" class="form-control" />
+                <help-text asp-for="Release.Version"></help-text>
+                <span asp-validation-for="Release.Version" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Release.PublisherId" class="control-label"></label>
+                <select asp-for="Release.PublisherId" class="form-control" asp-items="ViewBag.PublisherId">
+                    <option></option>
+                </select>
+                <help-text asp-for="Release.PublisherId"></help-text>
+                <span asp-validation-for="Release.PublisherId" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Release.EarlyAccess" /> @Html.DisplayNameFor(model => model.Release.EarlyAccess)
+                </label>
+                <help-text asp-for="Release.EarlyAccess"></help-text>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Release.EngineId" class="control-label"></label>
+                <select id="Release.EngineId" class="form-control" name="Release.EngineId">
+                    <option></option>
+                    @foreach (var engine in Model.Engine)
+                    {
+                        if (Model.Release.EngineId == engine.Id)
+                        {
+                            <option value="@engine.Id" title="@engine.Name @engine.Version" selected="selected">@engine.Name @engine.Version</option>
+                        }
+                        else
+                        {
+                            <option value="@engine.Id" title="@engine.Name @engine.Version">@engine.Name @engine.Version</option>
+                        }
+                    }
+                </select>
+                <help-text asp-for="Release.EngineId"></help-text>
+                <span asp-validation-for="Release.EngineId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Release.Languages" class="control-label"></label>
+                <help-text asp-for="Release.Languages"></help-text>
+                <div class="table">
+                    <table>
+                        @{
+                            foreach (var language in Model.Language.OrderBy(l => l.Name))
+                            {
+                                <tr>
+                                    <th>
+                                        <input type="checkbox"
+                                               name="selectedLanguages"
+                                               value="@language.Id"
+                                               @(Html.Raw(Model.Release.Languages.Any(l => l.LanguageId == language.Id) ? "checked=\"checked\"" : "")) />
+
+                                        @language.Name
+                                    </th>
+                                </tr>
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

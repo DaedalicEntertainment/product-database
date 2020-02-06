@@ -1,0 +1,153 @@
+﻿@page "{id:int}"
+@model Daedalic.ProductDatabase.Pages.Games.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Game</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Game.Id" />
+            <div class="form-group">
+                <label asp-for="Game.Name" class="control-label"></label>
+                <input asp-for="Game.Name" class="form-control" />
+                <help-text asp-for="Game.Name"></help-text>
+                <span asp-validation-for="Game.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game.DeveloperId" class="control-label"></label>
+                <select asp-for="Game.DeveloperId" class="form-control" asp-items="ViewBag.DeveloperId">
+                    <option></option>
+                </select>
+                <help-text asp-for="Game.DeveloperId"></help-text>
+                <span asp-validation-for="Game.DeveloperId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game.GenreId" class="control-label"></label>
+                <select asp-for="Game.GenreId" class="form-control" asp-items="ViewBag.GenreId">
+                    <option></option>
+                </select>
+                <help-text asp-for="Game.GenreId"></help-text>
+                <span asp-validation-for="Game.GenreId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game.SupportedLanguages" class="control-label"></label>
+                <help-text asp-for="Game.SupportedLanguages"></help-text>
+                <div class="table">
+                    <table>
+                        <tr>
+                            <th></th>
+
+                            @{
+                                foreach (var languageType in Model.LanguageType)
+                                {
+                                    <th>
+                                        @languageType.Name
+                                    </th>
+                                }
+                            }
+                        </tr>
+
+                        @{
+                            foreach (var language in Model.Language.OrderBy(l => l.Name))
+                            {
+                                <tr>
+                                    <th>
+                                        @language.Name
+                                    </th>
+
+                                    @foreach (var languageType in Model.LanguageType)
+                                    {
+                                        <td>
+                                            <input type="checkbox"
+                                                   name="newSupportedLanguages"
+                                                   value="@language.Id @Html.Raw("/") @languageType.Id"
+                                                   @(Html.Raw(Model.Game.SupportedLanguages.Any(l => l.LanguageId == language.Id && l.LanguageTypeId == languageType.Id) ? "checked=\"checked\"" : "")) />
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game.ImplementedLanguages" class="control-label"></label>
+                <help-text asp-for="Game.ImplementedLanguages"></help-text>
+                <div class="table">
+                    <table>
+                        @{
+                            foreach (var language in Model.Language
+                                .Where(l => Model.Game.SupportedLanguages.Any(sl => sl.LanguageId == l.Id))
+                                .OrderBy(l => l.Name))
+                            {
+                                <tr>
+                                    <td>
+                                        @language.Name
+                                    </td>
+
+                                    <td>
+                                        <select id="newLanguageStatuses[@language.Id]" class="form-control" name="newLanguageStatuses[@language.Id]">
+                                            @foreach (var languageStatus in Model.LanguageStatus.OrderBy(s => s.Order).ThenBy(s => s.Name))
+                                            {
+                                                @if (Model.IsLanguageStatus(language, languageStatus))
+                                                {
+                                                    <option value="@languageStatus.Id" title="@languageStatus.Summary" selected="selected">@languageStatus.Name</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@languageStatus.Id" title="@languageStatus.Summary">@languageStatus.Name</option>
+                                                }
+                                            }
+                                        </select>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game.AssetIndexProjectId" class="control-label"></label>
+                <input asp-for="Game.AssetIndexProjectId" class="form-control" />
+                <span asp-validation-for="Game.AssetIndexProjectId" class="text-danger"></span>
+                <help-text asp-for="Game.AssetIndexProjectId"></help-text>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game.WebsiteUrl" class="control-label"></label>
+                <input asp-for="Game.WebsiteUrl" class="form-control" />
+                <span asp-validation-for="Game.WebsiteUrl" class="text-danger"></span>
+                <help-text asp-for="Game.WebsiteUrl"></help-text>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game.FacebookPageName" class="control-label"></label>
+                <input asp-for="Game.FacebookPageName" class="form-control" />
+                <span asp-validation-for="Game.FacebookPageName" class="text-danger"></span>
+                <help-text asp-for="Game.FacebookPageName"></help-text>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game.TwitterHandle" class="control-label"></label>
+                <input asp-for="Game.TwitterHandle" class="form-control" />
+                <span asp-validation-for="Game.TwitterHandle" class="text-danger"></span>
+                <help-text asp-for="Game.TwitterHandle"></help-text>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

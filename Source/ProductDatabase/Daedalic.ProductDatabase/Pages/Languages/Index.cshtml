@@ -1,0 +1,43 @@
+﻿@page
+@model Daedalic.ProductDatabase.Pages.Languages.IndexModel
+
+@{
+    ViewData["Title"] = "Languages";
+}
+
+<partial name="_Alert" />
+
+<h1>Languages</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<partial name="_Filter" />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["name"]">
+                    @Html.DisplayNameFor(model => model.Language[0].Name)
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Language) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,41 @@
+﻿@page "{id:int}"
+@model Daedalic.ProductDatabase.Pages.Engines.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Engine</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Engine.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Engine.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Engine.Version)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Engine.Version)
+        </dd>
+    </dl>
+
+    @if (Model.Engine.Releases != null && Model.Engine.Releases.Count > 0)
+    {
+        <div class="alert alert-warning" role="alert">
+            This engine has @Model.Engine.Releases.Count releases associated with it. Deleting the engine will remove it from all of these releases.
+        </div>
+    }
+
+    <form method="post">
+        <input type="hidden" asp-for="Engine.Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>

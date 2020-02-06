@@ -1,0 +1,97 @@
+﻿@page "{id:int}"
+@model Daedalic.ProductDatabase.Pages.Releases.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Release</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Release.Game)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Release.Game.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Release.Platform) / @Html.DisplayNameFor(model => model.Release.Store)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Release.Platform.Name)
+            @Html.DisplayFor(model => model.Release.Store.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Release.ReleaseStatus)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Release.ReleaseStatus.Name)
+        </dd>
+
+        @if (!string.IsNullOrEmpty(Model.Release.Summary))
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Release.Summary)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Release.Summary)
+            </dd>
+        }
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Release.GmcDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Release.GmcDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Release.ReleaseDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Release.ReleaseDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Release.Version)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Release.Version)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Release.Publisher)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Release.Publisher.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Release.EarlyAccess)
+        </dt>
+        <dd class="col-sm-10">
+            <show-flag flag="@Model.Release.EarlyAccess"></show-flag>
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Release.Engine)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Release.Engine.Name)
+            @Html.DisplayFor(model => model.Release.Engine.Version)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Release.Languages)
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                foreach (var language in Model.Release.Languages.OrderBy(l => l.Language.Name))
+                {
+                    <text>@language.Language.Name</text> <br />
+                }
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Release.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

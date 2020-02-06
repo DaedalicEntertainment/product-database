@@ -1,0 +1,9 @@
+﻿@model int
+
+<form method="post">
+    <input type="hidden" name="id" value="@Model" />
+    <div class="form-group">
+        <input type="submit" value="Up" class="btn btn-primary" asp-page-handler="Up" />
+        <input type="submit" value="Down" class="btn btn-primary" asp-page-handler="Down" />
+    </div>
+</form>
