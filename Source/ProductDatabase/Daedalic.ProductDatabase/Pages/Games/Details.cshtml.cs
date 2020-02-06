@@ -28,6 +28,8 @@ namespace Daedalic.ProductDatabase.Pages.Games
 
         public Game Game { get; set; }
 
+        public IList<LanguageStatus> LanguageStatus { get; set; }
+
         public string FacebookUrl
         {
             get
@@ -138,6 +140,7 @@ namespace Daedalic.ProductDatabase.Pages.Games
             }
 
             AssetIndexUrl = _config.GetValue<string>("AssetIndexUrl");
+            LanguageStatus = await _context.LanguageStatus.AsNoTracking().ToListAsync();
 
             return Page();
         }

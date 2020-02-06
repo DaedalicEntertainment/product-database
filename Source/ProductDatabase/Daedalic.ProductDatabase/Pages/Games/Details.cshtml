@@ -56,7 +56,7 @@
                             }
                         }
 
-                        <th></th>
+                        <th>Status</th>
                     </tr>
 
                     @{
@@ -78,6 +78,10 @@
                                     @if (Model.Game.ImplementedLanguages.Any(il => il.LanguageId == language.Id))
                                     {
                                         @Model.Game.ImplementedLanguages.FirstOrDefault(il => il.LanguageId == language.Id).LanguageStatus.Name
+                                    }
+                                    else
+                                    {
+                                        @Model.LanguageStatus.FirstOrDefault(s => s.Id == Model.Configuration.DefaultLanguageStatus).Name
                                     }
                                 </td>
                             </tr>
