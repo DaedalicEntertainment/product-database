@@ -45,6 +45,17 @@ namespace Daedalic.ProductDatabase.Insights.Checks
                 });
             }
 
+            // Check Ready For Release dates.
+            foreach (Release release in context.Release.Include(r => r.Game).Include(r => r.Platform).Where(r => r.ReadyForReleaseDate == null))
+            {
+                results.Add(new InsightResult
+                {
+                    Severity = InsightResultSeverity.Warning,
+                    Item = release,
+                    Text = $"A release for {release.Game.Name} ({release.Platform.Name}) has no Ready For Release date."
+                });
+            }
+
             // Check release dates.
             foreach (Release release in context.Release.Include(r => r.Game).Include(r => r.Platform).Where(r => r.ReleaseDate == null))
             {

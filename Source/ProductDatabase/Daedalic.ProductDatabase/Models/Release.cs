@@ -24,6 +24,10 @@ namespace Daedalic.ProductDatabase.Models
         public DateTime? GmcDate { get; set; }
 
         [DataType(DataType.Date)]
+        [Display(Name = "Ready For Release Date", Description = "Date when all tests and submissions are supposted to be finished.")]
+        public DateTime? ReadyForReleaseDate { get; set; }
+
+        [DataType(DataType.Date)]
         [Display(Name = "Release Date", Description = "Date when this release is supposed to be live on the platform.")]
         public DateTime? ReleaseDate { get; set; }
 
@@ -65,9 +69,19 @@ namespace Daedalic.ProductDatabase.Models
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
+            if (GmcDate != null && ReadyForReleaseDate != null && ReadyForReleaseDate < GmcDate)
+            {
+                yield return new ValidationResult("Ready For Release must be after GMC.", new[] { nameof(ReleaseDate) });
+            }
+
             if (GmcDate != null && ReleaseDate != null && ReleaseDate < GmcDate)
             {
                 yield return new ValidationResult("Release must be after GMC.", new[] { nameof(ReleaseDate) });
+            }
+
+            if (ReadyForReleaseDate != null && ReleaseDate != null && ReleaseDate < ReadyForReleaseDate)
+            {
+                yield return new ValidationResult("Release must be after Ready For Release.", new[] { nameof(ReleaseDate) });
             }
         }
 

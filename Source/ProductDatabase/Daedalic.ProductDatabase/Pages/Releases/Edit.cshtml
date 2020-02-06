@@ -57,6 +57,12 @@
                 <span asp-validation-for="Release.GmcDate" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Release.ReadyForReleaseDate" class="control-label"></label>
+                <input asp-for="Release.ReadyForReleaseDate" class="form-control" />
+                <help-text asp-for="Release.ReadyForReleaseDate"></help-text>
+                <span asp-validation-for="Release.ReadyForReleaseDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Release.ReleaseDate" class="control-label"></label>
                 <input asp-for="Release.ReleaseDate" class="form-control" />
                 <help-text asp-for="Release.ReleaseDate"></help-text>

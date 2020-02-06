@@ -75,13 +75,13 @@
                     </a>
                 </th>
                 <th>
-                    <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["releasedate"]">
-                        @Html.DisplayNameFor(model => model.Release[0].ReleaseDate)
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["readyforreleasedate"]">
+                        @Html.DisplayNameFor(model => model.Release[0].ReadyForReleaseDate)
                     </a>
                 </th>
                 <th>
-                    <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["publisher"]">
-                        @Html.DisplayNameFor(model => model.Release[0].Publisher)
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.SortOrders["releasedate"]">
+                        @Html.DisplayNameFor(model => model.Release[0].ReleaseDate)
                     </a>
                 </th>
                 <th>
@@ -106,10 +106,10 @@
                         @Html.DisplayFor(modelItem => item.GmcDate)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.ReleaseDate)
+                        @Html.DisplayFor(modelItem => item.ReadyForReleaseDate)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Publisher.Name)
+                        @Html.DisplayFor(modelItem => item.ReleaseDate)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ReleaseStatus.Name)
