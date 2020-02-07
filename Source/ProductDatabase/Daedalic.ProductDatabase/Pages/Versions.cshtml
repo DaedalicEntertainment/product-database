@@ -1,0 +1,30 @@
+﻿@page
+@model Daedalic.ProductDatabase.VersionsModel
+@{
+    ViewData["Title"] = "Versions";
+}
+
+<h1>Versions</h1>
+
+<h4>Version 0.2</h4>
+
+<h6>New Features</h6>
+
+<ul>
+    <li>Added a default language status to the configuration page, which will be pre-selected when adding new languages to a game.</li>
+    <li>Added a Ready For Release date for all releases.</li>
+    <li>Added showing whether a release is a patch, or not.</li>
+    <li>Added a locale for date format to the configuration page, allowing to show dates in German format, for example.</li>
+    <li>Added release groups, which allow to see the latest release date of a set of releases at a glance.</li>
+</ul>
+
+<h6>Bug Fixes</h6>
+
+<ul>
+    <li>Correctly showing language statuses in Game details page even if none has been explicitly set before.</li>
+    <li>Fixed an error that could occur when encountering form validation errors while trying to create a new release.</li>
+</ul>
+
+<h4>Version 0.1</h4>
+
+Initial release.
