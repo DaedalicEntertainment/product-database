@@ -1,0 +1,102 @@
+﻿@page
+@model Daedalic.ProductDatabase.AddReleaseToGroupModel
+@{
+    ViewData["Title"] = "AddReleaseToGroup";
+}
+
+<h1>Add Release To Group</h1>
+
+<hr />
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Release.Game)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Release.Game.Name)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Release.Platform) / @Html.DisplayNameFor(model => model.Release.Store)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Release.Platform.Name)
+            @Html.DisplayFor(model => model.Release.Store.Name)
+        </dd>
+
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Release.ReleaseStatus)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Release.ReleaseStatus.Name)
+        </dd>
+
+        @if (!string.IsNullOrEmpty(Model.Release.Summary))
+        {
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Release.Summary)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Release.Summary)
+            </dd>
+        }
+
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Release.GmcDate)
+        </dt>
+        <dd class="col-sm-8">
+            @Model.Configuration.FormatDate(Model.Release.GmcDate)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Release.ReadyForReleaseDate)
+        </dt>
+        <dd class="col-sm-8">
+            @Model.Configuration.FormatDate(Model.Release.ReadyForReleaseDate)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Release.ReleaseDate)
+        </dt>
+        <dd class="col-sm-8">
+            @Model.Configuration.FormatDate(Model.Release.ReleaseDate)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Release.Version)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Release.Version)
+        </dd>
+    </dl>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" id="releaseId" name="releaseId" value="@Model.Release.Id" />
+
+            <div class="form-group">
+                <label for="groupId">Release Group</label>
+
+                <select id="groupId" name="groupId" class="form-control">
+                    @foreach (var releaseGroup in Model.ReleaseGroups)
+                    {
+                        <option value="@releaseGroup.Id">@releaseGroup.Name</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Add" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

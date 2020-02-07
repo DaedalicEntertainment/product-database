@@ -39,5 +39,7 @@ namespace Daedalic.ProductDatabase.Data
         public DbSet<Daedalic.ProductDatabase.Models.LanguageStatus> LanguageStatus { get; set; }
 
         public DbSet<Daedalic.ProductDatabase.Models.Engine> Engine { get; set; }
+
+        public DbSet<Daedalic.ProductDatabase.Models.ReleaseGroup> ReleaseGroup { get; set; }
     }
 }
